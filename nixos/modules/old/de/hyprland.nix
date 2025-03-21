@@ -17,6 +17,7 @@
     stow
     swayidle
     hyprshot
+    hyprpm
   ];
 
   # withUWSM = true; is a decent option
