@@ -9,19 +9,34 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./users.nix
+      ./programs/cli.nix
       ./de/hyprland.nix
       ./de/fonts.nix
-      ./programs/cli.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use GRUB boot loader.
+  boot.loader = {
+    systemd-boot.enable = false;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
 
-  # networking.hostName = "nixos"; # Define your hostname.
+    grub = {
+      enable = true;
+      devices = [ "nodev" ];
+      efiSupport = true;
+      useOSProber = true;
+    };
+  };
+  boot.tmp.cleanOnBoot = true;
+
+  networking.hostName = "rosso";
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  services.dbus.enable = true;
+
 
   # Set your time zone.
   time.timeZone = "America/Sacramento";

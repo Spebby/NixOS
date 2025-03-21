@@ -19,7 +19,14 @@
     hyprshot
   ];
 
-  programs.hyprland.enable = true;
+  # withUWSM = true; is a decent option
+  programs.hyprland = {
+    enable = true;
+  };
+
+  security.pam.services.hyprlock =  {};
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
