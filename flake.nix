@@ -68,7 +68,7 @@
 		}) {} hosts;
 
 		homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-			inherit pkgs;
+			pkgs = nixpkgs.legacyPackages.${system};
 			extraSpecialArgs = {
 				inherit inputs homeStateVersion user hyprland hyprland-plugins split-monitor-workspaces;
 			};

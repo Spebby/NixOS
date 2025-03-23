@@ -3,10 +3,11 @@
 { pkgs, stateVersion, hostname, ... }:
 
 {
-	import = [
+	imports = [
 	  ./hardware-configuration.nix
 	  ./local-packages.nix
-	  ../../nixos/modules
+	  ./../common.nix
+	  ./../../nixos/modules
 	];
 
 	environment.systemPackages = [ pkgs.home-manager ];
