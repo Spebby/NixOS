@@ -35,47 +35,47 @@
 		# I'm not stupid, so I won't be doing nixvim
 	};
 
-	outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, split-monitor-workspaces ... }@inputs: let
-		system = "x86_64-linux";
-		homeStateVersion = "24.11";
-		user = "thom";
-		host = [
-			{
-				hostname = "rosso";
-				stateVersion = "24.11";
-			}
+	outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, split-monitor-workspaces, ... }@inputs: let
+	system = "x86_64-linux";
+	homeStateVersion = "24.11";
+	user = "thom";
+	hosts = [
+		{
+			hostname = "rosso";
+			stateVersion = "24.11";
+		}
+	];
+
+
+	# Nix Builder
+	makeSystem = { hostname, stateVersion }: nixpkgs.lib.nixosSystem {
+		system = system;
+		specialArgs = {
+			inherit inputs stateVersion hostname user;
+		};
+
+		modules = [
+			./hosts/${hostname}/configuration.nix
 		];
+	};
 
+	in {
+		nixosConfigurations = nixpkgs.lib.foldl' (configs: host:
+			configs // {
+			"${host.hostname}" = makeSystem {
+				inherit (host) hostname stateVersion;
+			};
+		}) {} hosts;
 
-		# Nix Builder
-		makeSystem = { hostname, stateVersion }: nixpkgs.lib.nixosSystem {
-			system = system;
-			specialArgs = {
-				inherit inputs stateVersion hostname user;
+		homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
+			inherit pkgs;
+			extraSpecialArgs = {
+				inherit inputs homeStateVersion user hyprland hyprland-plugins split-monitor-workspaces;
 			};
 
 			modules = [
-				./hosts/${hostname}/configuration.nix
+				./home-manager/home.nix
 			];
 		};
-
-		in {
-			nixosConfigurations = nixpkgs.lib.foldl' ( configs: host: configs // {
-				"${host.hostname}" = makeSystem {
-					inherit (host) hostname stateVersion;
-				};
-				}) {} hosts;
-			homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-				pkgs = nixpkgs.legacyPackages.${system};
-				extraSpecialArgs = {
-					inherit inputs homsStateVersion user hyprland, hyprland-plugins, split-monitor-workspaces;
-				};
-
-				modules = [
-					./home-manager/home.nix
-				];
-			};
-		};
 	};
-};
-
+}
