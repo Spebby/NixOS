@@ -1,3 +1,5 @@
+# /nixos/modules/zram.nix
+
 {
 	zramSwap = {
 		enable = true;

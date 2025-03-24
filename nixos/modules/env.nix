@@ -1,3 +1,5 @@
+# /nixos/modules/env.nix
+
 {
 	environment.sessionVariables = rec {
 		TERMINAL = "kitty";

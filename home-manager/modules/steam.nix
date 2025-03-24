@@ -1,3 +1,5 @@
+# /home-manager/modules/steam.nix
+
 # review docs
 {
 	programs.steam = {

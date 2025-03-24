@@ -1,3 +1,5 @@
+# /home-manager/home-packages.nix
+
 { pkgs, ... }:
 
 {
@@ -6,7 +8,6 @@
 	# Packages I don't have specific configs for
 	home.packages = with pkgs; [
 		# Desktop Apps
-		firefox
 		mpv
 		obs-studio
 		obsidian
@@ -22,12 +23,12 @@
 		ffmpeg
 		ffmpegthumbnailer
 		fzf
-		git-graph
-		gnu-netcat	
+		git-graph	
 		gparted
 		grimblast
 		htop
 		hyprpicker
+		netcat-gnu
 		ntfs3g
 		mediainfo
 		microfetch
@@ -43,15 +44,9 @@
 		wget
 		wl-clipboard
 		wtype
+		yazi
 		yt-dlp
 		zip
-
-		# CXX
-		gcc
-		clang
-		clang-format
-		make
-		cmake
 
 		# CXX - Adj
 		meson
@@ -59,7 +54,7 @@
 
 		# ECMA
 		nodejs
-		npm
+#		npm
 
 		python311
 

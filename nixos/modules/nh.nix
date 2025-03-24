@@ -1,3 +1,5 @@
+# /nixos/modules/nh.nix
+
 { user, ... }:
 
 {

@@ -1,3 +1,5 @@
+# /nixos/modules/users.nix
+
 { pkgs, user, ... }:
 
 {

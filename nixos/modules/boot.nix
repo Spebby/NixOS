@@ -1,3 +1,5 @@
+# /nixos/modules/boot.nix
+
 {
 	boot.loader = {
 		systemd-boot.enable = false;

@@ -1,3 +1,5 @@
+# /nixos/modules/hyprland.nix
+
 {
 	#org config had 
 	# meson, waybar, dunst, libnotify, swaybg, wofi, stow, swayidle, hyprshot

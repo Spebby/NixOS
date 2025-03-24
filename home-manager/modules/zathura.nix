@@ -1,3 +1,5 @@
+# /home-manager/modules/zathura.nix
+
 {
 	programs.zathura = {
 		enable = true;
