@@ -19,6 +19,8 @@ in {
 
 	programs.zsh.enable = true;
 
+	services.flatpak.enable = true;
+
 	security.doas = {
 		enable = true;
 		extraRules = [

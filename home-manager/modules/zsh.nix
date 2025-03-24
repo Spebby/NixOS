@@ -1,6 +1,11 @@
 # /home-modules/modules/zsh.nix
 
-{ config, ... }: {
+{ config, ... }:
+
+{
+	services.cliphist.enable = true;
+	fonts.fontconfig.enable  = true;
+
 	programs.zsh = {
 		enable = true;
 		enableCompletion = true;
@@ -8,8 +13,7 @@
 		syntaxHighlighting.enable = true;
 
 		shellAliases =
-		let
-			
+		let			
 			flakeDir = "~/flake";
 		in {
 			nix-sw  = "nh os switch";
@@ -21,14 +25,14 @@
 			".." = "cd ..";
 
 			vim = "nvim";
-			ls  = "exa --icons";
+			ls  = "eza --group-directories-first --icons";
 			cat = "bat";
+			lf  = "${config.programs.yazi.shellWrapperName}";
 			grep = "rg";
-			lf  = "ya-with-dir-change";
 
 			obsidian = "hyprctl dispatch killactive && hyprctl dispatch exec \"obsidian\"";
 			discord = "hyprctl dispatch killactive && hyprctl dispatch exec \"discord\"";
-			firefox = "exec firefox";			
+			firefox = "exec firefox";
 		};
 
 		history.size = 10000;
@@ -36,16 +40,11 @@
 
 		# it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
 		initExtra = ''
-			function ya-with-dir-change() {
-				local tmp = "$(mktemp -t "yazi-cwd.XXXXX")"
-				yazi "$@" --cwd-file="$tmp"
-				if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWPD" ]; then
-					cd -- "$cwd"
-				fi
-				rm -f -- "$tmp"
-			}
-
 			# If I ever start using TMUX or  UWSM, put it here.
+
+			moo() {
+				echo -e "$(shuf -n 1 home/thom/.local/store/moo)"
+			}
 		'';
 	};
 }

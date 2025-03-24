@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+
 let
   booksDir = "$HOME/Downloads/books";
   booksScript = pkgs.writeScriptBin "open_books" ''
@@ -25,8 +26,9 @@ in {
       
 	  "$mainMod,       L, exec, loginctl lock-session"
       "$mainMod,       C, exec, hyprpicker -an"
-      "$mainMod,       B, exec, pkill -SIGUSR2 waybar"
-      "$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
+	  #"$mainMod,       B, exec, pkill -SIGUSR2 waybar"
+	  #"$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
+	  "$mainMod,       B, fullscreen, 1"
       "$mainMod,       N, exec, swaync-client -t"
       ", Print, exec, grimblast --notify --freeze copysave area"
 
@@ -73,26 +75,30 @@ in {
       "$mainMod, 8, workspace, 8"
       "$mainMod, 9, workspace, 9"
       "$mainMod, 0, workspace, 10"
+	  "$mainMod, P, togglespecialworkspace, popupterm"
 
 	  # Scroll Wheel to switch workplaces
-	  "$mainMod, mouse_down, mouse_down, workspace, e+1"
-	  "$mainMod, mouse_down, mouse_up, workspace, e-1"
+	  "$mainMod, mouse_down, workspace, e+1"
+	  "$mainMod, mouse_up, workspace, e-1"
 
       # Moving windows to workspaces
-      "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
-      "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-      "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-      "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-      "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-      "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-      "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-      "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-      "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-      "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+      "$mainMod SHIFT, 1, movetoworkspace, 1"
+      "$mainMod SHIFT, 2, movetoworkspace, 2"
+      "$mainMod SHIFT, 3, movetoworkspace, 3"
+      "$mainMod SHIFT, 4, movetoworkspace, 4"
+      "$mainMod SHIFT, 5, movetoworkspace, 5"
+      "$mainMod SHIFT, 6, movetoworkspace, 6"
+      "$mainMod SHIFT, 7, movetoworkspace, 7"
+      "$mainMod SHIFT, 8, movetoworkspace, 8"
+      "$mainMod SHIFT, 9, movetoworkspace, 9"
+      "$mainMod SHIFT, 0, movetoworkspace, 10"
+	  "$mainMod SHIFT, P, movetoworkspace, special:popupterm"
 	  "$mainMod, SPACE, layoutmsg, swapwithmaster"
 
+	  # I don't like the command, but movetoworkspacesilent may be useful in some cases.
+
+	
 	  # Special Workspaces
-	  "$mainMod,       P, togglespecialworkspace"
 			
       # Scratchpad
 	  # "$mainMod,       P, togglespecialworkspace,  magic"
@@ -121,6 +127,6 @@ in {
       ", XF86AudioPause, exec, playerctl play-pause"
       ", XF86AudioPlay,  exec, playerctl play-pause"
       ", XF86AudioPrev,  exec, playerctl previous"
-    ];
+    ];	
   };
 }

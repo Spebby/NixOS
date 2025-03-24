@@ -7,18 +7,21 @@
 		./waybar
 		./wofi
 
+		./alacritty.nix
 		./bat.nix
+		./discord.nix
 		./eza.nix
 		./firefox.nix
 		./git.nix
 		./lazygit.nix
+		./moo.nix
 		./neovim.nix
 		./obsidian.nix
 		./qt.nix
-#		./ranger.nix
 		./starship.nix
-#		./steam.nix
 		./stylix.nix
+#		./thunar.nix
+		./yazi.nix
 		./zathura.nix
 		./zsh.nix
 	];

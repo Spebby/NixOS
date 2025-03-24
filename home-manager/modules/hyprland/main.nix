@@ -1,7 +1,12 @@
-{
+{ pkgs, config, hyprland, ... }:
+
+let
+	terminal = "alacritty";
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
+
     settings = {
       env = [
         # Hint Electron apps to use Wayland
@@ -13,9 +18,9 @@
         "XDG_SCREENSHOTS_DIR, $HOME/screens"
       ];
 
-      monitor = ",2560x1600@165,auto,1.33";
+      monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMod" = "SUPER";
-      "$terminal" = "kitty";
+      "$terminal" = "${terminal}";
       "$fileManager" = "$terminal -e sh -c 'ranger'";
       "$menu" = "wofi";
 
@@ -55,7 +60,7 @@
 		};
 
         rounding = 0;
-		drop_shadow = false;
+		#drop_shadow = false;
 		#shadow_range = 4;
 		#shadow_render_power = 3;
 		#"col.shadow" = "rgba(1a1a1aee)";
@@ -80,6 +85,7 @@
 			"borderangle, 1, 8, default"
 			"fade, 1, 2, default"
 			"workspaces, 1, 6, default"
+			"specialWorkspace, 1, 3, default, slidefadevert, 95%"
 		];
       };
 
@@ -115,11 +121,15 @@
         new_status = "slave";
         new_on_top = true;
         mfact = 0.5;
+
+		special_scale_factor = 0.8;
       };
 
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;
+		enable_swallow = true;
+		swallow_regex = ".*(${terminal})";
       };
 
       windowrulev2 = [
@@ -129,12 +139,17 @@
         "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
         "noborder,nofocus,class:(showmethekey-gtk)"
 
-        "workspace 3,class:(obsidian)"
-        "workspace 3,class:(zathura)"
-        "workspace 4,class:(com.obsproject.Studio)"
-        "workspace 5,class:(telegram)"
-        "workspace 5,class:(vesktop)"
-        "workspace 6,class:(teams-for-linux)"
+		# This is a neat idea, but I'm probably only going to
+		# reserve this for something like a VM or steam games.
+		#"workspace 3,class:(obsidian)"
+		#"workspace 3,class:(zathura)"
+		#"workspace 4,class:(com.obsproject.Studio)"
+		#"workspace 5,class:(telegram)"
+		#"workspace 5,class:(vesktop)"
+		#"workspace 6,class:(teams-for-linux)"
+
+		# Popup term rules
+		"bordersize 0, opacity 0.8 override, onworkspace:w[popupterm], class:popupterm"
 
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
@@ -150,6 +165,7 @@
       workspace = [
         "w[tv1], gapsout:0, gapsin:0"
         "f[1], gapsout:0, gapsin:0"
+		"special:popupterm,on-created-empty:${terminal}"
       ];
     };
   };

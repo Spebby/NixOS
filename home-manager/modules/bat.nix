@@ -1,6 +1,7 @@
 # /home-modules/modules/bat.nix
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.bat = {
     enable = true;
     themes = {

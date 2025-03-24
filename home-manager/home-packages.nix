@@ -8,10 +8,24 @@
 	# Packages I don't have specific configs for
 	home.packages = with pkgs; [
 		# Desktop Apps
+		discord
+		gimp-with-plugins
+		jetbrains.rider
+		libreoffice-qt6
 		mpv
 		obs-studio
 		obsidian
-		
+		pinta
+		slack
+		thunderbird
+		vlc
+		vscode
+		xfce.thunar
+
+		# Steam Helpers
+		steam-tui
+		steamcmd
+
 		# CLI Utils
 		acpid
 		alsa-utils
@@ -44,7 +58,6 @@
 		wget
 		wl-clipboard
 		wtype
-		yazi
 		yt-dlp
 		zip
 

@@ -32,10 +32,12 @@
 			inputs.hyprland.follows = "hyprland";
 		};
 
-		# I'm not stupid, so I won't be doing nixvim
+		# I'm not stupid, so I won't be doing nixvim... yet
+		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+		nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 	};
 
-	outputs = { self, nixpkgs, home-manager, hyprland, hyprland-plugins, split-monitor-workspaces, ... }@inputs: let
+	outputs = { self, nixpkgs, home-manager, hyprland, nixos-hardware, nix-flatpak, ... }@inputs: let
 	system = "x86_64-linux";
 	homeStateVersion = "24.11";
 	user = "thom";
@@ -55,6 +57,7 @@
 		};
 
 		modules = [
+			nix-flatpak.nixosModules.nix-flatpak
 			./hosts/${hostname}/configuration.nix
 		];
 	};
@@ -70,7 +73,7 @@
 		homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
 			pkgs = nixpkgs.legacyPackages.${system};
 			extraSpecialArgs = {
-				inherit inputs homeStateVersion user hyprland hyprland-plugins split-monitor-workspaces;
+				inherit inputs homeStateVersion user hyprland nix-flatpak;
 			};
 
 			modules = [
