@@ -20,9 +20,13 @@ in {
 
       monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMod" = "SUPER";
-      "$terminal" = "${terminal}";
-      "$fileManager" = "$terminal -e sh -c 'ranger'";
+      "$terminal" = "Alacritty";
+      "$fileManager" = "thunar";
       "$menu" = "wofi";
+
+	  xwayland = {
+		force_zero_scaling = true;
+	  };
 
 			#	  "$idleBrightness" = "idleBrightness.sh";
       exec-once = [
@@ -149,8 +153,6 @@ in {
 		#"workspace 6,class:(teams-for-linux)"
 
 		# Popup term rules
-		"bordersize 0, opacity 0.8 override, onworkspace:w[popupterm], class:popupterm"
-
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
 
