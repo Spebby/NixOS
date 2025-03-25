@@ -1,8 +1,6 @@
 { pkgs, config, hyprland, ... }:
 
-let
-	terminal = "alacritty";
-in {
+{
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -15,12 +13,12 @@ in {
         "XDG_SESSION_TYPE, wayland"
         "XDG_SESSION_DESKTOP, Hyprland"
         "QT_QPA_PLATFORM, wayland"
-        "XDG_SCREENSHOTS_DIR, $HOME/screens"
+        "XDG_SCREENSHOTS_DIR, $HOME/Media/screenshots"
       ];
 
       monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMod" = "SUPER";
-      "$terminal" = "Alacritty";
+      "$terminal" = "alacritty";
       "$fileManager" = "thunar";
       "$menu" = "wofi";
 
@@ -133,7 +131,7 @@ in {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;
 		enable_swallow = true;
-		swallow_regex = ".*(${terminal})";
+		swallow_regex = ".*($terminal)";
       };
 
       windowrulev2 = [
@@ -167,7 +165,7 @@ in {
       workspace = [
         "w[tv1], gapsout:0, gapsin:0"
         "f[1], gapsout:0, gapsin:0"
-		"special:popupterm,on-created-empty:${terminal}"
+		"special:popupterm,on-created-empty:$terminal"
       ];
     };
   };

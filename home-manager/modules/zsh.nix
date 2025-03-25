@@ -43,8 +43,15 @@
 			# If I ever start using TMUX or  UWSM, put it here.
 
 			moo() {
-				echo -e "$(shuf -n 1 home/thom/.local/store/moo)"
+				echo -e "$(shuf -n 1 .local/store/moo)"
 			}
+		'';
+
+		# There is for sure a better way of doing this
+		profileExtra = ''
+			if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
+				Hyprland > /dev/null
+			fi
 		'';
 	};
 }

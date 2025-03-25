@@ -33,7 +33,7 @@ in {
       ", Print, exec, grimblast --notify --freeze copysave area"
 
 	  # Utilities
-      "$mainMod        RETURN, exec, $terminal"    # ex. Kitty/Foot
+      "$mainMod,       RETURN, exec, $terminal"    # ex. Kitty/Foot
       "$mainMod,       R, exec, $menu --show drun" # ex. Wofi
       "$mainMod,       D, exec, $fileManager"      # ex. Dolphin
       "$mainMod,       E, exec, bemoji -cn"

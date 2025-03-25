@@ -7,6 +7,7 @@
 
 	];
 
+
 	programs.steam = {
 		enable = true;
 		remotePlay.openFirewall = true; # Open ports for Steam Remote Play

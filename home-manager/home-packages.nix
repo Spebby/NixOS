@@ -1,17 +1,24 @@
 # /home-manager/home-packages.nix
 
-{ pkgs, ... }:
+{ pkgs, requireFile, ... }:
 
 {
-	nixpkgs.config.allowUnfree = true;
+	nixpkgs = {
+		config.allowUnfree = true;
+		overlays = [
+			(import ./packages)
+		];
+	};
 
 	# Packages I don't have specific configs for
 	home.packages = with pkgs; [
 		# Desktop Apps
+		cider-2
 		discord
 		gimp-with-plugins
 		jetbrains.rider
 		libreoffice-qt6
+		mission-center
 		mpv
 		obs-studio
 		obsidian
@@ -19,7 +26,6 @@
 		slack
 		thunderbird
 		vlc
-		vscode
 		xfce.thunar
 
 		# Steam Helpers
@@ -34,6 +40,7 @@
 		bottom
 		brightnessctl
 		cliphist
+		fastfetch
 		ffmpeg
 		ffmpegthumbnailer
 		fzf

@@ -24,7 +24,14 @@ window#waybar {
   background: #d65d0e;
 }
 
-#clock, #battery, #pulseaudio, #tray, #language, #weather {
+#custom-media-playing {
+	padding: 0 10px;
+	margin: 0;
+	color: #d79921;
+	border-bottom: 5px solid #d79921;
+}
+
+#clock, #power, #custom-power, #battery, #pulseaudio, #custom-notification, #tray, #language, #weather {
   padding: 0 10px;
   margin: 0 10px;
 }
@@ -53,16 +60,30 @@ window#waybar {
   border-bottom: 5px solid #cc241d;
 }
 
+
 #battery {
   margin: 0;
   color: #458588;
   border-bottom: 5px solid #458588;
 }
 
+#custom-power {
+  margin: 0;
+  padding: 0 10px;
+  color: #376669;
+  border-bottom: 5px solid #376669;
+}
+
 #clock {
   margin: 0;
   color: #b16286;
   border-bottom: 5px solid #b16286;
+}
+
+#custom-notification {
+  margin: 0;
+  color: #FACADE;
+  border-bottom: 5px solid #FACADE;
 }
 
 #tray {
