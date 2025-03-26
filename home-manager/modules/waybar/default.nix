@@ -5,6 +5,8 @@ let
   playerctl = lib.getExe pkgs.playerctl;
   socat = lib.getExe pkgs.socat;
   jq = lib.getExe pkgs.jq;
+
+  player_priority="cider, spotify, vlc, firefox, chromium";
 in {
   programs.waybar = {
     enable = true;
@@ -33,6 +35,7 @@ in {
 			#"6" = "";
 			#"7" = "";
 			#"8" = "";
+			"unity" = "";
             "magic" = "";
 			"game"  = "";
           };
@@ -119,13 +122,14 @@ in {
 
 		# Shoutouts to wyatt
 		"custom/media-playing" = {
+		  
           tooltip = false;
           format = "{icon} {}";
 		  format-icons = {
 			spotify = "";
 			chromium = "";
-			#cider = "";
-			firefox = "";
+			cider = "󰝚";
+			firefox = "󰈹";
 			vlc = "";
 			default = "";
 		  };
@@ -135,7 +139,6 @@ in {
           exec = pkgs.writeShellScript "queryMedia" ''
             #!/bin/sh
             metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
-            player_priority="cider, spotify, vlc, firefox, chromium"
 
             ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
               while read -r _; do

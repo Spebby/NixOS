@@ -18,6 +18,7 @@
 	# Packages I don't have specific configs for
 	home.packages = with pkgs; [
 		# Desktop Apps
+		blender
 		cider-2
 		discord
 		gimp-with-plugins
@@ -46,7 +47,6 @@
 		# Steam Helpers
 		steam-tui
 		steamcmd
-
 
 		# CLI Utils
 		acpid

@@ -41,9 +41,8 @@
 		# it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
 		initExtra = ''
 			# If I ever start using TMUX or  UWSM, put it here.
-
 			moo() {
-				echo -e "$(shuf -n 1 .local/store/moo)"
+				echo -e "$(shuf -n 1 ${config.home.homeDirectory}/.local/store/moo)"
 			}
 		'';
 

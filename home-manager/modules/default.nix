@@ -20,6 +20,7 @@
 		./qt.nix
 		./starship.nix
 		./stylix.nix
+		./todoist.nix
 		./yazi.nix
 		./zathura.nix
 		./zsh.nix

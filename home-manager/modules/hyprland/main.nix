@@ -151,6 +151,7 @@
 		#"workspace 5,class:(telegram)"
 		#"workspace 5,class:(vesktop)"
 		#"workspace 6,class:(teams-for-linux)"
+		"workspace unity, class:(Unity)"
 
 		# Popup term rules
         "suppressevent maximize, class:.*"
@@ -162,6 +163,9 @@
         "maxsize 1 1, class:^(xwaylandvideobridge)$"
         "noblur, class:^(xwaylandvideobridge)$"
         "nofocus, class:^(xwaylandvideobridge)$"
+
+		# Fix for Discord not taking keybinds
+		"allowsinput, class:^(discord)$, xwayland:0"
       ];
 
       workspace = [

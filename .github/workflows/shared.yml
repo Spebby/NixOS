@@ -1,0 +1,11 @@
+name: Nix CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  shared:
+    uses: wyatt-avilla/nix-ci/.github/workflows/nix-ci.yml@main
