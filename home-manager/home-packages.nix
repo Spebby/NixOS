@@ -8,6 +8,11 @@
 		overlays = [
 			(import ./packages)
 		];
+		config = {
+			permittedInsecurePackages = [
+				"openssl-1.1.1w"
+			];
+		};
 	};
 
 	# Packages I don't have specific configs for
@@ -27,10 +32,21 @@
 		thunderbird
 		vlc
 		xfce.thunar
+		xfce.xfconf
+
+		# Unity is superrrr cool and uses an old version of openssl for no good reason
+		openssl_1_1
+		(pkgs.unityhub.override {
+			extraLibs = pkgs: with pkgs; [
+				openssl_1_1
+			];
+		})
+		verco # Plastic SCM client
 
 		# Steam Helpers
 		steam-tui
 		steamcmd
+
 
 		# CLI Utils
 		acpid

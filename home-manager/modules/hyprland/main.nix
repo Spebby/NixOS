@@ -14,9 +14,11 @@
         "XDG_SESSION_DESKTOP, Hyprland"
         "QT_QPA_PLATFORM, wayland"
         "XDG_SCREENSHOTS_DIR, $HOME/Media/screenshots"
-      ];
+		"GDK_SCALE, 1.33"
+	  ];
 
-      monitor = "eDP-1,2560x1600@165,0x0,1.33";
+	  monitor = "eDP-1,highres, auto, 1.33";
+	  #monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "thunar";

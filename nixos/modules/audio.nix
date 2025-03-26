@@ -7,6 +7,9 @@
 		alsa.enable = true;
 		alsa.support32Bit = true;
 		pulse.enable = true;
-		jack.enable = true; # review if i actually need this one
+		#jack.enable = true; # review if i actually need this one
+		bluez5.autoswitch-profile = true;
 	};
+
+
 }
