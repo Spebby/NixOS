@@ -1,16 +1,18 @@
-{ homeStateVersion, user, ... }:
+# /home-manager/default.nix
+
+{ user, stateVersion, ... }:
 
 {
 	imports = [
 		./modules
 		./home-packages.nix
-		./flatpak.nix
+		#./flatpak.nix
 	];
 
+	home.stateVersion = stateVersion;
 	home = {
 		username = user;
 		homeDirectory = "/home/${user}";
-		stateVersion = homeStateVersion;
 
 		sessionVariables = {
 			NIXOS_OZONE_WL = "1";

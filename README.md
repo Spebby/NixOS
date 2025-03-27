@@ -18,6 +18,20 @@ The RICE is based off of Ampersands, though I intend to change it quite a bit
 once the system is mostly stable. Still plenty to be done! Expect actually
 pictures here when it no longer looks exactly like ampersands.
 
+## Philosophy
+
+I've designed this config to be somewhat portable, in that it will exist on a
+few systems, with same users. But not all systems will need a display manager,
+and thus won't need the same packages. However each user will want different
+packages depending on the system, those are added in the system's specific
+configuration `/hosts/hostname/configuration.nix`, whereas the base user
+configuration exists in `/users`. As I'm writing this, my home-manager setup is
+not at all oriented to being this flexible. In the future, I will be rewriting
+that system.
+
+I need to figure out what I'd like to do with `/nixos`, originally I intended it
+as "global" packages for all systems, though now I'm not so sure.
+
 ## Oddities
 
 While this config should work mostly out of the box, there are a few

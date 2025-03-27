@@ -1,13 +1,13 @@
 # /flake.nix
 
-# This is just a slightly modified version of Andrey0189's nixos-config-reborn flake.nix file
-# which was done very, very well
-
 {
+	# This may not be the best way of doing this; at some point it may make more sense to move system to be controlled by the systems, but this makes more sense for the moment.
 	description = "NixOS Config";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+		nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
 		# Dots
 		home-manager = {
@@ -21,64 +21,36 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		# Potentially moving these into their own user controlled areas would be best.
 		hyprland.url = "github:hyprwm/Hyprland";
 		hyprland-plugins = {
 			url = "github:hyprwm/hyprland-plugins";
 			inputs.hyprland.follows = "hyprland";
 		};
-		split-monitor-workspaces = {
-			url = "github:Duckonaut/split-monitor-workspaces";
-			inputs.hyprland.follows = "hyprland";
-		};
 
 		# I'm not stupid, so I won't be doing nixvim... yet
-		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-		nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 	};
 
-	outputs = { self, nixpkgs, home-manager, hyprland, nixos-hardware, nix-flatpak, ... }@inputs: let
-	system = "x86_64-linux";
-	homeStateVersion = "24.11";
-	user = "thom";
-	hosts = [
-		{
-			hostname = "rosso";
-			stateVersion = "24.11";
-		}
-	];
-
-
-	# Nix Builder
-	makeSystem = { hostname, stateVersion }: nixpkgs.lib.nixosSystem {
-		system = system;
-		specialArgs = {
-			inherit inputs stateVersion hostname user;
-		};
-
-		modules = [
-			nix-flatpak.nixosModules.nix-flatpak
-			./hosts/${hostname}/configuration.nix
-		];
-	};
-
+	outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, home-manager, stylix, hyprland, ... }@inputs: let
+		# In the future, I'd like to make this dynamic discovery. But for the moment, that's really dumb when there's only 1 system and 2 users.
+		lib = nixpkgs.lib;
+		stateVersion = "24.11";
+		hosts      = import ./hosts/hosts.nix;
+		makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
+		makeHome   = import ./lib/makeHome.nix   { inherit inputs stateVersion lib; };
 	in {
-		nixosConfigurations = nixpkgs.lib.foldl' (configs: host:
-			configs // {
-			"${host.hostname}" = makeSystem {
-				inherit (host) hostname stateVersion;
-			};
-		}) {} hosts;
-
-		homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-			pkgs = nixpkgs.legacyPackages.${system};
-			extraSpecialArgs = {
-				inherit inputs homeStateVersion user hyprland nix-flatpak;
-			};
-
-			modules = [
-				./home-manager/home.nix
-			];
-		};
+		nixosConfigurations = builtins.mapAttrs (name: host: makeSystem host) hosts;
+		homeConfigurations  = builtins.foldl' (acc: host:
+			acc // builtins.foldl' (userAcc: user:
+				let
+					hostHMConfig = host.config.home-manager.users.${user} or {};
+				in userAcc // {
+					"${user}@${host.hostname}" = makeHome {
+						inherit inputs user;
+						pkgs = nixpkgs.legacyPackages.${host.system};
+						hostModules = [ hostHMConfig ];
+					};
+				}
+			) acc (host.users or [])
+		) {} (builtins.attrValues hosts);
 	};
 }

@@ -17,6 +17,7 @@
 		./moo.nix
 		./neovim.nix
 		./obsidian.nix
+		./protonge.nix
 		./qt.nix
 		./starship.nix
 		./stylix.nix
