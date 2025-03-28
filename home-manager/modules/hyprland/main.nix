@@ -17,7 +17,7 @@
 		"GDK_SCALE, 1.33"
 	  ];
 
-	  monitor = "eDP-1,highres, auto, 1.33";
+	  monitor = "eDP-1,2560x1600@165, auto, 1.6";
 	  #monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";

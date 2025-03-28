@@ -7,6 +7,7 @@
 		./modules
 		./home-packages.nix
 		#./flatpak.nix
+		#userModules
 	];
 
 	home.stateVersion = stateVersion;

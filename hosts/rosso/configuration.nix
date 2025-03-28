@@ -2,15 +2,19 @@
 
 { pkgs, lib, stateVersion, hostname, nixos-hardware, ... }:
 
-{	networking.hostName = hostname;
+{
+	networking.hostName = hostname;
 	system.stateVersion = stateVersion;
+	nixpkgs.config.cudaSupport = true;
 
 	imports = [
 		./hardware-configuration.nix
 		./local-packages.nix
 		../common.nix		# Common to hosts
 		../../nixos/modules # Global modules
-		nixos-hardware.nixosModules.lenovo-legion-16ach6h
+		nixos-hardware.nixosModules.lenovo-legion-16ach6h-nvidia
+		../../users/thom.nix
+		../../users/max.nix
 	];
 
 	environment = {
@@ -35,44 +39,10 @@
 	security.pam.services.hyprlock = {};
 
 	users.defaultUserShell = pkgs.zsh;
-	users.users = {
-		thom = {
-			isNormalUser = true;
-			home = "/home/thom";
-			extraGroups = [
-				"wheel"
-				"networkmanager"
-				"home-manager"
-			];
-		};
-		max = {
-			isNormalUser = true;
-			home = "/home/max";
-			extraGroups = [
-				"wheel"
-				"networkmanager"
-				"home-manager"
-			];
-		};
-	};
-
-	home-manager.sharedModules = [{
-		home.stateVersion = stateVersion;
-	}];
-	home-manager.users = {
-		thom = {
-			home.packages = lib.mkAfter (with pkgs; [
-				# System-specific user packages
-				mangohud
-				lutris
-			]);
-		};
-
-		max = {
-			home.packages = lib.mkAfter (with pkgs; [
-				neofetch
-			]);
-		};
+	home-manager = {
+		sharedModules = [{
+			home.stateVersion = stateVersion;
+		}];
 	};
 
 	services.getty = {

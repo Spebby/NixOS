@@ -11,14 +11,13 @@
 inputs.home-manager.lib.homeManagerConfiguration {
 	inherit pkgs;
 
-	modules = let
-		baseModules = [
-			../home-manager
-			({ lib, ...}: {
-				home.stateVersion = lib.mkDefault stateVersion;
-			})
-		];
-	in baseModules ++ ( lib.flatten hostModules);
+	modules = [
+		../home-manager
+		../users/home-manager/${user}.nix
+		({ lib, ...}: {
+			home.stateVersion = lib.mkDefault stateVersion;
+		})
+	];
 
 	extraSpecialArgs = {
 		inherit inputs user stateVersion;

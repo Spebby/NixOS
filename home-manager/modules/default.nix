@@ -12,7 +12,6 @@
 		./discord.nix
 		./eza.nix
 		./firefox.nix
-		./git.nix
 		./lazygit.nix
 		./moo.nix
 		./neovim.nix
