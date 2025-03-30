@@ -1,25 +1,31 @@
 # /lib/makeHome.nix
 
-{ inputs, stateVersion, lib }:
+{
+  inputs,
+  stateVersion,
+  lib,
+}:
 
-{ pkgs
-, user
-, hostModules ? []
-, ...
+{
+  pkgs,
+  user,
+  hostModules ? [ ],
+  ...
 }@args:
 
 inputs.home-manager.lib.homeManagerConfiguration {
-	inherit pkgs;
+  inherit pkgs;
 
-	modules = [
-		../home-manager
-		../users/home-manager/${user}.nix
-		({ lib, ...}: {
-			home.stateVersion = lib.mkDefault stateVersion;
-		})
-	];
+  modules = [
+    ../home-manager
+    ../users/home-manager/${user}.nix
+    (
+      { lib, ... }:
+      {
+        home.stateVersion = lib.mkDefault stateVersion;
+      }
+    )
+  ];
 
-	extraSpecialArgs = {
-		inherit inputs user stateVersion;
-	};
+  extraSpecialArgs = { inherit inputs user stateVersion; };
 }

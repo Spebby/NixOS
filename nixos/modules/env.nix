@@ -1,12 +1,10 @@
 # /nixos/modules/env.nix
 
 {
-	environment.sessionVariables = rec {
-		TERMINAL = "alacritty";
-		EDITOR = "nvim";
-		XDG_BIN_HOME = "$HOME/.local/bin";
-		PATH = [
-			"${XDG_BIN_HOME}"
-		];
-	};
+  environment.sessionVariables = rec {
+    TERMINAL = "alacritty";
+    EDITOR = "nvim";
+    XDG_BIN_HOME = "$HOME/.local/bin";
+    PATH = [ "${XDG_BIN_HOME}" ];
+  };
 }

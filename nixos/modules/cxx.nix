@@ -3,21 +3,21 @@
 { config, pkgs, ... }:
 
 {
-	environment.systemPackages = with pkgs; [
-		clang
-		gcc
-		meson
-		cmake
-		gnumake
-		cpio
-		git
-		binutils
+  environment.systemPackages = with pkgs; [
+    clang
+    gcc
+    meson
+    cmake
+    gnumake
+    cpio
+    git
+    binutils
 
-		nvi
-	];
+    nvi
+  ];
 
-	environment.variables = {
-		CC  = "clang";
-		CXX = "clang++";
-	};
+  environment.variables = {
+    CC = "clang";
+    CXX = "clang++";
+  };
 }

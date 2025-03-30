@@ -8,7 +8,8 @@ let
     git add .
     git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" || exit 0
   '';
-in {
+in
+{
   home.packages = [ gitSyncObsidian ];
 
   systemd.user.services.git-sync-obsidian = {

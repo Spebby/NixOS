@@ -14,7 +14,7 @@
         font_size = 96;
         font_family = "JetBrains Mono";
         color = "rgba(235, 219, 178, 1.0)";
-		position = "0, 700";
+        position = "0, 700";
         dots_center = true;
         halign = "center";
         walign = "center";

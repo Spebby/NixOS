@@ -3,20 +3,20 @@
 { user, stateVersion, ... }:
 
 {
-	imports = [
-		./modules
-		./home-packages.nix
-		#./flatpak.nix
-		#userModules
-	];
+  imports = [
+    ./modules
+    ./home-packages.nix
+    #./flatpak.nix
+    #userModules
+  ];
 
-	home.stateVersion = stateVersion;
-	home = {
-		username = user;
-		homeDirectory = "/home/${user}";
+  home.stateVersion = stateVersion;
+  home = {
+    username = user;
+    homeDirectory = "/home/${user}";
 
-		sessionVariables = {
-			NIXOS_OZONE_WL = "1";
-		};
-	};
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
+  };
 }

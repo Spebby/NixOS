@@ -1,8 +1,8 @@
 # /nixos/modules/nix.nix
 
 {
-	nix.settings.experimental-features = [
-		"nix-command"
-		"flakes"
-	];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

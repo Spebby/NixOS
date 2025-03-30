@@ -5,6 +5,6 @@
     ./hyprlock.nix
     ./hyprpaper.nix
     ./main.nix
-		#	./scripts.nix
+    #	./scripts.nix
   ];
 }

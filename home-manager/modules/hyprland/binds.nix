@@ -15,32 +15,33 @@ let
         echo "No book selected."
     fi
   '';
-in {
+in
+{
   home.packages = [ booksScript ];
 
   wayland.windowManager.hyprland.settings = {
     bind = [
-	  # Core Functions
+      # Core Functions
       "$mainMod,       Q, killactive,"
       "$mainMod CTRL,  ESCAPE, exit,"
-      
-	  "$mainMod,       L, exec, loginctl lock-session"
+
+      "$mainMod,       L, exec, loginctl lock-session"
       "$mainMod,       C, exec, hyprpicker -an"
-	  #"$mainMod,       B, exec, pkill -SIGUSR2 waybar"
-	  #"$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
-	  "$mainMod,       B, fullscreen, 1"
+      #"$mainMod,       B, exec, pkill -SIGUSR2 waybar"
+      #"$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
+      "$mainMod,       B, fullscreen, 1"
       "$mainMod,       N, exec, swaync-client -t"
       ", Print, exec, grimblast --notify --freeze copysave area"
 
-	  # Utilities
-      "$mainMod,       RETURN, exec, $terminal"    # ex. Kitty/Foot
+      # Utilities
+      "$mainMod,       RETURN, exec, $terminal" # ex. Kitty/Foot
       "$mainMod,       R, exec, $menu --show drun" # ex. Wofi
-      "$mainMod,       D, exec, $fileManager"      # ex. Dolphin
+      "$mainMod,       D, exec, $fileManager" # ex. Dolphin
       "$mainMod,       E, exec, bemoji -cn"
       "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
       "$mainMod,       W, exec, ${booksScript}/bin/open_books"
 
-	  # Window Manipulation
+      # Window Manipulation
       "$mainMod,       F, togglefloating,"
       "$mainMod,       G, pin,"
       "$mainMod,       H, togglesplit,"
@@ -49,7 +50,7 @@ in {
       "$mainMod, left, movefocus, l"
       "$mainMod, right, movefocus, r"
       "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"	
+      "$mainMod, down, movefocus, d"
 
       # Moving windows
       "$mainMod SHIFT, left,  swapwindow, l"
@@ -63,7 +64,7 @@ in {
       "$mainMod CTRL, up,    resizeactive,  0 -60"
       "$mainMod CTRL, down,  resizeactive,  0  60"
 
-	  # Eventually, adding support for split-workspace would be good.
+      # Eventually, adding support for split-workspace would be good.
       # Switching workspaces
       "$mainMod, 1, workspace, 1"
       "$mainMod, 2, workspace, 2"
@@ -75,11 +76,11 @@ in {
       "$mainMod, 8, workspace, 8"
       "$mainMod, 9, workspace, 9"
       "$mainMod, 0, workspace, 10"
-	  "$mainMod, P, togglespecialworkspace, popupterm"
+      "$mainMod, P, togglespecialworkspace, popupterm"
 
-	  # Scroll Wheel to switch workplaces
-	  "$mainMod, mouse_down, workspace, e+1"
-	  "$mainMod, mouse_up, workspace, e-1"
+      # Scroll Wheel to switch workplaces
+      "$mainMod, mouse_down, workspace, e+1"
+      "$mainMod, mouse_up, workspace, e-1"
 
       # Moving windows to workspaces
       "$mainMod SHIFT, 1, movetoworkspace, 1"
@@ -92,17 +93,16 @@ in {
       "$mainMod SHIFT, 8, movetoworkspace, 8"
       "$mainMod SHIFT, 9, movetoworkspace, 9"
       "$mainMod SHIFT, 0, movetoworkspace, 10"
-	  "$mainMod SHIFT, P, movetoworkspace, special:popupterm"
-	  "$mainMod, SPACE, layoutmsg, swapwithmaster"
+      "$mainMod SHIFT, P, movetoworkspace, special:popupterm"
+      "$mainMod, SPACE, layoutmsg, swapwithmaster"
 
-	  # I don't like the command, but movetoworkspacesilent may be useful in some cases.
+      # I don't like the command, but movetoworkspacesilent may be useful in some cases.
 
-	
-	  # Special Workspaces
-			
+      # Special Workspaces
+
       # Scratchpad
-	  # "$mainMod,       P, togglespecialworkspace,  magic"
-	  # "$mainMod SHIFT, P, movetoworkspace, special:magic"
+      # "$mainMod,       P, togglespecialworkspace,  magic"
+      # "$mainMod SHIFT, P, movetoworkspace, special:magic"
     ];
 
     # Move/resize windows with mainMod + LMB/RMB and dragging
@@ -127,6 +127,6 @@ in {
       ", XF86AudioPause, exec, playerctl play-pause"
       ", XF86AudioPlay,  exec, playerctl play-pause"
       ", XF86AudioPrev,  exec, playerctl previous"
-    ];	
+    ];
   };
 }

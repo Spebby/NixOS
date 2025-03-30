@@ -3,14 +3,14 @@
 { pkgs, lib, ... }:
 
 {
-	# "lucky day" fix
-	home.file = {
-		".config/discord/settings.json" = {
-			text = ''
-			{
-				"SKIP_HOST_UPDATE": true
-			}
-			'';
-		};
-	};
+  # "lucky day" fix
+  home.file = {
+    ".config/discord/settings.json" = {
+      text = ''
+        			{
+        				"SKIP_HOST_UPDATE": true
+        			}
+        			'';
+    };
+  };
 }

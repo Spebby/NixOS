@@ -6,8 +6,9 @@ let
   socat = lib.getExe pkgs.socat;
   jq = lib.getExe pkgs.jq;
 
-  player_priority="cider, spotify, vlc, firefox, chromium";
-in {
+  player_priority = "cider, spotify, vlc, firefox, chromium";
+in
+{
   programs.waybar = {
     enable = true;
     style = ./style.css;
@@ -17,9 +18,21 @@ in {
         layer = "top";
         position = "top";
         height = 30;
-        modules-left = ["hyprland/workspaces" "custom/media-playing"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["hyprland/submap" "custom/weather" "pulseaudio" "battery" "custom/power" "clock" "custom/notification" "tray"];
+        modules-left = [
+          "hyprland/workspaces"
+          "custom/media-playing"
+        ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+          "hyprland/submap"
+          "custom/weather"
+          "pulseaudio"
+          "battery"
+          "custom/power"
+          "clock"
+          "custom/notification"
+          "tray"
+        ];
         "hyprland/workspaces" = {
           disable-scroll = true;
           show-special = false;
@@ -27,30 +40,30 @@ in {
           all-outputs = false;
           format = "{icon}";
           format-icons = {
-			#"1" = "";
-			#"2" = "";
-			#"3" = "";
-			#"4" = "";
-			#"5" = "";
-			#"6" = "";
-			#"7" = "";
-			#"8" = "";
-			"unity" = "";
+            #"1" = "";
+            #"2" = "";
+            #"3" = "";
+            #"4" = "";
+            #"5" = "";
+            #"6" = "";
+            #"7" = "";
+            #"8" = "";
+            "unity" = "";
             "magic" = "";
-			"game"  = "";
+            "game" = "";
           };
 
-#          persistent-workspaces = {
-#            "*" = 9;
-#          };
+          #          persistent-workspaces = {
+          #            "*" = 9;
+          #          };
         };
 
-		"hyprland/submap" = {
-			format = " {}";
-			max-length = 8;
-			tooltip = false;
-			always-on = false;
-		};
+        "hyprland/submap" = {
+          format = " {}";
+          max-length = 8;
+          tooltip = false;
+          always-on = false;
+        };
 
         "hyprland/language" = {
           format-en = "🇺🇸";
@@ -59,7 +72,7 @@ in {
           min-length = 5;
           tooltip = false;
 
-		  # TODO: add an on-click to change language
+          # TODO: add an on-click to change language
         };
 
         "custom/weather" = {
@@ -67,7 +80,7 @@ in {
           exec = "curl -s 'wttr.in/?format=%c%t'";
           interval = 300;
           class = "weather";
-		  tooltip = "curl -s 'wttr.in/?format=%l";
+          tooltip = "curl -s 'wttr.in/?format=%l";
         };
 
         "pulseaudio" = {
@@ -81,23 +94,26 @@ in {
             "phone" = "";
             "portable" = "";
             "car" = "";
-            "default" = ["" ""];
+            "default" = [
+              ""
+              ""
+            ];
           };
           on-click = "pavucontrol";
         };
 
-		"custom/power" = {
-			format = "⏻";
-			tooltip = false;
-			menu = "on-click";
-			menu-file = ".config/waybar/power_menu.xml";
-			menu-actions = {
-				shutdown  = "shutdown";
-				reboot    = "reboot";
-				suspend   = "systemctl suspend";
-				hibernate = "systemctl hibernate";
-			};
-		};
+        "custom/power" = {
+          format = "⏻";
+          tooltip = false;
+          menu = "on-click";
+          menu-file = ".config/waybar/power_menu.xml";
+          menu-actions = {
+            shutdown = "shutdown";
+            reboot = "reboot";
+            suspend = "systemctl suspend";
+            hibernate = "systemctl hibernate";
+          };
+        };
 
         "battery" = {
           states = {
@@ -107,7 +123,13 @@ in {
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
           format-alt = "{time} {icon}";
-          format-icons = ["" "" "" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         "clock" = {
@@ -120,19 +142,19 @@ in {
           spacing = 1;
         };
 
-		# Shoutouts to wyatt
-		"custom/media-playing" = {
-		  
+        # Shoutouts to wyatt
+        "custom/media-playing" = {
+
           tooltip = false;
           format = "{icon} {}";
-		  format-icons = {
-			spotify = "";
-			chromium = "";
-			cider = "󰝚";
-			firefox = "󰈹";
-			vlc = "";
-			default = "";
-		  };
+          format-icons = {
+            spotify = "";
+            chromium = "";
+            cider = "󰝚";
+            firefox = "󰈹";
+            vlc = "";
+            default = "";
+          };
 
           return-type = "json";
           exec-if = "which ${playerctl}";
@@ -170,42 +192,42 @@ in {
           on-click-right = "${swayncClient} -d -sw";
           escape = true;
         };
-	  };
+      };
     };
   };
 
   home.file = {
-	".config/waybar/power_menu.xml" = {
-	  text = ''
-		<?xml version="1.0" encoding="UTF-8"?>
-		<interface>
-		  <object class="GtkMenu" id="menu">
-			<child>
-			  <object class="GtkMenuItem" id="suspend">
-				<property name="label">Suspend</property>
-			  </object>
-			</child>
-			<child>
-			  <object class="GtkMenuItem" id="hibernat">
-				<property name="label">Hibernate</property>
-			  </object>
-			</child>
-			<child>
-			  <object class="GtkMenuItem" id="shutdown">
-				<property name="label">Shutdown</property>
-			  </object>
-			</child>
-			<child>
-			  <object class="GtkSeparatorMenuItem" id="delimiter1"/>
-			</child>
-			<child>
-			  <object class="GtkMenuItem" id="reboot">
-				<property name="label">Reboot</property>
-			  </object>
-			</child>
-		  </object>
-		</interface>
-	  ''; 
-	};
+    ".config/waybar/power_menu.xml" = {
+      text = ''
+        		<?xml version="1.0" encoding="UTF-8"?>
+        		<interface>
+        		  <object class="GtkMenu" id="menu">
+        			<child>
+        			  <object class="GtkMenuItem" id="suspend">
+        				<property name="label">Suspend</property>
+        			  </object>
+        			</child>
+        			<child>
+        			  <object class="GtkMenuItem" id="hibernat">
+        				<property name="label">Hibernate</property>
+        			  </object>
+        			</child>
+        			<child>
+        			  <object class="GtkMenuItem" id="shutdown">
+        				<property name="label">Shutdown</property>
+        			  </object>
+        			</child>
+        			<child>
+        			  <object class="GtkSeparatorMenuItem" id="delimiter1"/>
+        			</child>
+        			<child>
+        			  <object class="GtkMenuItem" id="reboot">
+        				<property name="label">Reboot</property>
+        			  </object>
+        			</child>
+        		  </object>
+        		</interface>
+        	  '';
+    };
   };
 }
