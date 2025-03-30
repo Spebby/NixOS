@@ -14,7 +14,7 @@ inputs.nixpkgs.lib.nixosSystem {
   
 	specialArgs = {
 		inherit inputs hostname stateVersion;
-		nixos-hardware = inputs.nixos-hardware;
+		inherit (inputs) nixos-hardware;
 	};
 
 	modules = [

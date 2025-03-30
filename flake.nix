@@ -32,13 +32,13 @@
 
 	outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, home-manager, stylix, hyprland, ... }@inputs: let
 		# In the future, I'd like to make this dynamic discovery. But for the moment, that's really dumb when there's only 1 system and 2 users.
-		lib = nixpkgs.lib;
+		inherit (nixpkgs) lib;
 		stateVersion = "24.11";
 		hosts      = import ./hosts/hosts.nix;
 		makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
 		makeHome   = import ./lib/makeHome.nix   { inherit inputs stateVersion lib; };
 	in {
-		nixosConfigurations = builtins.mapAttrs (name: host: makeSystem host) hosts;
+		nixosConfigurations = builtins.mapAttrs (name: makeSystem) hosts;
 		homeConfigurations  = builtins.foldl' (acc: host:
 			acc // builtins.foldl' (userAcc: user:
 				let

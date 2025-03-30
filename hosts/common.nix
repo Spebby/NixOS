@@ -51,9 +51,11 @@ in {
 
 	programs.zsh.enable = true;
 
-	services.flatpak.enable = true;
-	services.gvfs.enable = true;    # Mount, trash, etc
-	services.tumbler.enable = true; # Thumbnail support for images
+	services = {
+		flatpak.enable = true;
+		gvfs.enable = true;		# Mount, Trash, etc
+		tumbler.enable = true;	# Thumbnail support for images
+	};
 
 	security.doas = {
 		enable = true;

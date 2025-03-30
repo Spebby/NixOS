@@ -3,9 +3,9 @@
 { pkgs, ... }:
 
 {
-	home.packages = (with pkgs; [
+	home.packages = with pkgs; [
 		neofetch
-	]);
+	];
 
 	programs.git = {
 		enable = true;
