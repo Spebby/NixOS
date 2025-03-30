@@ -24,5 +24,9 @@
     ./yazi.nix
     ./zathura.nix
     ./zsh.nix
+
+    # Unity
+    ./rider.nix
+    ./unity.nix
   ];
 }
