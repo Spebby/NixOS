@@ -1,11 +1,22 @@
 {
   pkgs,
-  config,
   hyprland,
   ...
 }:
 
 {
+  home.packages = with pkgs; [
+    xdotool
+    jq
+    (writeShellScriptBin "hypr-kill-or-hide-steam" ''
+      if [ "$(hyprctl activewindow -j | jq -r ".class")" = "Steam" ]; then
+          xdotool getactivewindow windowunmap
+      else
+          hyprctl dispatch killactive ""
+      fi
+    '')
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -15,11 +26,26 @@
         # Hint Electron apps to use Wayland
         "NIXOS_OZONE_WL, 1"
         "XDG_CURRENT_DESKTOP, Hyprland"
-        "XDG_SESSION_TYPE, wayland"
         "XDG_SESSION_DESKTOP, Hyprland"
+        "XDG_SESSION_TYPE, wayland"
         "QT_QPA_PLATFORM, wayland"
         "XDG_SCREENSHOTS_DIR, $HOME/Media/screenshots"
-        "GDK_SCALE, 1.33"
+        "GDK_SCALE, 1.6"
+        #"XCURSOR_SIZE, 16"
+
+        # NVIDIA GBM backend (critical for Wayland)
+        "GBM_BACKEND, nvidia-drm"
+        "__GLX_VENDOR_LIBRARY_NAME, nvidia"
+
+        # TODO: Will eventually have to make this a bit more dynamic so it works on more than just
+        # my laptop.
+        # Run iGPU mainly, dGPU secondarily
+        "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:35:00.0-card:/dev/dri/by-path/pci-0000:01:00.0-card"
+        "LIBVA_DRIVER_NAME,nvidia"
+        # GSync/VRR Control (set per-game if needed)
+        "__GL_GSYNC_ALLOWED, 1"
+        # Disable Adaptive Sync globally to avoid flickering
+        "__GL_VRR_ALLOWED, 0"
       ];
 
       monitor = "eDP-1,2560x1600@165, auto, 1.6";
@@ -98,7 +124,7 @@
         ];
       };
 
-      # hpyrwiki.../Configuration/Variables/<M-C-F2> for all catagories
+      # hpyrwiki.../Configuration/Variables/<M-C-F2> for all categories
       input = {
         kb_layout = "us";
         kb_options = "grp:caps_toggle";
@@ -148,6 +174,11 @@
         "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
         "noborder,nofocus,class:(showmethekey-gtk)"
 
+        # Borders for different state
+        "bordercolor rgba(89ff89ee) rgba(c4ff89ee) 45deg rgba(89ff89bb) rgba(003b00bb) 45deg,pinned:1"
+        # Set pinned windows to mint-ish border. Darker mint on inactive.
+        "bordersize 1, pinned:1" # Give it a smaller border too
+
         # This is a neat idea, but I'm probably only going to
         # reserve this for something like a VM or steam games.
         #"workspace 3,class:(obsidian)"
@@ -156,7 +187,8 @@
         #"workspace 5,class:(telegram)"
         #"workspace 5,class:(vesktop)"
         #"workspace 6,class:(teams-for-linux)"
-        "workspace unity, class:(Unity)"
+        "workspace name:unity, class:(Unity)"
+        #"workspace special:gaming"
 
         # Popup term rules
         "suppressevent maximize, class:.*"
@@ -179,5 +211,11 @@
         "special:popupterm,on-created-empty:$terminal"
       ];
     };
+
+    # Unity is awful on Hyprland... Someone has made a config to make it not terrible to use.
+    extraConfig = ''
+      # Include external .conf file
+      ${builtins.readFile ./submodules/HyprlandUnityFix/UnityFix.conf}
+    '';
   };
 }

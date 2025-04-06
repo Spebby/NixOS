@@ -24,7 +24,7 @@
 
       background = [
         {
-          path = "screenshot";
+          path = "Media/screenshots";
           blur_passes = 3;
           blur_size = 8;
         }

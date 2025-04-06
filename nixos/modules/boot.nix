@@ -1,4 +1,15 @@
 # /nixos/modules/boot.nix
+{
+  lib,
+  pkgs,
+  ...
+}:
+
+with lib;
+
+let
+  memtest86 = pkgs.memtest86plus;
+in
 
 {
   boot.loader = {
@@ -15,6 +26,13 @@
       devices = [ "nodev" ];
       efiSupport = true;
       useOSProber = true;
+
+      memtest86 = {
+        enable = false;
+        package = memtest86;
+        # Make Memtest86+, a memory testing program, available from the GRUB boot menu.
+        params = [ "onepass" ];
+      };
     };
   };
   boot.tmp.cleanOnBoot = true;

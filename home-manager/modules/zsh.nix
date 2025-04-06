@@ -12,29 +12,25 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases =
-      let
-        flakeDir = "~/flake";
-      in
-      {
-        nix-sw = "nh os switch";
-        nix-upd = "nh os switch --update";
-        nix-hms = "nh home switch";
-        #pkgs = "nvim ${flakeDir}/nixos/packages.nix";
+    shellAliases = {
+      #nix-sw = "nh os switch";
+      #nix-upd = "nh os switch --update";
+      #nix-hms = "nh home switch";
+      #pkgs = "nvim ${flakeDir}/nixos/packages.nix";
 
-        microfetch = "microfetch && echo";
-        ".." = "cd ..";
+      microfetch = "microfetch && echo";
+      ".." = "cd ..";
 
-        vim = "nvim";
-        ls = "eza --group-directories-first --icons";
-        cat = "bat";
-        lf = "${config.programs.yazi.shellWrapperName}";
-        grep = "rg";
+      vim = "nvim";
+      ls = "eza --group-directories-first --icons";
+      cat = "bat";
+      lf = "${config.programs.yazi.shellWrapperName}";
+      grep = "rg";
 
-        obsidian = "hyprctl dispatch killactive && hyprctl dispatch exec \"obsidian\"";
-        discord = "hyprctl dispatch killactive && hyprctl dispatch exec \"discord\"";
-        firefox = "exec firefox";
-      };
+      obsidian = "hyprctl dispatch killactive && hyprctl dispatch exec \"obsidian\"";
+      discord = "hyprctl dispatch killactive && hyprctl dispatch exec \"discord\"";
+      firefox = "exec firefox";
+    };
 
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";

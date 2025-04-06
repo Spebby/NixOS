@@ -1,0 +1,3 @@
+[submodule "home-manager/modules/hyprland/HyprlandUnityFix"]
+	path = home-manager/modules/hyprland/HyprlandUnityFix
+	url = git@github.com:nnra6864/HyprlandUnityFix.git

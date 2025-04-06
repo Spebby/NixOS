@@ -39,12 +39,8 @@
     {
       self,
       nixpkgs,
-      nixos-hardware,
-      nix-flatpak,
       pre-commit-hooks,
       home-manager,
-      stylix,
-      hyprland,
       ...
     }@inputs:
     let
@@ -54,9 +50,12 @@
       hosts = import ./hosts/hosts.nix;
       makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
       makeHome = import ./lib/makeHome.nix { inherit inputs stateVersion lib; };
+
+      defaultSystem = "x86_64-linux";
     in
     {
-      nixosConfigurations = builtins.mapAttrs (name: makeSystem) hosts;
+      # Previously "name: makeSystem", but unused and deadnix complained.
+      nixosConfigurations = builtins.mapAttrs (_: makeSystem) hosts;
       homeConfigurations = builtins.foldl' (
         acc: host:
         acc
@@ -76,12 +75,38 @@
         ) acc (host.users or [ ])
       ) { } (builtins.attrValues hosts);
 
-      # TODO: make this not linux only
-      devShells."x86_64-linux".default = nixpkgs.legacyPackages."x86_64-linux".mkShell {
+      devShells.${defaultSystem}.default = nixpkgs.legacyPackages.${defaultSystem}.mkShell {
         shellHook = ''
-          install -m 755 ${./scripts/pre-commit} .git/hooks/pre-commit
-          	exit
+          ${self.checks.${defaultSystem}.pre-commit-check.shellHook}
         '';
+      };
+
+      checks.${defaultSystem} = {
+        pre-commit-check = pre-commit-hooks.lib.${defaultSystem}.run {
+          src = ./.;
+          excludes = [
+            ".*/submodules/.*"
+            "^submodules/.*"
+          ];
+          hooks = {
+            # Official hooks from cachix/pre-commit-hooks.nix
+            nixfmt-rfc-style.enable = true;
+            statix.enable = true;
+            deadnix.enable = true;
+            nil.enable = true; # Nix LSP diagnostics
+
+            # Optional: Other useful hooks
+            shellcheck.enable = true;
+            shfmt.enable = true;
+            typos.enable = true;
+          };
+
+          # Settings for specific hooks
+          settings = {
+            nixfmt.width = 100; # Line width
+            statix.ignore = [ "flake.lock" ]; # Files to ignore
+          };
+        };
       };
     };
 }

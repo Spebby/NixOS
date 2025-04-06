@@ -23,6 +23,9 @@ window#waybar {
 #workspaces button.active {
   background: #d65d0e;
 }
+#workspaces button.urgent {
+  background: #eb4d4b;
+}
 
 #custom-media-playing {
 	padding: 0 10px;

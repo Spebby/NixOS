@@ -19,6 +19,7 @@
 
   xdg.desktopEntries.unityhub = {
     name = "Unity Hub";
+    # Note: env GDK_SCALE=2 GDK_DPI_SCALE=0.5 works well for higher res displays. Does not work great for my laptop!
     exec = "${pkgs.unityhub}/bin/unityhub --ozone-platform-hint=auto --  %U";
     icon = "unityhub";
     comment = "The Official Unity Hub";

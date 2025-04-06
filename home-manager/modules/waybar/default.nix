@@ -3,10 +3,8 @@
 let
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
   playerctl = lib.getExe pkgs.playerctl;
-  socat = lib.getExe pkgs.socat;
+  #socat = lib.getExe pkgs.socat;
   jq = lib.getExe pkgs.jq;
-
-  player_priority = "cider, spotify, vlc, firefox, chromium";
 in
 {
   programs.waybar = {
@@ -35,7 +33,7 @@ in
         ];
         "hyprland/workspaces" = {
           disable-scroll = true;
-          show-special = false;
+          show-special = true;
           special-visible-only = true;
           all-outputs = false;
           format = "{icon}";
@@ -51,6 +49,7 @@ in
             "unity" = "";
             "magic" = "";
             "game" = "";
+            "popupterm" = "";
           };
 
           #          persistent-workspaces = {
@@ -108,7 +107,7 @@ in
           menu = "on-click";
           menu-file = ".config/waybar/power_menu.xml";
           menu-actions = {
-            shutdown = "shutdown";
+            shutdown = "poweroff";
             reboot = "reboot";
             suspend = "systemctl suspend";
             hibernate = "systemctl hibernate";
@@ -144,7 +143,6 @@ in
 
         # Shoutouts to wyatt
         "custom/media-playing" = {
-
           tooltip = false;
           format = "{icon} {}";
           format-icons = {
@@ -159,16 +157,17 @@ in
           return-type = "json";
           exec-if = "which ${playerctl}";
           exec = pkgs.writeShellScript "queryMedia" ''
-            #!/bin/sh
-            metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
+                        #!/bin/sh
+            			player_priority="cider, spotify, vlc, firefox, chromium"
+                        metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
 
-            ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
-              while read -r _; do
-            	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
-            	echo ""
-            	echo "$active_stream" | ${jq} --unbuffered --compact-output \
-            	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
-              done
+                        ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
+                          while read -r _; do
+                        	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
+                        	echo ""
+                        	echo "$active_stream" | ${jq} --unbuffered --compact-output \
+                        	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
+                          done
           '';
         };
 

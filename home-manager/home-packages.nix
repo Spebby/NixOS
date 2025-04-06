@@ -1,6 +1,6 @@
 # /home-manager/home-packages.nix
 
-{ pkgs, requireFile, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -45,13 +45,13 @@
     bc
     bottom
     brightnessctl
+    btop
     cliphist
     fastfetch
     ffmpeg
     ffmpegthumbnailer
     fzf
     git-graph
-    gparted
     grimblast
     htop
     hyprpicker
@@ -63,7 +63,6 @@
     ripgrep
     showmethekey
     silicon
-    tlp
     udisks
     ueberzugpp
     unzip

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 
 let
   booksDir = "$HOME/Downloads/books";
@@ -22,7 +22,7 @@ in
   wayland.windowManager.hyprland.settings = {
     bind = [
       # Core Functions
-      "$mainMod,       Q, killactive,"
+      "$mainMod,       Q, exec, hypr-kill-or-hide-steam"
       "$mainMod CTRL,  ESCAPE, exit,"
 
       "$mainMod,       L, exec, loginctl lock-session"
