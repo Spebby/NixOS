@@ -7,9 +7,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "openssl-1.1.1w"
-      ];
+      permittedInsecurePackages = [ "openssl-1.1.1w" ];
     };
 
     overlays = [ (import ./packages) ];

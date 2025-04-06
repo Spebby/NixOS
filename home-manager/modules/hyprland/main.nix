@@ -1,8 +1,4 @@
-{
-  pkgs,
-  hyprland,
-  ...
-}:
+{ pkgs, hyprland, ... }:
 
 {
   home.packages = with pkgs; [
@@ -25,11 +21,15 @@
       env = [
         # Hint Electron apps to use Wayland
         "NIXOS_OZONE_WL, 1"
+        "OZONE_PLATFORM, wayland"
+        "ELECTRON_OZONE_PLATFORM_HINT, wayland"
+
         "XDG_CURRENT_DESKTOP, Hyprland"
         "XDG_SESSION_DESKTOP, Hyprland"
         "XDG_SESSION_TYPE, wayland"
-        "QT_QPA_PLATFORM, wayland"
         "XDG_SCREENSHOTS_DIR, $HOME/Media/screenshots"
+
+        "QT_QPA_PLATFORM, wayland"
         "GDK_SCALE, 1.6"
         #"XCURSOR_SIZE, 16"
 
@@ -40,7 +40,8 @@
         # TODO: Will eventually have to make this a bit more dynamic so it works on more than just
         # my laptop.
         # Run iGPU mainly, dGPU secondarily
-        "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:35:00.0-card:/dev/dri/by-path/pci-0000:01:00.0-card"
+
+        "AQ_DRM_DEVICES, /dev/dri/card1:/dev/dri/card0"
         "LIBVA_DRIVER_NAME,nvidia"
         # GSync/VRR Control (set per-game if needed)
         "__GL_GSYNC_ALLOWED, 1"
@@ -179,16 +180,12 @@
         # Set pinned windows to mint-ish border. Darker mint on inactive.
         "bordersize 1, pinned:1" # Give it a smaller border too
 
-        # This is a neat idea, but I'm probably only going to
-        # reserve this for something like a VM or steam games.
-        #"workspace 3,class:(obsidian)"
-        #"workspace 3,class:(zathura)"
-        #"workspace 4,class:(com.obsproject.Studio)"
-        #"workspace 5,class:(telegram)"
-        #"workspace 5,class:(vesktop)"
-        #"workspace 6,class:(teams-for-linux)"
+        # Special Workspaces
         "workspace name:unity, class:(Unity)"
-        #"workspace special:gaming"
+        "workspace name:game,  class:^(^gamescope$|^steam_app_.*$)"
+
+        "noanim, title:^(gamescope)$"
+        "noblur, title:^(gamescope)$"
 
         # Popup term rules
         "suppressevent maximize, class:.*"
@@ -206,6 +203,8 @@
       ];
 
       workspace = [
+        "name:unity, id:100"
+        "name:game, id:101"
         "w[tv1], gapsout:0, gapsin:0"
         "f[1], gapsout:0, gapsin:0"
         "special:popupterm,on-created-empty:$terminal"

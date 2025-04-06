@@ -90,6 +90,7 @@
           ];
           hooks = {
             # Official hooks from cachix/pre-commit-hooks.nix
+            flake-checker.enable = true;
             nixfmt-rfc-style.enable = true;
             statix.enable = true;
             deadnix.enable = true;

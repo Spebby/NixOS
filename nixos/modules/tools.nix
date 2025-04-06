@@ -9,6 +9,7 @@
     gparted
     ncdu
     lsof
+    pciutils
     udisks
   ];
 }

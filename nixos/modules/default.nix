@@ -11,6 +11,7 @@
     ./net.nix
     ./nix.nix
     ./timezone.nix
+    ./tools.nix
     ./zram.nix
   ];
 }

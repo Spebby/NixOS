@@ -3,10 +3,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    mangohud
-    lutris
-  ];
+  home.packages = with pkgs; [ lutris ];
 
   programs.git = {
     enable = true;

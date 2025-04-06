@@ -5,6 +5,7 @@
 {
   environment.systemPackages = with pkgs; [
     powertop
+    mangohud
   ];
 
   programs = {
@@ -14,6 +15,11 @@
       dedicatedServer.openFirewall = true; # open ports for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports for Steam Local Network
       gamescopeSession.enable = true;
+      extraPackages = with pkgs; [
+        gamescope
+        gamemode
+        mangohud
+      ];
     };
 
     gamemode = {

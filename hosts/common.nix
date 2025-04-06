@@ -1,10 +1,6 @@
 # /hosts/common.nix
 
-{
-  config,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
