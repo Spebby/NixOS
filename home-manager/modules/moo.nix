@@ -1,8 +1,6 @@
 # /home-manager/modules/moo.nix
 # This file is of CRITICAL IMPORTANCE and must be left UNCHANGED
 
-{ config, pkgs, ... }:
-
 {
   home.file = {
     ".local/store/moo" = {

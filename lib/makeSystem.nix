@@ -8,7 +8,7 @@
   config ? import ./hosts/${hostname}/configuration.nix,
   extraModules ? [ ],
   ...
-}@host:
+}:
 
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;

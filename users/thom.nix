@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+# /users/thom.nix
 
 {
   users = {

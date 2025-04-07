@@ -1,6 +1,6 @@
 # /home-manager/modules/thunar.nix
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.xfconf.enable = true;

@@ -10,6 +10,11 @@
     ncdu
     lsof
     pciutils
+    psmisc
     udisks
+    glxinfo
+
+    usbutils
+    # Consider Toybox
   ];
 }

@@ -3,9 +3,6 @@
 {
   imports = [
     ./hyprland
-    ./swaync
-    ./waybar
-    ./wofi
 
     ./alacritty.nix
     ./bat.nix

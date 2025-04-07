@@ -1,6 +1,6 @@
 # /nixos/modules/cxx.nix
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [

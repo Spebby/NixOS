@@ -91,8 +91,14 @@
           hooks = {
             # Official hooks from cachix/pre-commit-hooks.nix
             flake-checker.enable = true;
-            nixfmt-rfc-style.enable = true;
-            statix.enable = true;
+            nixfmt-rfc-style = {
+              enable = true;
+              settings.width = 100;
+            };
+            statix = {
+              enable = true;
+              settings.ignore = [ "flake.lock" ];
+            };
             deadnix.enable = true;
             nil.enable = true; # Nix LSP diagnostics
 
@@ -100,12 +106,6 @@
             shellcheck.enable = true;
             shfmt.enable = true;
             typos.enable = true;
-          };
-
-          # Settings for specific hooks
-          settings = {
-            nixfmt.width = 100; # Line width
-            statix.ignore = [ "flake.lock" ]; # Files to ignore
           };
         };
       };

@@ -1,7 +1,5 @@
 # /home-manager/modules/yazi.nix
 
-{ lib, pkgs, ... }:
-
 {
   programs.yazi = {
     enable = true;

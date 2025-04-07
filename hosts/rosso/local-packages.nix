@@ -1,4 +1,4 @@
-# /hosts/rosso/local-packages.nix
+#usbutils /hosts/rosso/local-packages.nix
 
 { pkgs, ... }:
 
@@ -6,6 +6,8 @@
   environment.systemPackages = with pkgs; [
     powertop
     mangohud
+    rocmPackages.rocm-smi
+    rocmPackages.rocminfo
   ];
 
   programs = {

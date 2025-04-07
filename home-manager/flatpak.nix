@@ -1,6 +1,6 @@
 # /home-manager/flatpak.nix
 
-{ config, nix-flatpak, ... }:
+{ nix-flatpak, ... }:
 
 {
   imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];

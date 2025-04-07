@@ -1,10 +1,7 @@
+# TODO: Rework this
+
 # /etc/nixos/disko.nix
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   # Import the Disko module

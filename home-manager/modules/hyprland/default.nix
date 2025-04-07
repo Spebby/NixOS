@@ -1,10 +1,10 @@
+# /home-manager/modules/default.nix
+
 {
   imports = [
-    ./binds.nix
-    ./hypridle.nix
-    ./hyprlock.nix
-    ./hyprpaper.nix
-    ./main.nix
-    #	./scripts.nix
+    ./hypr
+    ./swaync
+    ./waybar
+    ./wofi
   ];
 }

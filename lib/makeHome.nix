@@ -9,9 +9,9 @@
 {
   pkgs,
   user,
-  hostModules ? [ ],
+  #hostModules ? [ ],
   ...
-}@args:
+}:
 
 inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
