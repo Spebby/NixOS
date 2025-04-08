@@ -17,6 +17,7 @@
     nixos-hardware.nixosModules.common-cpu-amd-pstate
     nixos-hardware.nixosModules.common-cpu-amd-zenpower
     nixos-hardware.nixosModules.common-gpu-amd
+    nixos-hardware.nixosModules.common-pc-laptop
     nixos-hardware.nixosModules.common-pc-ssd
   ];
 
@@ -31,6 +32,7 @@
       # Only add this if you’re running Nix on something exotic or experimental:
       allowUnsupportedSystem = true;
     };
+    environment.variables.CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
 
     environment.systemPackages = with pkgs; [
       nvidia-vaapi-driver
@@ -44,12 +46,9 @@
     hardware = {
       # If I have issues, uncomment this. For the moment, since we boot w/ iGPU,
       # This will let Plymouth work at boot.
-      #amdgpu.initrd.enable = false;
+      amdgpu.initrd.enable = true;
       graphics = {
         enable = true;
-        extraPackages = with pkgs; [
-
-        ];
       };
 
       nvidia = {
@@ -63,10 +62,13 @@
         modesetting.enable = true;
 
         # NVIDIA X Server Settings
-        nvidiaSettings = true;
+        nvidiaSettings = false;
 
         # Fine Grained Power Management for use w/ offload. Turning+
-        powerManagement.finegrained = true;
+        powerManagement = {
+          enable = true;
+          finegrained = false;
+        };
         dynamicBoost.enable = true;
 
         prime = {
@@ -113,8 +115,20 @@
       ];
 
       # This is mainly an X11 support thing. Investigate if we need it.
-      kernelModules = [ "amdgpu" ];
       blacklistedKernelModules = [ "nouveau" ];
+
+      # This probably won't work properly.
+      # I was right this shit didn't work.
+      initrd.kernelModules = [
+        #"nvidia"
+        #"nvidia_modeset"
+        #"nvidia_uvm"
+        #"nvidia_drm"
+      ];
+      kernelModules = [
+        "amdgpu"
+        "kvm-amd"
+      ];
     };
   };
 }

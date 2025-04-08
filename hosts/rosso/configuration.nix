@@ -35,6 +35,7 @@
         # By default we would install all themes
         (adi1090x-plymouth-themes.override { selected_themes = [ "cuts_alt" ]; })
       ];
+      extraConfig = "DeviceScale=1.5";
     };
 
     # Silent Boot

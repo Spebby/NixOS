@@ -13,6 +13,7 @@
     psmisc
     udisks
     glxinfo
+    lshw-gui
 
     usbutils
     # Consider Toybox
