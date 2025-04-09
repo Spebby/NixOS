@@ -26,6 +26,7 @@
       cat = "bat";
       lf = "${config.programs.yazi.shellWrapperName}";
       grep = "rg";
+      grepchild = "grep -rnwe";
 
       obsidian = "hyprctl dispatch killactive && hyprctl dispatch exec \"obsidian\"";
       discord = "hyprctl dispatch killactive && hyprctl dispatch exec \"discord\"";

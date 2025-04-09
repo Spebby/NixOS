@@ -14,6 +14,8 @@
     home-manager
     openssl
     wget
+
+    gnome-keyring
   ];
 
   programs.zsh.enable = true;

@@ -31,6 +31,8 @@
     vlc
     xfce.thunar
     xfce.xfconf
+    zoom-us
+    en-croissant
 
     # Steam Helpers
     steam-tui
