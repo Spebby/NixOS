@@ -66,6 +66,8 @@ the overlay yourself. The good news is that I did 0 tweaks from the
 on nixpkgs. So, you'll probably be safe to simply copy and paste whatever the
 most recent version is.
 
+So I remember: I typically keep my AppImages in ~/.appimages/
+
 ### Unity
 
 This program is a fucking headache. My config has a lot of weirdness for Unity

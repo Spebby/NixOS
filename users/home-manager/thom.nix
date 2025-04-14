@@ -7,7 +7,10 @@ let
 in
 {
   home = {
-    packages = with pkgs; [ lutris ];
+    packages = with pkgs; [
+      lutris
+      gh
+    ];
     file."${allowedSigners}".text =
       "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
   };

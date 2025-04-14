@@ -1,4 +1,4 @@
-{ pkgs, hyprland, ... }:
+{ pkgs, inputs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -65,6 +65,7 @@
         "waybar"
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
+        "nm-applet"
         #		"swayidle -w timeout 200 $idleBrightness 'startIdle' resume $idleBrightness 'endIdle'"
         #		"swayidle -w timeout 600 $idleBrightness 'finalIdle' resume $idleBrightness 'endIdle'"
 
@@ -181,7 +182,7 @@
         "bordersize 1, pinned:1" # Give it a smaller border too
 
         # Special Workspaces
-        "workspace name:unity, class:(Unity)"
+        "workspace name:unity silent, class:(Unity)"
         "workspace name:game,  class:^(^gamescope$|^steam_app_.*$)"
 
         "noanim, title:^(gamescope)$"
@@ -214,7 +215,7 @@
     # Unity is awful on Hyprland... Someone has made a config to make it not terrible to use.
     extraConfig = ''
       # Include external .conf file
-      ${builtins.readFile ./submodules/HyprlandUnityFix/UnityFix.conf}
+      ${builtins.readFile "${inputs.HyprlandUnityFix}/UnityFix.conf"}
     '';
   };
 }

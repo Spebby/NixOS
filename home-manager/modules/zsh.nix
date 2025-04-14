@@ -1,6 +1,12 @@
 # /home-modules/modules/zsh.nix
 
-{ config, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.cliphist.enable = true;
@@ -21,7 +27,7 @@
       microfetch = "microfetch && echo";
       ".." = "cd ..";
 
-      vim = "nvim";
+      vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
       ls = "eza --group-directories-first --icons";
       cat = "bat";
       lf = "${config.programs.yazi.shellWrapperName}";

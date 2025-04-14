@@ -32,7 +32,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # I am stupid, so I will be doing nixvim... just not yet
+    nixvim = {
+      url = "github:Spebby/nixvim/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    HyprlandUnityFix = {
+      url = "github:nnra6864/HyprlandUnityFix";
+      flake = false;
+    };
   };
 
   outputs =

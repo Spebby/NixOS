@@ -3,6 +3,7 @@
 {
   imports = [
     ./hyprland
+    ./stylix
 
     ./alacritty.nix
     ./ghostty.nix
@@ -12,12 +13,10 @@
     ./firefox.nix
     ./lazygit.nix
     ./moo.nix
-    ./neovim.nix
     ./obsidian.nix
     ./protonge.nix
     ./qt.nix
     ./starship.nix
-    ./stylix.nix
     ./todoist.nix
     ./yazi.nix
     ./zathura.nix

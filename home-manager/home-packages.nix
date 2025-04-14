@@ -1,9 +1,8 @@
 # /home-manager/home-packages.nix
 
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
-
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -72,6 +71,7 @@
     wtype
     yt-dlp
     zip
+    inputs.nixvim.packages.${pkgs.system}.default
 
     # CXX - Adj
     meson
@@ -79,7 +79,7 @@
 
     # ECMA
     nodejs
-    #		npm
+    #npm
 
     python311
 

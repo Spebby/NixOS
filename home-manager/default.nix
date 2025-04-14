@@ -1,7 +1,18 @@
 # /home-manager/default.nix
 
-{ user, stateVersion, ... }:
+{
+  inputs,
+  user,
+  stateVersion,
+  lib,
+  pkgs,
+  ...
+}:
 
+let
+  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+  inherit (inputs) nixvim;
+in
 {
   imports = [
     ./modules
@@ -16,6 +27,7 @@
     homeDirectory = "/home/${user}";
 
     sessionVariables = {
+      EDITOR = lib.getExe nixvim-stylix;
       NIXOS_OZONE_WL = "1";
     };
   };

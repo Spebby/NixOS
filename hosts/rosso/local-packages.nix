@@ -30,16 +30,8 @@
         enable = true;
         args = [
           "--adaptive-sync"
-          "--hdr-enabled"
-          "--hdr-itm-enable"
-          "--rt"
-          "--steam"
-          "--nested-refresh"
-          "165"
-          "--output-width"
-          "2560"
-          "--output-height"
-          "1600"
+          "--expose-wayland"
+          "--force-grab-cursor"
         ];
         env = {
           MANGOHUD = "1";

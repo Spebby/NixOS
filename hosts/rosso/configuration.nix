@@ -55,14 +55,21 @@
   };
 
   environment = {
-    systemPackages = [
-      pkgs.home-manager
-      pkgs.bottles
+    systemPackages = with pkgs; [
+      home-manager
+      bottles
+      libsForQt5.qt5.qtquickcontrols2
+      libsForQt5.qt5.qtgraphicaleffects
     ];
 
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
+  };
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [ jetbrains-mono ];
   };
 
   # Hyperland Specific
@@ -87,10 +94,10 @@
   };
 
   services = {
-    getty = {
-      greetingLine = "moo";
-      # autoLoginUser = user;
-    };
+    #getty = {
+    #  greetingLine = "moo";
+    #  autoLoginUser = user;
+    #};
 
     auto-cpufreq.enable = false;
     tlp = {
@@ -121,7 +128,7 @@
 
         # Radio Device
         RESTORE_DEVICE_STATE_ON_STARTUP = 1;
-        DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
+        #DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
 
         # If want to be more aggressive, use force option
         #DEVICES_TO_DISABLE_ON_BAT = "bluetooth";
@@ -142,6 +149,15 @@
         #RADEON_DPM_PERF_LEVEL_ON_BAT = "auto";
         RADEON_DPM_STATE_ON_AC = "performance";
         RADEON_DPM_STATE_ON_BAT = "battery";
+      };
+    };
+
+    displayManager = {
+      defaultSession = "hyprland";
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        theme = "${import ./sddm.nix { inherit pkgs; }}";
       };
     };
   };

@@ -15,6 +15,7 @@
 
 inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
+  inherit lib;
 
   modules = [
     ../home-manager

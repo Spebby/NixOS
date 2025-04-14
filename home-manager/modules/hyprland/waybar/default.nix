@@ -7,6 +7,8 @@ let
   jq = lib.getExe pkgs.jq;
 in
 {
+  home.packages = with pkgs; [ networkmanagerapplet ];
+
   programs.waybar = {
     enable = true;
     style = ./style.css;

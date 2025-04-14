@@ -1,3 +1,5 @@
 *.AppImage
 
 .pre-commit-config.yaml
+./nixvim/
+./home-manager/modules/hyprland/hypr/submodules/*
