@@ -37,6 +37,7 @@
       obsidian = "hyprctl dispatch killactive && hyprctl dispatch exec \"obsidian\"";
       discord = "hyprctl dispatch killactive && hyprctl dispatch exec \"discord\"";
       firefox = "exec firefox";
+      xev = "wev";
     };
 
     history.size = 10000;

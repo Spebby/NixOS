@@ -32,7 +32,10 @@
       # Only add this if you’re running Nix on something exotic or experimental:
       allowUnsupportedSystem = true;
     };
-    environment.variables.CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
+    environment.variables = {
+      CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
+      BACKLIGHT_DEVICE = "amdgpu_bl1";
+    };
 
     environment.systemPackages = with pkgs; [
       nvidia-vaapi-driver

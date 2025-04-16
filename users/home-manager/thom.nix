@@ -36,4 +36,11 @@ in
     enableSshSupport = true;
     pinentryPackage = pkgs.pinentry-gtk2; # hyprland specific
   };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "thunar.desktop" ];
+    };
+  };
 }

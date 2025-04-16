@@ -13,6 +13,14 @@
     '')
   ];
 
+  imports = [ inputs.hyprland-unity-fix.nixosModules.hyprlandUnityFixModule ];
+  hyprlandUnityFix = {
+    enable = true;
+    configRules = [
+
+    ];
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -28,6 +36,10 @@
         "XDG_SESSION_DESKTOP, Hyprland"
         "XDG_SESSION_TYPE, wayland"
         "XDG_SCREENSHOTS_DIR, $HOME/Media/screenshots"
+        "XDG_PICTURES_DIR, $HOME/Media/screenshots/"
+        "XDG_VIDEOS_DIR, $HOME/Media/Videos/"
+
+        "SCREENSHOT_APP, grimblast --notify --freeze copysave"
 
         "QT_QPA_PLATFORM, wayland"
         "GDK_SCALE, 1.6"
@@ -49,8 +61,9 @@
         "__GL_VRR_ALLOWED, 0"
       ];
 
-      monitor = "eDP-1,2560x1600@165, auto, 1.6";
+      monitor = "$mainMonitor,2560x1600@165, auto, 1.6";
       #monitor = "eDP-1,2560x1600@165,0x0,1.33";
+      "$mainMonitor" = "eDP-1";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "thunar";
@@ -196,11 +209,16 @@
         "noanim, class:^(xwaylandvideobridge)$"
         "noinitialfocus, class:^(xwaylandvideobridge)$"
         "maxsize 1 1, class:^(xwaylandvideobridge)$"
-        "noblur, class:^(xwaylandvideobridge)$"
+        "noblur,  class:^(xwaylandvideobridge)$"
         "nofocus, class:^(xwaylandvideobridge)$"
 
-        # Fix for Discord not taking keybinds
+        # Fix for Discord not taking keybinds JUST KIDDING THIS DONT WORK
         "allowsinput, class:^(discord)$, xwayland:0"
+
+        # Make file manager start floating
+        "float,      class:^($fileManager)$"
+        "center,     class:^($fileManager)$"
+        "movecursor, class:^($fileManager)"
       ];
 
       workspace = [
@@ -211,11 +229,5 @@
         "special:popupterm,on-created-empty:$terminal"
       ];
     };
-
-    # Unity is awful on Hyprland... Someone has made a config to make it not terrible to use.
-    extraConfig = ''
-      # Include external .conf file
-      ${builtins.readFile "${inputs.HyprlandUnityFix}/UnityFix.conf"}
-    '';
   };
 }

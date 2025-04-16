@@ -18,6 +18,7 @@
     TERMINAL = "alacritty";
     EDITOR = "nvim";
     XDG_BIN_HOME = "$HOME/.local/bin";
+    ROFI_SCREENSHOT_DIR = "$HOME/Media/screenshots";
     PATH = [ "${XDG_BIN_HOME}" ];
 
     #XDG_SESSION_TYPE = "wayland";

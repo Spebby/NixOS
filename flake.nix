@@ -37,9 +37,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    HyprlandUnityFix = {
+    hyprland-unity-fix = {
       url = "github:nnra6864/HyprlandUnityFix";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

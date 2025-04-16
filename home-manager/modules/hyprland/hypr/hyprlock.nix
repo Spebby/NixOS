@@ -13,7 +13,7 @@
 
       label = [
         {
-          monitor = "";
+          monitor = "$mainMonitor";
           halign = "center";
           valign = "center";
           position = "0, 80";

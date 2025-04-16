@@ -29,6 +29,7 @@
       wofi.enable = false;
       hyprland.enable = false;
       hyprlock.enable = false;
+      swaync.enable = false;
     };
 
     cursor = {

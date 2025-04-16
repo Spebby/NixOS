@@ -33,6 +33,9 @@
     zoom-us
     en-croissant
 
+    # Test
+    figma-linux
+
     # Steam Helpers
     steam-tui
     steamcmd
@@ -45,15 +48,12 @@
     bottom
     brightnessctl
     btop
-    cliphist
     fastfetch
     ffmpeg
     ffmpegthumbnailer
     fzf
     git-graph
-    grimblast
     htop
-    hyprpicker
     netcat-gnu
     ntfs3g
     mediainfo
@@ -87,10 +87,7 @@
     libsForQt5.xwaylandvideobridge
     libnotify
     xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
 
     # Other
-    bemoji
-    nix-prefetch-scripts
   ];
 }

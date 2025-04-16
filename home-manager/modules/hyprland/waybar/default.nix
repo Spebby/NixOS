@@ -28,7 +28,7 @@ in
           "custom/weather"
           "pulseaudio"
           "battery"
-          "custom/power"
+          #"custom/power"
           "clock"
           "custom/notification"
           "tray"

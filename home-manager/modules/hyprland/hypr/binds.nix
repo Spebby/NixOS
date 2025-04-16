@@ -17,7 +17,19 @@ let
   '';
 in
 {
-  home.packages = [ booksScript ];
+  home.packages = [
+    booksScript
+    pkgs.bemoji
+    pkgs.cliphist
+
+    pkgs.hyprpicker
+    pkgs.hyprshade
+    pkgs.grimblast
+    pkgs.swappy
+
+    # Testing binds
+    pkgs.wev
+  ];
 
   wayland.windowManager.hyprland.settings = {
     bind = [
@@ -31,7 +43,7 @@ in
       #"$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
       "$mainMod,       B, fullscreen, 1"
       "$mainMod,       N, exec, swaync-client -t"
-      ", Print, exec, grimblast --notify --freeze copysave area"
+      ", Print, exec, grimblast --notify --freeze copysave area | swappy -f -"
 
       # Utilities
       "$mainMod,       RETURN, exec, $terminal" # ex. Kitty/Foot
@@ -117,6 +129,13 @@ in
       ",XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86MonBrightnessUp,   exec, brightnessctl s 10%+"
+      ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+
+      # My keyboard has an audio nob, and I'd like to control the brightness
+      # w/ it sometimes.
+      "SHIFT,XF86AudioRaiseVolume,  exec, brightnessctl s 10%+"
+      "SHIFT,XF86AudioLowerVolume,  exec, brightnessctl s 10%-"
       "$mainMod, bracketright, exec, brightnessctl s 10%+"
       "$mainMod, bracketleft,  exec, brightnessctl s 10%-"
     ];
