@@ -15,6 +15,7 @@
   # Packages I don't have specific configs for
   home.packages = with pkgs; [
     # Desktop Apps
+    audacity
     blender
     cider-2
     discord
@@ -23,13 +24,10 @@
     mission-center
     mpv
     obs-studio
-    obsidian
     pinta
     slack
     thunderbird
     vlc
-    xfce.thunar
-    xfce.xfconf
     zoom-us
     en-croissant
 
@@ -39,6 +37,10 @@
     # Steam Helpers
     steam-tui
     steamcmd
+
+    # Thunar File Manager
+    xfce.thunar
+    xfce.xfconf
 
     # CLI Utils
     acpid

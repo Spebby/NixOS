@@ -21,6 +21,7 @@
     ./yazi.nix
     ./zathura.nix
     ./zsh.nix
+    #    ./dolphin.nix
 
     # Unity
     ./rider.nix

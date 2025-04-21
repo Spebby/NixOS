@@ -3,14 +3,23 @@ let
   gitSyncObsidian = pkgs.writeScriptBin "git-sync-obsidian" ''
     #!/bin/sh
 
-    VAULT_DIR="$HOME/Media/vaults/"
+    VAULT_DIR="$HOME/Media/Vaults/"
     cd $VAULT_DIR || exit 1
-    git add .
-    git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" || exit 0
+
+    git pull
+    # Only commit if there are changes
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        git add .
+        git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
+    fi
+    git push
   '';
 in
 {
-  home.packages = [ gitSyncObsidian ];
+  home.packages = [
+    pkgs.obsidian
+    gitSyncObsidian
+  ];
 
   systemd.user.services.git-sync-obsidian = {
     Unit = {
@@ -19,7 +28,9 @@ in
     };
     Service = {
       ExecStart = "${gitSyncObsidian}/bin/git-sync-obsidian";
-      Type = "simple";
+      Type = "oneshot";
+      Environment = [ "SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh" ];
+      # TODO: make this more flexible ^
     };
   };
 

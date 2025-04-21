@@ -197,6 +197,7 @@
         # Special Workspaces
         "workspace name:unity silent, class:(Unity)"
         "workspace name:game,  class:^(^gamescope$|^steam_app_.*$)"
+        "workspace name:daw, class:(fl64.exe)"
 
         "noanim, title:^(gamescope)$"
         "noblur, title:^(gamescope)$"
@@ -224,6 +225,7 @@
       workspace = [
         "name:unity, id:100"
         "name:game, id:101"
+        "name:daw, id:102"
         "w[tv1], gapsout:0, gapsin:0"
         "f[1], gapsout:0, gapsin:0"
         "special:popupterm,on-created-empty:$terminal"
