@@ -27,6 +27,10 @@
   # TODO: move the theme specific stuff to machine specific configs.
   # I also like owl, Loader 2, Spinner Alt, Splash, Cuts Alt, DNA, Hexagon Dots Alt, Hexagons
   boot = {
+    loader.grub = {
+      theme = "${import ./grubtheme.nix { inherit pkgs; }}";
+      configurationLimit = 5;
+    };
     plymouth = {
       enable = true;
       theme = "cuts_alt";
@@ -49,9 +53,24 @@
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
       "udev.log_priority=3"
+      "resume=/.swapfile"
     ];
     # Hide OS choice for bootloader
     # loader.timeout = 0;
+  };
+
+  nix = {
+    optimise = {
+      automatic = true;
+    };
+    settings = {
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = [ "--delete-older-than 30d" ];
+    };
   };
 
   environment = {

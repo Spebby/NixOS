@@ -70,7 +70,7 @@
         # Fine Grained Power Management for use w/ offload. Turning+
         powerManagement = {
           enable = true;
-          finegrained = false;
+          finegrained = true;
         };
         dynamicBoost.enable = true;
 

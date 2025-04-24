@@ -1,18 +1,19 @@
 { pkgs, ... }:
 let
   gitSyncObsidian = pkgs.writeScriptBin "git-sync-obsidian" ''
-    #!/bin/sh
+        #!/bin/sh
 
-    VAULT_DIR="$HOME/Media/Vaults/"
-    cd $VAULT_DIR || exit 1
+        VAULT_DIR="$HOME/Media/Vaults/"
+        cd $VAULT_DIR || exit 1
 
-    git pull
-    # Only commit if there are changes
-    if ! git diff --quiet || ! git diff --cached --quiet; then
-        git add .
-        git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
-    fi
-    git push
+        git pull
+    	git add .
+        # Only commit if there are changes
+        if ! git diff --quiet || ! git diff --cached --quiet; then
+            git add .
+            git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
+        fi
+        git push
   '';
 in
 {
