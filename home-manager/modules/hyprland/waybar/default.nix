@@ -101,7 +101,7 @@ in
               ""
             ];
           };
-          on-click = "pavucontrol";
+          on-click = "pavucontrol floatingwindow";
         };
 
         "custom/power" = {

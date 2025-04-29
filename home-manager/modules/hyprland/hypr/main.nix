@@ -186,6 +186,11 @@
         "bordersize 0, floating:0, onworkspace:w[t1]"
 
         "float,class:(mpv)|(imv)|(showmethekey-gtk)"
+
+        # Volume Manager
+        "float, class:pavucontrol"
+        "size min 800 400, class:pavucontrol"
+
         "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
         "noborder,nofocus,class:(showmethekey-gtk)"
 

@@ -89,8 +89,20 @@ Additionally, Unity's many dropdowns and popups are not Hyprland friendly. As
 Unity currently does not support a single-window mode like Godot does, there are
 a lot of manual window rules set within Hyprland to make Unity a more usable
 experience. I haven't manually set these up myself,
-[someone else did](https://github.com/nnra6864/HyprlandUnityFix). I've imported
-it as a submodule--make sure you're updating it periodically.
+[someone else did](https://github.com/nnra6864/HyprlandUnityFix). I worked with
+the maintainer to make a flake for it, and instructions are on that repository.
+
+#### PlasticSCM
+
+PlasticSCM does have a native Linux package, but only for Ubuntu, Fedora, Cent
+and other more popular distros. Nix is not one of those. I had originally
+intended to unpack it myself, but that fell through. Instead, my setup involves
+using a TUI application, "vecro", and using DistroBox to install the cli version
+of PlasticSCM. I had intended to get the GUI version to work, but that needs
+more of my time then I can devote to it at the moment due to some issues with
+systemd and wayland. As such, while verco is included in this configuration (and
+you can use it w/ git!), the DistroBox setup is not managed and you must
+manually set that up if you intend to use it.
 
 ### Waybar
 

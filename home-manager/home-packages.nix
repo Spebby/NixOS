@@ -1,6 +1,11 @@
 # /home-manager/home-packages.nix
 
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   nixpkgs = {
@@ -30,6 +35,9 @@
     vlc
     zoom-us
     en-croissant
+
+    # Unstable
+    pkgs-unstable.godot-mono
 
     # Test
     figma-linux
@@ -90,6 +98,7 @@
     libnotify
     xdg-desktop-portal-gtk
 
-    # Other
+    # Unstable
+    pkgs-unstable.godot-mono
   ];
 }

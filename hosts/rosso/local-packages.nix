@@ -8,6 +8,10 @@
     mangohud
     rocmPackages.rocm-smi
     rocmPackages.rocminfo
+
+    distrobox
+    podman
+    xorg.xhost
   ];
 
   programs = {

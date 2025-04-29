@@ -8,8 +8,9 @@
 
 {
   pkgs,
+  pkgs-unstable,
   user,
-  #hostModules ? [ ],
+  hostModules ? [ ],
   ...
 }:
 
@@ -26,7 +27,14 @@ inputs.home-manager.lib.homeManagerConfiguration {
         home.stateVersion = lib.mkDefault stateVersion;
       }
     )
-  ];
+  ] ++ hostModules;
 
-  extraSpecialArgs = { inherit inputs user stateVersion; };
+  extraSpecialArgs = {
+    inherit
+      inputs
+      user
+      stateVersion
+      pkgs-unstable
+      ;
+  };
 }
