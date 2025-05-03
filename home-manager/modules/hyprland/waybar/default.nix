@@ -7,7 +7,10 @@ let
   jq = lib.getExe pkgs.jq;
 in
 {
-  home.packages = with pkgs; [ networkmanagerapplet ];
+  home.packages = with pkgs; [
+    networkmanagerapplet
+    wttrbar
+  ];
 
   programs.waybar = {
     enable = true;
@@ -22,7 +25,7 @@ in
           "hyprland/workspaces"
           "custom/media-playing"
         ];
-        modules-center = [ "hyprland/window" ];
+
         modules-right = [
           "hyprland/submap"
           "custom/weather"
@@ -40,24 +43,12 @@ in
           all-outputs = false;
           format = "{icon}";
           format-icons = {
-            #"1" = "";
-            #"2" = "";
-            #"3" = "";
-            #"4" = "";
-            #"5" = "";
-            #"6" = "";
-            #"7" = "";
-            #"8" = "";
             "magic" = "";
             "unity" = "";
             "game" = "";
             "daw" = "";
             "popupterm" = "";
           };
-
-          #          persistent-workspaces = {
-          #            "*" = 9;
-          #          };
         };
 
         "hyprland/submap" = {
@@ -68,9 +59,9 @@ in
         };
 
         "hyprland/language" = {
-          format-en = "🇺🇸";
-          format-ru = "🇷🇺";
-          format-he = "🇮🇱";
+          format-en = "🇬🇧";
+          format-nl = "🇳🇱";
+          format-fr = "🇫🇷";
           min-length = 5;
           tooltip = false;
 
@@ -79,10 +70,10 @@ in
 
         "custom/weather" = {
           format = " {} ";
-          exec = "curl -s 'wttr.in/?format=%c%t'";
+          tooltip = true;
+          exec = "wttrbar --ampm --lang en --location \"Santa Cruz\" --date-format \"%A, %d/%m\"";
+          return-type = "json";
           interval = 300;
-          class = "weather";
-          tooltip = "curl -s 'wttr.in/?format=%l";
         };
 
         "pulseaudio" = {
@@ -101,7 +92,7 @@ in
               ""
             ];
           };
-          on-click = "pavucontrol floatingwindow";
+          on-click = "pavucontrol";
         };
 
         "custom/power" = {
@@ -135,7 +126,7 @@ in
         };
 
         "clock" = {
-          format = "{:%d/%m/%y %H:%M}";
+          format = "{:%D %H:%M}";
           format-alt = "{:%A, %B %d at %R}";
         };
 
@@ -152,7 +143,7 @@ in
             spotify = "";
             chromium = "";
             cider = "󰝚";
-            firefox = "󰈹";
+            firefox = "";
             vlc = "";
             default = "";
           };
@@ -160,17 +151,46 @@ in
           return-type = "json";
           exec-if = "which ${playerctl}";
           exec = pkgs.writeShellScript "queryMedia" ''
-                        #!/bin/sh
-            			player_priority="cider, spotify, vlc, firefox, chromium"
-                        metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
+            	#!/bin/sh
+            	player_priority="cider, spotify, vlc, firefox, chromium"
+            	metadata_format="{\"playerName\": \"{{ playerName }}\", \"status\": \"{{ status }}\", \"title\": \"{{ title }}\", \"artist\": \"{{ artist }}\"}"
 
-                        ${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
-                          while read -r _; do
-                        	active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
-                        	echo ""
-                        	echo "$active_stream" | ${jq} --unbuffered --compact-output \
-                        	  '.class = .playerName | .alt = .playerName | .text = "\(.title) - \(.artist)"'
-                          done
+            	${playerctl} --follow -a --player "$player_priority" metadata --format "$metadata_format" |
+                  while read -r _; do
+                    active_stream=$(${playerctl} -a --player "$player_priority" metadata --format "$metadata_format" | ${jq} -s 'first([.[] | select(.status == "Playing")][] // empty)')
+                    echo ""
+                    echo "$active_stream" | ${jq} --unbuffered --compact-output --arg maxlen 50 '
+                      def truncate($len):
+                        (if length > ($len | tonumber) 
+                         then (.[0:($len | tonumber - 3)] + "...") 
+                         else . end) | gsub("&"; "&amp;");
+                      
+                      .class = .playerName
+                      | .alt = .playerName
+                      | .text = "\(.title) - \(.artist)"
+                      | .text |= truncate($maxlen | tonumber)'
+                  done	
+          '';
+
+          on-click = ''
+            bash -c '
+              player_priority="cider, spotify, vlc, firefox, chromium"
+              # Find the first player in priority order that is running
+              active=$(playerctl -l \
+                        | tr "," "\n" \
+                        | grep -E "^(cider|spotify|vlc|firefox|chromium)$" \
+                        | head -n1)
+              if [ -n "$active" ]; then
+                # Launch or focus the app; adjust commands if your binaries differ
+                case "$active" in
+                  cider)     cider         ;;  # assume `cider` is the launch command
+                  spotify)   spotify       ;;
+                  vlc)       vlc           ;;
+                  firefox)   firefox       ;;
+                  chromium)  chromium      ;;
+                esac &
+              fi
+            '
           '';
         };
 

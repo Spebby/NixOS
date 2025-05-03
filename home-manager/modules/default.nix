@@ -26,5 +26,6 @@
     # Unity
     ./rider.nix
     ./unity.nix
+    ./godot.nix
   ];
 }

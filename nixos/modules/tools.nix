@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     acpid # Arguable if needs to be here
 
+    cowsay
     gparted
     ncdu
     lsof

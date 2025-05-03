@@ -1,11 +1,6 @@
 # /home-manager/home-packages.nix
 
-{
-  inputs,
-  pkgs,
-  pkgs-unstable,
-  ...
-}:
+{ inputs, pkgs, ... }:
 
 {
   nixpkgs = {
@@ -23,7 +18,6 @@
     audacity
     blender
     cider-2
-    discord
     gimp-with-plugins
     libreoffice-qt6
     mission-center
@@ -35,9 +29,6 @@
     vlc
     zoom-us
     en-croissant
-
-    # Unstable
-    pkgs-unstable.godot-mono
 
     # Test
     figma-linux
@@ -97,8 +88,5 @@
     libsForQt5.xwaylandvideobridge
     libnotify
     xdg-desktop-portal-gtk
-
-    # Unstable
-    pkgs-unstable.godot-mono
   ];
 }

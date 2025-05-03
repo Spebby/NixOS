@@ -4,7 +4,7 @@
     settings = {
       allow_markup = true;
       allow_images = true;
-      width = 400;
+      width = 450;
       height = 500;
     };
   };
