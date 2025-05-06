@@ -5,9 +5,8 @@
     ./hyprland
     ./stylix
     ./emulators
+    ./terminals
 
-    ./alacritty.nix
-    ./ghostty.nix
     ./bat.nix
     ./discord.nix
     ./eza.nix

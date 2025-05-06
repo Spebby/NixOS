@@ -201,6 +201,7 @@
         "center, class:pavucontrol"
         "size 1200 400, class:pavucontrol"
 
+        # Scratch Notes
         "center, class:^(scratch-note)$"
         "float, class:^(scratch-note)$"
 
@@ -235,9 +236,10 @@
         "allowsinput, class:^(discord)$, xwayland:0"
 
         # Make file manager start floating
-        "float,      class:^($fileManager)$"
-        "center,     class:^($fileManager)$"
-        "movecursor, class:^($fileManager)"
+        "float,         class:^($fileManager)$"
+        "center,        class:^($fileManager)$"
+        "movecursor,    class:^($fileManager)$"
+        "size 1200 800, class:^($fileManager)"
       ];
 
       workspace = [
