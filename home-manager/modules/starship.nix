@@ -84,18 +84,18 @@ in
     enable = true;
     enableZshIntegration = true;
     settings = {
-      format = "󱄅 (red)$username $directory ${
-        lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
-          languages
-          buildTooling
-          environment
-          containerization
-          [
-            "cmd_duration"
-            "fill"
-          ]
-        ]
-      }${prependDollarAndJoinWith " " versionControl}$line_break$character";
+      format = " 󱄅 (red)$username $directory ${
+         lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
+           languages
+           buildTooling
+           environment
+           containerization
+           [
+             "cmd_duration"
+             "fill"
+           ]
+         ]
+       }${prependDollarAndJoinWith " " versionControl}$line_break$character";
 
       add_newline = true;
       fill.symbol = " ";

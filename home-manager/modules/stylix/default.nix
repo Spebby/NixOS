@@ -1,6 +1,11 @@
 # /home-manager/modules/stylix.nix
 
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [ inputs.stylix.homeManagerModules.stylix ];
@@ -18,7 +23,7 @@
     (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
   ];
 
-  stylix = {
+  stylix = lib.mkDefault {
     enable = true;
     autoEnable = true;
     polarity = "dark";

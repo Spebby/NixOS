@@ -1,7 +1,5 @@
 # /nixos/modules/env.nix
 
-#{ pkgs, ... }:
-
 {
   #xdg = {
   #autostart.enable = true;

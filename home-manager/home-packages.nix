@@ -29,9 +29,11 @@
     vlc
     zoom-us
     en-croissant
+    geogebra6
 
     # Test
     figma-linux
+    davinci-resolve
 
     # Steam Helpers
     steam-tui

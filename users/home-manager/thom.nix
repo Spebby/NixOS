@@ -1,6 +1,6 @@
 # /users/home-manager/thom.nix
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   allowedSigners = "${builtins.getEnv "HOME"}/.ssh/allowed_signers";
@@ -11,10 +11,30 @@ in
       lutris
       gh
     ];
+
+    # GPG Signing for Git
     file."${allowedSigners}".text =
       "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
+
+    sessionVariables = rec {
+      XDG_BOOKS_DIR = "$HOME/Media/Books";
+      TERMINAL = "kitty";
+    };
   };
 
+  # Stylix Overrides
+  stylix = lib.mkForce {
+    polarity = "dark";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+
+    image = pkgs.fetchurl {
+      url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-dark-rainbow.png";
+      sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
+    };
+    imageScalingMode = "fill";
+  };
+
+  # Git
   programs.git = {
     enable = true;
     userName = "Thom Mott";

@@ -1,7 +1,13 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
+    kitty
     xdotool
     jq
     (writeShellScriptBin "hypr-kill-or-hide-steam" ''
@@ -43,6 +49,7 @@
 
         "QT_QPA_PLATFORM, wayland"
         "GDK_SCALE, 1.6"
+
         #"XCURSOR_SIZE, 16"
 
         # NVIDIA GBM backend (critical for Wayland)
@@ -65,7 +72,9 @@
       #monitor = "eDP-1,2560x1600@165,0x0,1.33";
       "$mainMonitor" = "eDP-1";
       "$mainMod" = "SUPER";
-      "$terminal" = "alacritty";
+      "$terminal" = "${config.home.sessionVariables.TERMINAL
+        or config.environment.sessionVariables.TERMINAL or "kitty"
+      }";
       "$fileManager" = "thunar";
       "$menu" = "wofi";
 
@@ -189,7 +198,11 @@
 
         # Volume Manager
         "float, class:pavucontrol"
-        "size min 800 400, class:pavucontrol"
+        "center, class:pavucontrol"
+        "size 1200 400, class:pavucontrol"
+
+        "center, class:^(scratch-note)$"
+        "float, class:^(scratch-note)$"
 
         "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
         "noborder,nofocus,class:(showmethekey-gtk)"

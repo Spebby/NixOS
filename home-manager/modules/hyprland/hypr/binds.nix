@@ -1,19 +1,32 @@
 { pkgs, ... }:
 
 let
-  booksDir = "$HOME/Downloads/books";
   booksScript = pkgs.writeScriptBin "open_books" ''
     #!/bin/sh
 
-    BOOKS_DIR="${booksDir}"
+    BOOKS_DIR="''${XDG_BOOKS_DIR:-''$HOME/Media/Books}"
 
     BOOK=$(find "$BOOKS_DIR" -type f \( -iname "*.pdf" -o -iname "*.epub" -o -iname "*.djvu" \) | wofi --dmenu --prompt "Select a book" --width 1200 --height 400)
 
     if [[ -n "$BOOK" ]]; then
-        zathura "$BOOK" &
+    	zathura "$BOOK" &
     else
-        echo "No book selected."
+    	echo "No book selected."
     fi
+  '';
+
+  scratchNotesScript = pkgs.writeScriptBin "scratch_notes" ''
+    #!/bin/sh
+    # Find existing scratch file, or create a new one
+    SCRATCH_FILE=$(find /tmp -maxdepth 1 -type f -name 'scratch-*.md' | head -n 1)
+
+    if [ -z "''$SCRATCH_FILE" ]; then
+      TIMESTAMP=$(date +%Y-%m-%dT%H-%M-%S)
+      SCRATCH_FILE="/tmp/scratch-''$TIMESTAMP.md"
+      echo "# Scratch Note (''$TIMESTAMP)" > "''$SCRATCH_FILE"
+    fi
+
+    exec "''${TERMINAL:-kitty}" --class scratch-note -e nvim "''$SCRATCH_FILE"
   '';
 in
 {
@@ -51,7 +64,8 @@ in
       "$mainMod,       D, exec, $fileManager" # ex. Dolphin
       "$mainMod,       E, exec, bemoji -cn"
       "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
-      "$mainMod,       W, exec, ${booksScript}/bin/open_books"
+      "$mainMod,       S, exec, ${booksScript}/bin/open_books"
+      "$mainMod,       W, exec, ${scratchNotesScript}/bin/scratch_notes"
 
       # Window Manipulation
       "$mainMod,       F, togglefloating,"

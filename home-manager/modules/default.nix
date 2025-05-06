@@ -4,6 +4,7 @@
   imports = [
     ./hyprland
     ./stylix
+    ./emulators
 
     ./alacritty.nix
     ./ghostty.nix
