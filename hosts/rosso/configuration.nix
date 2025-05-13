@@ -117,7 +117,6 @@
     #  greetingLine = "moo";
     #  autoLoginUser = user;
     #};
-
     auto-cpufreq.enable = false;
     tlp = {
       enable = true;

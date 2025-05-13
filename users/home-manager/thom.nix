@@ -10,6 +10,9 @@ in
     packages = with pkgs; [
       lutris
       gh
+
+      # Games
+      prismlauncher # Minecraft
     ];
 
     # GPG Signing for Git
@@ -25,7 +28,7 @@ in
   # Stylix Overrides
   stylix = lib.mkForce {
     polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
     image = pkgs.fetchurl {
       url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-dark-rainbow.png";

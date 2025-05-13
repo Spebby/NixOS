@@ -1,3 +1,5 @@
+@import url("colours.css");
+
 * {
   border: none;
   border-radius: 0px;
@@ -5,33 +7,33 @@
   font-weight: bold;
   font-size: 16px;
   min-height: 0;
-  color: #ebdbb2;
+  color: @base06;
 }
 
 window#waybar {
-  background: #1d2021;
+  background: @base00;
 }
 
 /* Workspace Buttons */
 #workspaces button label{
-  color: #ebdbb2;
+  color: @base06;
   padding: 0 10px;
 }
 #workspaces button.active label {
-  color: #1d2021;
+  color: @base00;
 }
 #workspaces button.active {
-  background: #d65d0e;
+  background: @base0F;
 }
 #workspaces button.urgent {
-  background: #eb4d4b;
+  background: @base08;
 }
 
 #custom-media-playing {
 	padding: 0 10px;
 	margin: 0;
-	color: #d79921;
-	border-bottom: 5px solid #d79921;
+	color: @base0A;
+	border-bottom: 5px solid @base0A;
 }
 
 #clock, #power, #custom-power, #battery, #pulseaudio, #custom-notification, #tray, #language, #weather {
@@ -41,56 +43,56 @@ window#waybar {
 
 #language {
   margin: 0;
-  color: #d79921;
-  border-bottom: 5px solid #d79921;
+  color: @base0A;
+  border-bottom: 5px solid @base0A;
 }
 
 #custom-weather {
   margin: 0;
-  color: #98971a;
-  border-bottom: 5px solid #98971a
+  color: @base0B;
+  border-bottom: 5px solid @base0B;
 }
 
 #pulseaudio {
   margin: 0;
-  color: #689d6a;
-  border-bottom: 5px solid #689d6a;
+  color: @base0C;
+  border-bottom: 5px solid @base0C;
 }
 
 #pulseaudio.muted {
   padding: 0 20px;
-  color: #cc241d;
-  border-bottom: 5px solid #cc241d;
+  color: @base08;
+  border-bottom: 5px solid @base08;
 }
 
 
 #battery {
   margin: 0;
-  color: #458588;
-  border-bottom: 5px solid #458588;
+  color: @base0D;
+  border-bottom: 5px solid @base0D;
 }
 
 #custom-power {
   margin: 0;
   padding: 0 10px;
-  color: #376669;
-  border-bottom: 5px solid #376669;
+  color: @base0D;
+  border-bottom: 5px solid @base0D;
 }
 
 #clock {
   margin: 0;
-  color: #b16286;
-  border-bottom: 5px solid #b16286;
+  color: @base0E;
+  border-bottom: 5px solid @base0E;
 }
 
 #custom-notification {
   margin: 0;
-  color: #FACADE;
-  border-bottom: 5px solid #FACADE;
+  color: @base0E;
+  border-bottom: 5px solid @base0E;
 }
 
 #tray {
   margin: 0;
-  color: #d65d0e;
-  border-bottom: 5px solid #d65d0e;
+  color: @base0F;
+  border-bottom: 5px solid @base0F;
 }

@@ -12,9 +12,7 @@
 
 /* https://github.com/Axenide/Dotfiles */
 
-/*
-* These colors don't match my system, but they will do as a placeholder for the moment
-*/
+@import url("colours.css");
 
 @define-color cc-bg #141b1e;
 @define-color noti-bg #232a2d;
@@ -28,7 +26,6 @@
 @define-color bg-selected #1B1D1D;
 
 @define-color black     #232a2d;
-@define-color red       #67b0e8;
 @define-color green     #000000;
 @define-color yellow    #000000;
 @define-color blue      #e57474;
@@ -46,7 +43,9 @@
 @define-color bg2       #504945;
 
 * {
-    font-family: Iosevka Nerd Font;
+    font-family: "JetBrains Mono";
+	font-weight: bold;
+	color: @base06;
     /* font-weight: bolder; */
 }
 
@@ -55,7 +54,7 @@
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
     opacity: 1;
-    background: alpha(@red, 0.25);
+    background: alpha(@base08, 0.25);
     border-radius: 0px;
     margin: 0px;
 }
@@ -63,9 +62,8 @@
 .notification {
     border-radius: 10px;
     padding: 0;
-    border: 1px solid @noti-close-bg;
-    background: @noti-bg-darker;
-   /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);*/
+    border: 1px solid @base09;
+    background: @base00;
 }
 
 .notification-content {
@@ -74,8 +72,8 @@
 }
 
 .close-button {
-    background: @noti-close-bg;
-    color: @red;
+    background: @base00;
+    color: @base08;
     text-shadow: none;
     padding: 0;
     border-radius: 100%;
@@ -89,7 +87,7 @@
 
 .close-button:hover {
     box-shadow: none;
-    background: @noti-close-bg-hover;
+    background: @base02;
     transition: all .15s ease-in-out;
     border: none
 }
@@ -145,7 +143,7 @@
 }
 
 .notification-group-icon {
-  color: @red;
+  color: @base08;
   margin-right: 8px;
 }
 
@@ -158,7 +156,7 @@
 
 .notification-group-collapse-button:hover {
   background: @noti-close-bg-hover;
-  color: @red;
+  color: @base08;
 }
 
 .notification-group-close-all-button {
@@ -170,7 +168,7 @@
 
 .notification-group-close-all-button:hover {
   background: @noti-close-bg-hover;
-  color: @red
+  color: @base08
 }
 
 .inline-reply {
@@ -214,9 +212,9 @@
     font-weight: bold;
     font-style: italic;
     background: transparent;
-    color: @red;
+    color: @base08;
     margin-left: 10px;
-    /* text-shadow: 0 0 3px @red; */
+    /* text-shadow: 0 0 3px @base08; */
 }
 
 .time {
@@ -245,7 +243,7 @@
 }
 
 .control-center {
-    background: alpha(@cc-bg, 1);
+    background: alpha(@base00, 1);
     border-left: 1px solid @noti-close-bg;
     border-radius: 10px;
     margin-left: 10px;
@@ -270,12 +268,12 @@
 }
 
 .widget-title {
-    color: @red;
+    color: @base08;
     margin: 20px 20px 5px 20px;
     font-size: 10.5pt;
     font-weight: bold;
     font-style: italic;
-    /* text-shadow: 0 0 3px @red; */
+    /* text-shadow: 0 0 3px @base08; */
 }
 
 .widget-title>button {
@@ -399,7 +397,7 @@
 }
 
 .widget-volume>box>button {
-    background: @red;
+    background: @base08;
     border: 1px solid @noti-close-bg;
 }
 

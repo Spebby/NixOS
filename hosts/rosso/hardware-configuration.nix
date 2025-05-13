@@ -15,6 +15,7 @@
         "usbhid"
         "usb_storage"
         "sd_mod"
+        "softdog"
       ];
     };
     extraModulePackages = [ ];

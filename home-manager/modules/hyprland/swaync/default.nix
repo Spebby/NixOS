@@ -1,5 +1,5 @@
 # /home-manager/modules/hyprland/swaync/default.nix
-# { config, ... }:
+{ config, ... }:
 
 let
   # fixme: NOT PLATFORM AGNOSTIC
@@ -204,4 +204,7 @@ in
       };
     };
   };
+
+  home.file.".config/swaync/colours.css".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/stylix/colours.css";
 }

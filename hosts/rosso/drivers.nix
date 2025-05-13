@@ -101,20 +101,20 @@
       kernelParams = [
         # === NVIDIA-Specific Fixes ===
         # Force s2idle (since S3 isn't supported)
-        #"mem_sleep_default=s2idle"
+        "mem_sleep_default=s2idle"
 
         # Disable PCIe power management quirks
         #"pcie_aspm=off"
         #"pcie_port_pm=off"
         # GPU memory preservation
-        #"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+        "nvidia.NVreg_PreserveVideoMemoryAllocations=0"
         # Workaround for resume failures
-        #"nvidia.NVreg_EnablePCIeGen3=1"
+        "nvidia.NVreg_EnablePCIeGen3=1"
 
         # === Debugging (temporary) ===
         # Enable these if issues persist, then check `journalctl -b`:
         # "pm_debug_messages"
-        # "nvidia.NVreg_EnableMSI=1"
+        "nvidia.NVreg_EnableMSI=1"
       ];
 
       # This is mainly an X11 support thing. Investigate if we need it.

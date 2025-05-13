@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   swayncClient = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
@@ -251,5 +256,8 @@ in
         		</interface>
         	  '';
     };
+
+    ".config/waybar/colours.css".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/stylix/colours.css";
   };
 }
