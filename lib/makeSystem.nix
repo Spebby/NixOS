@@ -16,6 +16,12 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = {
     inherit inputs hostname stateVersion;
     inherit (inputs) nixos-hardware;
+    pkgs-unstable = import inputs.nixpkgs-unstable {
+      inherit system;
+      config = {
+        allowUnfree = true;
+      };
+    };
   };
 
   modules = [ config ] ++ extraModules;

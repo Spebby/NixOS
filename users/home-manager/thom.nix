@@ -1,6 +1,11 @@
 # /users/home-manager/thom.nix
 
-{ pkgs, lib, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   allowedSigners = "${builtins.getEnv "HOME"}/.ssh/allowed_signers";
@@ -10,6 +15,8 @@ in
     packages = with pkgs; [
       lutris
       gh
+
+      inputs.yt-x.packages."${pkgs.system}".default
 
       # Games
       prismlauncher # Minecraft

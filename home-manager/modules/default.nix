@@ -8,6 +8,7 @@
     ./terminals
 
     ./bat.nix
+    ./blender.nix
     ./discord.nix
     ./eza.nix
     ./firefox.nix

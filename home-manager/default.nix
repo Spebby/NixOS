@@ -20,8 +20,8 @@ in
     #./flatpak.nix
   ];
 
-  home.stateVersion = stateVersion;
   home = {
+    inherit stateVersion;
     username = user;
     homeDirectory = "/home/${user}";
 

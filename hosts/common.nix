@@ -1,9 +1,10 @@
 # /hosts/common.nix
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
+  home-manager.backupFileExtension = "backup";
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"

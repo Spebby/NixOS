@@ -33,7 +33,7 @@
     };
 
     nixvim = {
-      url = "github:Spebby/nixvim/main";
+      url = "github:Spebby/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -41,6 +41,13 @@
       url = "github:nnra6864/HyprlandUnityFix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    blender = {
+      url = "github:edolstra/nix-warez?dir=blender";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    yt-x.url = "github:Benexl/yt-x";
   };
 
   outputs =
@@ -49,13 +56,11 @@
       nixpkgs,
       nixpkgs-unstable,
       pre-commit-hooks,
-      home-manager,
       ...
     }@inputs:
     let
       # In the future, I'd like to make this dynamic discovery. But for the moment, that's really dumb when there's only 1 system and 2 users.
       inherit (nixpkgs) lib;
-      #inherit (nixpkgs-unstable) lib-unstable;
       stateVersion = "24.11";
       hosts = import ./hosts/hosts.nix;
       makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
@@ -78,8 +83,18 @@
           // {
             "${user}@${host.hostname}" = makeHome {
               inherit inputs user;
-              pkgs = nixpkgs.legacyPackages.${host.system};
-              pkgs-unstable = nixpkgs-unstable.legacyPackages.${host.system};
+              pkgs = import nixpkgs {
+                inherit (host) system;
+                config = {
+                  allowUnfree = true;
+                };
+              };
+              pkgs-unstable = import nixpkgs-unstable {
+                inherit (host) system;
+                config = {
+                  allowUnfree = true;
+                };
+              };
               hostModules = [ hostHMConfig ];
             };
           }

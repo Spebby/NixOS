@@ -16,7 +16,6 @@
   home.packages = with pkgs; [
     # Desktop Apps
     audacity
-    blender
     cider-2
     gimp-with-plugins
     libreoffice-qt6
