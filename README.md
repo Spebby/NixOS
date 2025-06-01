@@ -7,16 +7,14 @@
 This is my NixOS config. The backbone (nix/home-manager) is based heavily on
 Ampersand's "Reborn" config. I've taken that config, and blended it with my old
 dots from my Gentoo days. This setup is made for a Lonovo Legion 5 Pro 16ARH7H,
-but with some tinkering it should work on most systems with a bit of tinkering.
-Plenty of credit due to my good fiends, [wyatt](www.wyatt.wtf) and
+but with some tinkering it should work on most systems. Plenty of credit due to
+my good fiends, [wyatt](https://www.wyatt.wtf) and
 [molecule31](https://molecule31.co.ua/) for helping me through the learning
 process. This repository will be somewhat active as long as I'm using this
 system--I go back and forwards between this and a old Thinkpad running Gentoo,
 which I have no intention of moving over to Nix.
 
-The RICE is based off of Ampersands, though I intend to change it quite a bit
-once the system is mostly stable. Still plenty to be done! Expect actually
-pictures here when it no longer looks exactly like ampersands.
+The RICE is based off of Ampersands' RICE.
 
 ## Tinkering
 
@@ -56,17 +54,7 @@ applications which will require some tinkering.
 ### Cider
 
 This is a paid app, and you'll need to [download an AppImage](https://cider.sh/)
-you've bought from them. The particular version of Cider you buy matters--Stable
-is typically behind by a few months. I don't like being on the unstable branch,
-so I've opted to use an overlay for this particular app. Each major release
-requires a new purchase, so I am personally not interested in keeping latest.
-So, unless you want to use the same version as me (why?) You'll have to update
-the overlay yourself. The good news is that I did 0 tweaks from the
-[fresh package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/ci/cider-2/package.nix)
-on nixpkgs. So, you'll probably be safe to simply copy and paste whatever the
-most recent version is.
-
-So I remember: I typically keep my AppImages in ~/.appimages/
+you've bought from them for it to install.
 
 ### Unity
 
@@ -96,18 +84,10 @@ the maintainer to make a flake for it, and instructions are on that repository.
 
 PlasticSCM does have a native Linux package, but only for Ubuntu, Fedora, Cent
 and other more popular distros. Nix is not one of those. I had originally
-intended to unpack it myself, but that fell through. Instead, my setup involves
-using a TUI application, "vecro", and using DistroBox to install the cli version
-of PlasticSCM. I had intended to get the GUI version to work, but that needs
-more of my time then I can devote to it at the moment due to some issues with
-systemd and wayland. As such, while verco is included in this configuration (and
-you can use it w/ git!), the DistroBox setup is not managed and you must
-manually set that up if you intend to use it.
-
-### Waybar
-
-My Waybar setup includes a weather widget--this is a leftover from Ampersand's
-config. Ampersand chose to hardcode the specific city being checked--I opted to
-make it dynamic. It sometimes bugs out a bit, so I may change that in the future
-and make it an environmental variable set per machine. For the moment though,
-keep that in mind if you disable location services.
+intended to unpack it myself, but I didn't feel it was worth my time. Instead,
+my setup involves using a TUI application, "verco", and using DistroBox to
+install the cli version of PlasticSCM. I had intended to get the GUI version to
+work, but that needs more of my time then I can devote to it at the moment due
+to some issues with systemd and wayland. As such, while verco is included in
+this configuration (and you can use it w/ git!), the DistroBox setup is not
+managed and you must manually set that up if you intend to use it.

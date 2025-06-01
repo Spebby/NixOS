@@ -9,7 +9,7 @@
 }:
 
 {
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   home.packages = with pkgs; [
     dejavu_fonts
@@ -21,7 +21,7 @@
     font-awesome
     powerline-fonts
     powerline-symbols
-    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    nerd-fonts.symbols-only
   ];
 
   stylix = lib.mkDefault {
@@ -31,10 +31,10 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
 
     targets = {
-      alacritty.enable = true;
       bat.enable = true;
       ghostty.enable = true;
 
+      firefox.enable = false;
       neovim.enable = false;
       waybar.enable = false;
       wofi.enable = false;

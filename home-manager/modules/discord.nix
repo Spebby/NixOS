@@ -4,20 +4,11 @@
 
 {
   home.packages = with pkgs-unstable; [
-    (discord.override {
+    (discord-canary.override {
       withOpenASAR = true;
       withVencord = true;
     })
-  ];
 
-  # "lucky day" fix
-  home.file = {
-    ".config/discord/settings.json" = {
-      text = ''
-        {
-        	"SKIP_HOST_UPDATE": true
-        }
-      '';
-    };
-  };
+    vesktop
+  ];
 }

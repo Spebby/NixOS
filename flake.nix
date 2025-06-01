@@ -5,19 +5,19 @@
   description = "NixOS Config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Theming Manager
     stylix = {
-      url = "github:danth/stylix/release-24.11";
+      url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -37,10 +37,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland-unity-fix = {
-      url = "github:nnra6864/HyprlandUnityFix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland-unity-fix.url = "github:nnra6864/HyprlandUnityFix";
 
     blender = {
       url = "github:edolstra/nix-warez?dir=blender";
@@ -61,7 +58,7 @@
     let
       # In the future, I'd like to make this dynamic discovery. But for the moment, that's really dumb when there's only 1 system and 2 users.
       inherit (nixpkgs) lib;
-      stateVersion = "24.11";
+      stateVersion = "25.05";
       hosts = import ./hosts/hosts.nix;
       makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
       makeHome = import ./lib/makeHome.nix { inherit inputs stateVersion lib; };

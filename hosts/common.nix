@@ -10,7 +10,11 @@
     "flakes"
   ];
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   environment.systemPackages = with pkgs; [
+    ntfs3g
+
     git
     home-manager
     openssl

@@ -1,6 +1,11 @@
 # /home-manager/home-packages.nix
 
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   nixpkgs = {
@@ -9,14 +14,13 @@
       permittedInsecurePackages = [ "openssl-1.1.1w" ];
     };
 
-    overlays = [ (import ./packages) ];
+    #overlays = [ (import ./packages) ];
   };
 
   # Packages I don't have specific configs for
   home.packages = with pkgs; [
     # Desktop Apps
     audacity
-    cider-2
     gimp-with-plugins
     libreoffice-qt6
     mission-center
@@ -29,6 +33,9 @@
     zoom-us
     en-croissant
     geogebra6
+
+    pkgs-unstable.cider-2
+    pkgs-unstable.gitkraken
 
     # Test
     figma-linux

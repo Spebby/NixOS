@@ -3,9 +3,12 @@
 {
   imports = [
     ./hyprland
-    ./stylix
     ./emulators
     ./terminals
+
+    # Styling
+    ./stylix
+    ./qt.nix
 
     ./bat.nix
     ./blender.nix
@@ -16,7 +19,6 @@
     ./moo.nix
     ./obsidian.nix
     ./protonge.nix
-    ./qt.nix
     ./starship.nix
     ./todoist.nix
     ./yazi.nix

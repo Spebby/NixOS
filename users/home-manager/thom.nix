@@ -64,7 +64,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-gtk2; # hyprland specific
+    pinentry.package = pkgs.pinentry-gtk2; # hyprland specific
   };
 
   xdg.mimeApps = {

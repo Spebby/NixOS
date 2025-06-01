@@ -6,6 +6,7 @@
 
 let
   extra-path = with pkgs; [
+    dotnetCorePackages.dotnet_8.sdk
     dotnetCorePackages.sdk_8_0
     dotnetPackages.Nuget
     mono
