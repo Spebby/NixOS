@@ -8,7 +8,7 @@
 
 {
   pkgs,
-  pkgs-unstable,
+  pkgs-stable,
   user,
   hostModules ? [ ],
   ...
@@ -34,7 +34,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
       inputs
       user
       stateVersion
-      pkgs-unstable
+      pkgs-stable
       ;
   };
 }

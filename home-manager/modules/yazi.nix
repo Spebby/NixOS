@@ -1,10 +1,10 @@
 # /home-manager/modules/yazi.nix
 
-{ pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 # todo: https://github.com/yazi-rs/plugins/tree/main/git.yazi
 {
-  home.packages = with pkgs-unstable; [ yaziPlugins.git ];
+  home.packages = with pkgs; [ yaziPlugins.git ];
 
   programs.yazi = {
     enable = true;

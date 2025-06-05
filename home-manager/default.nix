@@ -3,7 +3,6 @@
 {
   inputs,
   user,
-  stateVersion,
   lib,
   pkgs,
   ...
@@ -21,7 +20,6 @@ in
   ];
 
   home = {
-    inherit stateVersion;
     username = user;
     homeDirectory = "/home/${user}";
 

@@ -1,9 +1,9 @@
 # /home-manager/modules/godot.nix
 
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 let
-  godotMono = pkgs-unstable.godot-mono;
+  godotMono = pkgs.godot-mono;
 in
 {
   home.packages = [ godotMono ];

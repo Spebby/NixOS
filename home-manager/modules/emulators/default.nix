@@ -1,7 +1,7 @@
 # /home-manager/modules/emulators/default.nix
 
-{ pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
-  home.packages = with pkgs-unstable; [ rmg ];
+  home.packages = with pkgs; [ rmg ];
 }

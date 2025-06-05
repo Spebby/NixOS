@@ -5,19 +5,19 @@
   description = "NixOS Config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Theming Manager
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:danth/stylix/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -51,17 +51,17 @@
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
+      nixpkgs-stable,
       pre-commit-hooks,
       ...
     }@inputs:
     let
-      # In the future, I'd like to make this dynamic discovery. But for the moment, that's really dumb when there's only 1 system and 2 users.
+      # NEVER CHANGE THIS STRING. IT IS A FAILSAFE PROVIDED BY NIXOS.
+      stateVersion = "24.11";
       inherit (nixpkgs) lib;
-      stateVersion = "25.05";
       hosts = import ./hosts/hosts.nix;
       makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
-      makeHome = import ./lib/makeHome.nix { inherit inputs stateVersion lib; };
+      makeHome = import ./lib/makeHome.nix { inherit inputs lib stateVersion; };
 
       defaultSystem = "x86_64-linux";
     in
@@ -86,7 +86,7 @@
                   allowUnfree = true;
                 };
               };
-              pkgs-unstable = import nixpkgs-unstable {
+              pkgs-stable = import nixpkgs-stable {
                 inherit (host) system;
                 config = {
                   allowUnfree = true;

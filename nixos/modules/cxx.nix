@@ -13,7 +13,8 @@
     git
     binutils
 
-    nvi
+    nano
+    vim
   ];
 
   environment.variables = {

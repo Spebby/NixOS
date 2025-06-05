@@ -1,11 +1,6 @@
 # /home-manager/home-packages.nix
 
-{
-  inputs,
-  pkgs,
-  pkgs-unstable,
-  ...
-}:
+{ inputs, pkgs, ... }:
 
 {
   nixpkgs = {
@@ -34,8 +29,8 @@
     en-croissant
     geogebra6
 
-    pkgs-unstable.cider-2
-    pkgs-unstable.gitkraken
+    cider-2
+    gitkraken
 
     # Test
     figma-linux

@@ -1,9 +1,9 @@
 # /home-manager/modules/discord
 
-{ pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
-  home.packages = with pkgs-unstable; [
+  home.packages = with pkgs; [
     (discord-canary.override {
       withOpenASAR = true;
       withVencord = true;
