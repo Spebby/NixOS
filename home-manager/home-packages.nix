@@ -80,12 +80,11 @@
     # CXX - Adj
     meson
     cpio
+    doxygen_gui
 
     # ECMA
     nodejs
     #npm
-
-    python311
 
     # WM
     libsForQt5.xwaylandvideobridge

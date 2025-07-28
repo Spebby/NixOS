@@ -15,6 +15,9 @@
 
     nano
     vim
+
+    python312Full
+    zig
   ];
 
   environment.variables = {

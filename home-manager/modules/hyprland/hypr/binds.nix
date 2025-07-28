@@ -107,6 +107,8 @@ in
       # Scroll Wheel to switch workplaces
       "$mainMod, mouse_down, workspace, e+1"
       "$mainMod, mouse_up, workspace, e-1"
+      "$mainMod CTRL, right, workspace, e+1"
+      "$mainMod CTRL, left, workspace, e-1"
 
       # Moving windows to workspaces
       "$mainMod SHIFT, 1, movetoworkspace, 1"
