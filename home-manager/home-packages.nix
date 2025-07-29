@@ -16,7 +16,7 @@
   home.packages = with pkgs; [
     # Desktop Apps
     audacity
-    gimp-with-plugins
+    #gimp-with-plugins
     libreoffice-qt6
     mission-center
     mpv
