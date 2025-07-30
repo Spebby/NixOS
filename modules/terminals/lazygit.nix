@@ -1,6 +1,6 @@
 # /home-manager/modules/lazygit.nix
 
-{ config, lib }:
+{ config, lib, ... }:
 
 let
   cfg = config.lazygit;
@@ -9,7 +9,7 @@ in
   options.lazygit = {
     enable = lib.mkEnableOption "Enable LazyGit terminal utility";
     settings = lib.mkOption {
-      type = lib.types.attrsOf lib.types.any;
+      type = lib.types.attrs;
       default = {
         gui.showIcons = true;
         gui.theme = {
@@ -26,5 +26,5 @@ in
     };
   };
 
-  programs.lazygit = { inherit (cfg) enable settings; };
+  config.programs.lazygit = { inherit (cfg) enable settings; };
 }

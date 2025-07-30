@@ -32,7 +32,6 @@ in
     ./discord
     ./emulators
     ./firefox
-    ./productivity
     ./steam
     ./stylix
     ./terminals

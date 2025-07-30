@@ -30,5 +30,5 @@ in
     };
   };
 
-  programs.bat = { inherit (cfg) enable themes; };
+  config.programs.bat = { inherit (cfg) enable themes; };
 }

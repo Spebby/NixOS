@@ -44,15 +44,9 @@ in
   firefox.enable = true;
   discord = {
     enable = true;
-    customClient = true;
+    useCustomClient = true;
   };
 
-  obsidian = {
-    enable = true;
-    useGitSync.enable = true;
-  };
-
-  todoist.enable = false;
   protonUp.enable = true;
 
   blender.enable = true;

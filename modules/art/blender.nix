@@ -12,7 +12,8 @@ let
   cfg = config.blender;
 in
 {
-  options.blender.enable = lib.mkIf cfg.enable {
+  options.blender.enable = lib.mkEnableOption "Enable Blender";
+  config = lib.mkIf cfg.enable {
     home.packages = [ inputs.blender.packages.${pkgs.system}.default ];
   };
 }

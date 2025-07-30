@@ -1,6 +1,6 @@
 # /home-manager/modules/starship.nix
 
-{ config, lib }:
+{ config, lib, ... }:
 
 let
   prependDollarAndJoinWith =
@@ -84,8 +84,8 @@ in
 {
   # I would eventually like to make this more comprehensive but starship is a bit too complicated for the moment.
 
-  options.starship = {
-    starship.enable = lib.mkOption {
+  options.terminals.starship = {
+    enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
       description = "Enable Starship terminal shell prompt";
@@ -97,7 +97,7 @@ in
     };
   };
 
-  programs.starship = {
+  config.programs.starship = {
     inherit (cfg) enable enableZshIntegration;
     settings = {
       format = " 󱄅 (red)$username $directory ${

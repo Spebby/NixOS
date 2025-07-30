@@ -75,7 +75,7 @@ in
 
   };
 
-  programs.eza = {
+  config.programs.eza = {
     inherit (cfg)
       enable
       enableZshIntegration

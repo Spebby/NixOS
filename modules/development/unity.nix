@@ -4,6 +4,7 @@
   config,
   pkgs,
   lib,
+  ...
 }:
 
 # TODO: investigate if i can get rid of the openssl mask
@@ -12,6 +13,7 @@ let
   cfg = config.unity;
 in
 {
+  # For UNITY. Again, investigate if I can remove this garbage.
   options.unity = {
     enable = lib.mkEnableOption "Enable Unity game engine";
     useVerco = lib.mkOption {
@@ -22,10 +24,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nixpkgs.config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [ "openssl-1.1.1w" ];
+    };
+
     home.packages =
       with pkgs;
       [
-        openssl_1_1
+        openssl_1_1 # My heart knows only hate
         (pkgs.unityhub.override {
           extraLibs =
             pkgs: with pkgs; [

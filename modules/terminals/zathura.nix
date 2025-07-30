@@ -1,6 +1,6 @@
 # /home-manager/modules/zathura.nix
 
-{ config, lib }:
+{ config, lib, ... }:
 
 let
   cfg = config.zathura;
@@ -9,7 +9,7 @@ in
   options.zathura = {
     enable = lib.mkEnableOption "Enable Zathura document reader";
     mappings = lib.mkOption {
-      type = lib.types.attrsOf lib.types.any;
+      type = lib.types.attrs;
       default = {
         D = "toggle_page_mode";
         d = "scroll half_down";
@@ -25,5 +25,5 @@ in
     };
   };
 
-  programs.zathura = { inherit (cfg) enable mappings options; };
+  config.programs.zathura = { inherit (cfg) enable mappings options; };
 }
