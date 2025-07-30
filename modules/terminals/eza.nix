@@ -75,16 +75,14 @@ in
 
   };
 
-  config = lib.mkIf cfg.enable {
-    programs.eza = {
-      enable = true;
-      inherit (cfg)
-        enableZshIntegration
-        git
-        colors
-        icons
-        extraOptions
-        ;
-    };
+  programs.eza = {
+    inherit (cfg)
+      enable
+      enableZshIntegration
+      git
+      colors
+      icons
+      extraOptions
+      ;
   };
 }

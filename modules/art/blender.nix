@@ -1,7 +1,18 @@
-# /home-manager/packages/blender.nix
-
-{ pkgs, inputs, ... }:
+# /modules/art/blender.nix
 
 {
-  home.packages = [ inputs.blender.packages.${pkgs.system}.default ];
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
+
+let
+  cfg = config.blender;
+in
+{
+  options.blender.enable = lib.mkIf cfg.enable {
+    home.packages = [ inputs.blender.packages.${pkgs.system}.default ];
+  };
 }

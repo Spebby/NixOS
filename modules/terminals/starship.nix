@@ -1,6 +1,6 @@
 # /home-manager/modules/starship.nix
 
-{ lib, ... }:
+{ config, lib }:
 
 let
   prependDollarAndJoinWith =
@@ -78,11 +78,27 @@ let
     "docker_context"
     "vagrant"
   ];
+
+  cfg = config.terminals.starship;
 in
 {
+  # I would eventually like to make this more comprehensive but starship is a bit too complicated for the moment.
+
+  options.starship = {
+    starship.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable Starship terminal shell prompt";
+    };
+    enableZshIntegration = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable Zsh integration with Starship";
+    };
+  };
+
   programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
+    inherit (cfg) enable enableZshIntegration;
     settings = {
       format = " 󱄅 (red)$username $directory ${
          lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [

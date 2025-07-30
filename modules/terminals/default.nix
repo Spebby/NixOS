@@ -46,18 +46,6 @@ in
 
   # Config options
   options.terminals = {
-    eza.enable = lib.mkEnableOption "Enable eza 'ls' replacement";
-    starship.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable Starship terminal shell prompt";
-    };
-    zsh.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable ZSH shell and config";
-    };
-
     alacritty.enable = lib.mkEnableOption "Enable Alacritty terminal emulator";
     ghostty.enable = lib.mkEnableOption "Enable Ghostty terminal emulator";
     kitty.enable = lib.mkOption {

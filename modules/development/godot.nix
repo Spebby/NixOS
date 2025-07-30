@@ -1,14 +1,23 @@
 # /home-manager/modules/godot.nix
 
-{ pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+}:
 
 let
   godotMono = pkgs.godot-mono;
+  cfg = config.godot;
 in
 {
-  home.packages = [ godotMono ];
+  options.godot.enable = lib.mkEnableOption "Enable the Godot game engine";
 
-  xdg.dataFile."applications/godot-mono.desktop".text = ''
-    ${pkgs.gnused}/bin/sed -i 's|^Exec=.*|Exec=${godotMono}/bin/godot-mono --single-window %F|' $out
-  '';
+  config = lib.mkIf cfg.enable {
+    home.packages = [ godotMono ];
+
+    xdg.dataFile."applications/godot-mono.desktop".text = ''
+      ${pkgs.gnused}/bin/sed -i 's|^Exec=.*|Exec=${godotMono}/bin/godot-mono --single-window %F|' $out
+    '';
+  };
 }

@@ -54,6 +54,8 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
       "resume=/.swapfile"
+
+      "console=tty2"
     ];
     # Hide OS choice for bootloader
     # loader.timeout = 0;
@@ -102,9 +104,6 @@
 
   security = {
     pam.services.hyprlock = { };
-    #pki.certificateFiles = [
-    #  ../../certs/eduroam.crt
-    #];
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -113,10 +112,6 @@
   };
 
   services = {
-    #getty = {
-    #  greetingLine = "moo";
-    #  autoLoginUser = user;
-    #};
     auto-cpufreq.enable = false;
     tlp = {
       enable = true;

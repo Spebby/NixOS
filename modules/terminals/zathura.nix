@@ -1,16 +1,29 @@
 # /home-manager/modules/zathura.nix
 
+{ config, lib }:
+
+let
+  cfg = config.zathura;
+in
 {
-  programs.zathura = {
-    enable = true;
-    mappings = {
-      D = "toggle_page_mode";
-      d = "scroll half_down";
-      u = "scroll half_up";
+  options.zathura = {
+    enable = lib.mkEnableOption "Enable Zathura document reader";
+    mappings = lib.mkOption {
+      type = lib.types.attrsOf lib.types.any;
+      default = {
+        D = "toggle_page_mode";
+        d = "scroll half_down";
+        u = "scroll half_up";
+      };
     };
 
     options = {
-      font = "JetBrains Mono Bold 13";
+      font = lib.mkOption {
+        type = lib.types.str;
+        default = "JetBrains Mono Bold 13";
+      };
     };
   };
+
+  programs.zathura = { inherit (cfg) enable mappings options; };
 }

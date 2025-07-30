@@ -2,7 +2,12 @@
 # Credit to huantianad for original configuration.
 # https://huantian.dev/blog/unity3d-rider-nixos/
 
-{ pkgs-stable, lib, ... }:
+{
+  config,
+  pkgs-stable,
+  lib,
+  ...
+}:
 
 let
   extra-path = with pkgs-stable; [
@@ -19,29 +24,33 @@ let
     libglvnd
   ];
 
+  cfg = config.rider;
 in
 {
-  home.packages = [
-    (pkgs-stable.symlinkJoin {
-      name = "rider-wrapped";
-      paths = [ pkgs-stable.jetbrains.rider ];
-      buildInputs = [ pkgs-stable.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/rider \
-          --argv0 rider \
-          --prefix PATH : "${lib.makeBinPath extra-path}" \
-          --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
-      '';
-    })
-  ];
+  options.rider.enable = lib.mkEnableOption "Enable JetBrains Rider";
+  config = lib.mkIf cfg.enable {
+    home.packages = [
+      (pkgs-stable.symlinkJoin {
+        name = "rider-wrapped";
+        paths = [ pkgs-stable.jetbrains.rider ];
+        buildInputs = [ pkgs-stable.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/rider \
+            --argv0 rider \
+            --prefix PATH : "${lib.makeBinPath extra-path}" \
+            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
+        '';
+      })
+    ];
 
-  # Keep the desktop file
-  xdg.dataFile."applications/jetbrains-rider.desktop".text = ''
-    [Desktop Entry]
-    Name=Rider
-    Exec="${pkgs-stable.jetbrains.rider}/bin/rider"
-    Icon=rider
-    Type=Application
-    NoDisplay=true
-  '';
+    # Keep the desktop file
+    xdg.dataFile."applications/jetbrains-rider.desktop".text = ''
+      [Desktop Entry]
+      Name=Rider
+      Exec="${pkgs-stable.jetbrains.rider}/bin/rider"
+      Icon=rider
+      Type=Application
+      NoDisplay=true
+    '';
+  };
 }

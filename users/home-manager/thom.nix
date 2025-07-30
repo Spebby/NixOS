@@ -44,7 +44,7 @@ in
   firefox.enable = true;
   discord = {
     enable = true;
-    customClient.enable = true;
+    customClient = true;
   };
 
   obsidian = {
@@ -53,8 +53,18 @@ in
   };
 
   todoist.enable = false;
+  protonUp.enable = true;
+
+  blender.enable = true;
+  rider.enable = true;
+  godot.enable = true;
+  unity = {
+    enable = true;
+    useVerco = true;
+  };
 
   home = {
+    # local packages
     packages = with pkgs; [
       lutris
       gh
@@ -63,6 +73,78 @@ in
 
       # Games
       prismlauncher # Minecraft
+
+      # Desktop Apps
+      audacity
+      #gimp-with-plugins
+      libreoffice-qt6
+      mission-center
+      mpv
+      obs-studio
+      pinta
+      slack
+      thunderbird
+      vlc
+      zoom-us
+      en-croissant
+      geogebra6
+
+      cider-2
+
+      # Test
+      figma-linux
+      davinci-resolve
+
+      # Steam Helpers
+      steam-tui
+      steamcmd
+
+      # CLI Utils
+      acpid
+      alsa-utils
+      bat
+      bc
+      bottom
+      brightnessctl
+      btop
+      fastfetch
+      ffmpeg
+      ffmpegthumbnailer
+      fzf
+      git-graph
+      htop
+      netcat-gnu
+      ntfs3g
+      mediainfo
+      microfetch
+      playerctl
+      ripgrep
+      showmethekey
+      silicon
+      udisks
+      ueberzugpp
+      unzip
+      w3m
+      wget
+      wl-clipboard
+      wtype
+      yt-dlp
+      zip
+      inputs.nixvim.packages.${pkgs.system}.default
+
+      # CXX - Adj
+      meson
+      cpio
+      doxygen_gui
+
+      # ECMA
+      nodejs
+      #npm
+
+      # WM
+      libsForQt5.xwaylandvideobridge
+      libnotify
+      xdg-desktop-portal-gtk
     ];
 
     # GPG Signing for Git

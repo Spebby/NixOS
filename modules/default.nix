@@ -1,34 +1,42 @@
-# /home-manager/modules/default.nix
-
+# /modules/default.nix
 {
+  inputs,
+  user,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+  inherit (inputs) nixvim;
+in
+{
+  home = {
+    username = user;
+    homeDirectory = "/home/${user}";
+
+    sessionVariables = {
+      EDITOR = lib.getExe nixvim-stylix;
+      NIXOS_OZONE_WL = "1";
+    };
+  };
+
+  # Blanket import everything. The user's configuration in
+  # ../users/home-manager/ will enable the specific packages
+  # they actually want.
   imports = [
-    ./hyprland
+    ./art
+    ./de
+    ./development
+    ./discord
     ./emulators
+    ./firefox
+    ./productivity
+    ./steam
+    ./stylix
     ./terminals
 
-    # Styling
-    ./stylix
     ./qt.nix
-
-    ./bat.nix
-    ./blender.nix
-    ./discord.nix
-    ./eza.nix
-    ./firefox.nix
-    ./lazygit.nix
-    ./moo.nix
-    ./obsidian.nix
-    ./protonge.nix
-    ./starship.nix
-    ./todoist.nix
-    ./yazi.nix
-    ./zathura.nix
-    ./zsh.nix
-    #    ./dolphin.nix
-
-    # Unity
-    ./rider.nix
-    ./unity.nix
-    ./godot.nix
   ];
 }

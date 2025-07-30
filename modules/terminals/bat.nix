@@ -13,13 +13,9 @@ in
 {
   options.terminals.bat = {
     enable = lib.mkEnableOption "Enable bat (modern cat replacement)";
-  };
-
-  config = lib.mkIf cfg.enable {
-    programs.bat = {
-      enable = true;
-
-      themes = {
+    themes = lib.mkOption {
+      type = lib.types.attrsOf lib.types.attrs;
+      default = {
         dracula = {
           src = pkgs.fetchFromGitHub {
             owner = "Briles";
@@ -30,6 +26,9 @@ in
           file = "gruvbox (Dark) (Medium).sublime-color-scheme";
         };
       };
+      description = "Themes for bat syntax highlighting.";
     };
   };
+
+  programs.bat = { inherit (cfg) enable themes; };
 }
