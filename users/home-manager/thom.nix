@@ -13,7 +13,7 @@ let
 in
 {
   # Specific packages.
-  imports = [ ../../modules ];
+  imports = [ ../../modules/home-manager ];
 
   terminals = {
     alacritty.enable = false;

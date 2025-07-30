@@ -4,7 +4,7 @@
 
 {
   # Import all the home-manager modules
-  imports = [ ../../modules ];
+  imports = [ ../../modules/home-manager ];
 
   # And then selectively enable them as needed
   firefox.enable = true;
