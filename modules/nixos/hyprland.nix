@@ -5,24 +5,19 @@ let
 in
 {
   options.hyprland = {
-    enable = "Enable Hyprland wayland compositor";
+    enable = lib.mkEnableOption "Enable Hyprland wayland compositor";
     withUWSM = lib.mkOption {
       type = lib.types.bool;
       default = false;
     };
-
-    xwayland = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
   };
 
   config = {
-    sessionVariables = {
+    environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
 
-    programs.hyprland = { inherit (cfg) enable withUWSM xwayland; };
+    programs.hyprland = { inherit (cfg) enable withUWSM; };
 
     services = {
       pulseaudio.enable = false;
@@ -32,8 +27,8 @@ in
           enable = true;
           support32Bit = true;
         };
+        pulse.enable = true;
       };
-      pulse.enable = true;
     };
 
     security = {

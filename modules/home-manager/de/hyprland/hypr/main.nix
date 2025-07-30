@@ -39,6 +39,22 @@ in
       settings = {
         inherit (cfg) env;
 
+        monitor = "$mainMonitor,${cfg.monitorResolution},auto,${cfg.monitorScale}";
+        "$mainMonitor" = cfg.mainMonitor;
+        "$mainMod" = cfg.mainMod;
+        "$terminal" = cfg.terminal;
+        "$fileManager" = cfg.fileManager;
+        "$menu" = cfg.menu;
+
+        xwayland.force_zero_scaling = true;
+
+        exec-once = [
+          "waybar"
+          "wl-paste --type text --watch cliphist store"
+          "wl-paste --type image --watch cliphist store"
+          "nm-applet"
+        ];
+
         # hpyrwiki.../Configuration/Variables
         general = {
           gaps_in = 5;

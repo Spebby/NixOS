@@ -29,6 +29,29 @@
       description = "Resolution and refresh rate for the main monitor.";
     };
 
+    monitorScale = lib.mkOption {
+      type = lib.types.str;
+      default = "1.6";
+    };
+
+    terminal = lib.mkOption {
+      type = lib.types.str;
+      default = "kitty";
+      description = "Default terminal emulator.";
+    };
+
+    fileManager = lib.mkOption {
+      type = lib.types.str;
+      default = "thunar";
+      description = "Default file manager.";
+    };
+
+    menu = lib.mkOption {
+      type = lib.types.str;
+      default = "wofi";
+      description = "Launcher/menu program.";
+    };
+
     env = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [

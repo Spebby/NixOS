@@ -89,8 +89,8 @@
     packages = with pkgs; [ jetbrains-mono ];
   };
 
-  #hyprland.enable = true;
   gnome.enable = true;
+  hyprland.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {
@@ -151,19 +151,16 @@
       };
     };
 
+    power-profiles-daemon.enable = false;
+
+    desktopManager.gnome.enable = true;
     displayManager = {
       defaultSession = "gnome";
-      gdm = {
+      sddm = {
         enable = true;
-        settings = {
-          greeter.IncludeAll = true;
-        };
+        wayland.enable = true;
+        theme = "${import ./sddm.nix { inherit pkgs; }}";
       };
-      #sddm = {
-      #enable = true;
-      #wayland.enable = true;
-      #theme = "${import ./sddm.nix { inherit pkgs; }}";
-      #};
     };
   };
 }

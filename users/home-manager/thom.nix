@@ -5,6 +5,7 @@
   inputs,
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }:
 
@@ -49,7 +50,7 @@ in
 
   protonUp.enable = true;
 
-  #hyprland.enable = true;
+  hyprland.enable = true;
   gnome.enable = true;
 
   blender.enable = true;
@@ -72,7 +73,7 @@ in
       prismlauncher # Minecraft
 
       # Desktop Apps
-      audacity
+      pkgs-stable.audacity
       #gimp-with-plugins
       libreoffice-qt6
       mission-center

@@ -28,23 +28,15 @@ in
         gnome-music
         gnome-weather
       ];
-    };
 
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
+      sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+      };
     };
 
     services = {
-      displayManager = {
-        displayManager.gdm = {
-          settings = {
-            greeter.IncludeAll = true;
-          };
-        };
-        desktopManager = {
-          gnome.enable = true;
-        };
-      };
+      #displayManager.gdm.enable = true; #for whatever reason, broken
+      desktopManager.gnome.enable = true;
       udev.packages = [ pkgs.gnome-settings-daemon ];
 
       pulseaudio.enable = false;
@@ -54,12 +46,12 @@ in
           enable = true;
           support32Bit = true;
         };
+        pulse.enable = true;
       };
-      pulse.enable = true;
-    };
 
-    services.displayManager.gdm.enable = true;
-    services.desktopManager.gnome.enable = true;
+      # Disable GNOME's power profile daemon
+      power-profiles-daemon.enable = false;
+    };
 
     security.rtkit.enable = true;
   };
