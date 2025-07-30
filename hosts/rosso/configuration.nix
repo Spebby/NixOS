@@ -16,7 +16,6 @@
     ./local-packages.nix
     ./drivers.nix
     ../common.nix # Common to hosts
-    ../../nixos/modules # Global modules
     ../../users/thom.nix
     ../../users/max.nix
   ];
