@@ -1,5 +1,10 @@
+{ config, lib, ... }:
+
+let
+  cfg = config.hyprland;
+in
 {
-  services.hypridle = {
+  services.hypridle = lib.mkIf cfg.enable {
     enable = true;
     settings = {
       general = {

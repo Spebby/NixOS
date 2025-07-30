@@ -1,7 +1,15 @@
-{ pkgs, ... }:
-
 {
-  programs.hyprlock = {
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+
+let
+  cfg = config.hyprland;
+in
+{
+  programs.hyprlock = lib.mkIf cfg.enable {
     enable = true;
     settings = {
       general = {

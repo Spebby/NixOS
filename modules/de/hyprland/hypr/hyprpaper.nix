@@ -1,6 +1,9 @@
+{ config, lib, ... }:
+
+let
+  cfg = config.hyprland;
+in
 {
   # Wallpaper is configured in ../stylix.nix
-  services.hyprpaper = {
-    enable = true;
-  };
+  services.hyprpaper = lib.mkIf cfg.enable { enable = true; };
 }

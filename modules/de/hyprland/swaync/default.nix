@@ -1,5 +1,5 @@
 # /home-manager/modules/hyprland/swaync/default.nix
-{ config, ... }:
+{ config, lib, ... }:
 
 let
   # fixme: NOT PLATFORM AGNOSTIC
@@ -7,9 +7,10 @@ let
 
   scIcon = "";
   ssIcon = "";
+  cfg = config.hyprland;
 in
 {
-  services.swaync = {
+  config.services.swaync = lib.mkIf cfg.enable {
     enable = true;
     style = ./style.css;
 
