@@ -83,7 +83,6 @@ in
       thunderbird
       vlc
       zoom-us
-      en-croissant
       geogebra6
 
       cider-2
