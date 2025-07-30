@@ -26,6 +26,9 @@ to slowly go through and update them to be more modular and control more of the
 hardware-specific environmental variables at host-level. For the moment though,
 consult the Hyprland wiki, and remove incompatible features.
 
+If you get any errors about missing precommit hooks, make sure to run
+`nix develop`!
+
 ## Philosophy
 
 I've designed this config to be somewhat portable, in that it will exist on a

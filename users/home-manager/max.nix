@@ -3,6 +3,17 @@
 { pkgs, lib, ... }:
 
 {
+  # Import all the home-manager modules
+  imports = [ ../../modules/home-manager ];
+
+  # And then selectively enable them as needed
+  firefox.enable = true;
+  discord = {
+    enable = true;
+    customClient.enable = false;
+  };
+
+  # For
   home.packages = with pkgs; [ neofetch ];
 
   # Stylix Overrides

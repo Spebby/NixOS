@@ -12,14 +12,11 @@
     extraModules = [ ];
   };
 
-  #desktop = {
-  #	namename = "desktop";
-  #	system = "x86_64-linux";
-  #	config = import ./desktop/configuration.nix;
-  #   users = [
-  #		"thom"
-  #		"max"
-  #   ];
-  #	extraModules = [];
+  #tink = {
+  #hostname = "tink";
+  #system = "x86_64-linux";
+  #config = import ./tink/configuration.nix;
+  #users = [ "max" ];
+  #extraModules = [ ];
   #};
 }

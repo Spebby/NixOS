@@ -1,9 +1,11 @@
 # /users/home-manager/thom.nix
 
 {
+  config,
   inputs,
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }:
 
@@ -11,7 +13,56 @@ let
   allowedSigners = "${builtins.getEnv "HOME"}/.ssh/allowed_signers";
 in
 {
+  # Specific packages.
+  imports = [ ../../modules/home-manager ];
+
+  terminals = {
+    alacritty.enable = false;
+    ghostty.enable = false;
+    kitty.enable = true;
+
+    zsh.enable = true;
+    starship.enable = true;
+
+    bat.enable = true;
+    eza = {
+      enable = true;
+      enableZshIntegration = true;
+      git = true;
+      colors = "always";
+      icons = "always";
+      extraOptions = [
+        "--group-directories-first"
+        "--header"
+      ];
+    };
+  };
+
+  lazygit.enable = true;
+  yazi.enable = true;
+  zathura.enable = true;
+
+  firefox.enable = true;
+  discord = {
+    enable = true;
+    useCustomClient = true;
+  };
+
+  protonUp.enable = true;
+
+  hyprland.enable = true;
+  gnome.enable = true;
+
+  blender.enable = true;
+  rider.enable = true;
+  godot.enable = true;
+  unity = {
+    enable = true;
+    useVerco = true;
+  };
+
   home = {
+    # local packages
     packages = with pkgs; [
       lutris
       gh
@@ -20,6 +71,77 @@ in
 
       # Games
       prismlauncher # Minecraft
+
+      # Desktop Apps
+      pkgs-stable.audacity
+      #gimp-with-plugins
+      libreoffice-qt6
+      mission-center
+      mpv
+      obs-studio
+      pinta
+      slack
+      thunderbird
+      vlc
+      zoom-us
+      geogebra6
+
+      cider-2
+
+      # Test
+      figma-linux
+      davinci-resolve
+
+      # Steam Helpers
+      steam-tui
+      steamcmd
+
+      # CLI Utils
+      acpid
+      alsa-utils
+      bat
+      bc
+      bottom
+      brightnessctl
+      btop
+      fastfetch
+      ffmpeg
+      ffmpegthumbnailer
+      fzf
+      git-graph
+      htop
+      netcat-gnu
+      ntfs3g
+      mediainfo
+      microfetch
+      playerctl
+      ripgrep
+      showmethekey
+      silicon
+      udisks
+      ueberzugpp
+      unzip
+      w3m
+      wget
+      wl-clipboard
+      wtype
+      yt-dlp
+      zip
+      inputs.nixvim.packages.${pkgs.system}.default
+
+      # CXX - Adj
+      meson
+      cpio
+      doxygen_gui
+
+      # ECMA
+      nodejs
+      #npm
+
+      # WM
+      libsForQt5.xwaylandvideobridge
+      libnotify
+      xdg-desktop-portal-gtk
     ];
 
     # GPG Signing for Git
@@ -28,7 +150,7 @@ in
 
     sessionVariables = rec {
       XDG_BOOKS_DIR = "$HOME/Media/Books";
-      TERMINAL = "kitty";
+      TERMINAL = lib.mkDefault (config.terminals.default or "kitty");
     };
   };
 

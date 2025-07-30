@@ -16,7 +16,7 @@
     ./local-packages.nix
     ./drivers.nix
     ../common.nix # Common to hosts
-    ../../nixos/modules # Global modules
+    ../../modules/nixos
     ../../users/thom.nix
     ../../users/max.nix
   ];
@@ -54,6 +54,8 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
       "resume=/.swapfile"
+
+      "console=tty2"
     ];
     # Hide OS choice for bootloader
     # loader.timeout = 0;
@@ -80,10 +82,6 @@
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
     ];
-
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-    };
   };
 
   fonts = {
@@ -91,21 +89,8 @@
     packages = with pkgs; [ jetbrains-mono ];
   };
 
-  # Hyperland Specific
-  programs.hyprland = {
-    enable = true;
-
-    # These two are sometimes nice but I don't want em' for now
-    # withUWSM = true;
-    # xwayland.enable = false;
-  };
-
-  security = {
-    pam.services.hyprlock = { };
-    #pki.certificateFiles = [
-    #  ../../certs/eduroam.crt
-    #];
-  };
+  gnome.enable = true;
+  hyprland.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {
@@ -113,10 +98,6 @@
   };
 
   services = {
-    #getty = {
-    #  greetingLine = "moo";
-    #  autoLoginUser = user;
-    #};
     auto-cpufreq.enable = false;
     tlp = {
       enable = true;
@@ -170,8 +151,11 @@
       };
     };
 
+    power-profiles-daemon.enable = false;
+
+    desktopManager.gnome.enable = true;
     displayManager = {
-      defaultSession = "hyprland";
+      defaultSession = "gnome";
       sddm = {
         enable = true;
         wayland.enable = true;
