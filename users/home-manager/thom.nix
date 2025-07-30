@@ -49,6 +49,9 @@ in
 
   protonUp.enable = true;
 
+  #hyprland.enable = true;
+  gnome.enable = true;
+
   blender.enable = true;
   rider.enable = true;
   godot.enable = true;

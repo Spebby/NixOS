@@ -1,3 +1,8 @@
 # /modules/de/
 
-{ imports = [ ./hyprland ]; }
+{
+  imports = [
+    ./hyprland
+    ./gnome
+  ];
+}

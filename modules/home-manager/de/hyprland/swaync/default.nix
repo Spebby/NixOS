@@ -206,6 +206,6 @@ in
     };
   };
 
-  home.file.".config/swaync/colours.css".source =
+  config.home.file.".config/swaync/colours.css".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/stylix/colours.css";
 }

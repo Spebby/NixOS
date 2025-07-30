@@ -151,7 +151,6 @@
         }
       ];
     };
-    rtkit.enable = true;
   };
 
   # Timezones

@@ -19,7 +19,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
   inherit lib;
 
   modules = [
-    ../modules
+    ../modules/home-manager
     ../users/home-manager/${user}.nix
     (
       { lib, ... }:

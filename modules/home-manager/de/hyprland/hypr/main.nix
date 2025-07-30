@@ -10,7 +10,15 @@ let
   cfg = config.hyprland;
 in
 {
+  imports = [ inputs.hyprland-unity-fix.nixosModules.hyprlandUnityFixModule ];
   config = lib.mkIf cfg.enable {
+    hyprlandUnityFix = {
+      enable = true;
+      configRules = [
+
+      ];
+    };
+
     home.packages = with pkgs; [
       kitty
       xdotool
@@ -24,14 +32,7 @@ in
       '')
     ];
 
-    imports = [ inputs.hyprland-unity-fix.nixosModules.hyprlandUnityFixModule ];
-    hyprlandUnityFix = lib.mkIf cfg.enable {
-      enable = true;
-      configRules = [
-
-      ];
-    };
-    wayland.windowManager.hyprland = lib.mkIf cfg.enable {
+    wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
 

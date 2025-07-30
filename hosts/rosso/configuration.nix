@@ -16,6 +16,7 @@
     ./local-packages.nix
     ./drivers.nix
     ../common.nix # Common to hosts
+    ../../modules/nixos
     ../../users/thom.nix
     ../../users/max.nix
   ];
@@ -81,10 +82,6 @@
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
     ];
-
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-    };
   };
 
   fonts = {
@@ -92,18 +89,8 @@
     packages = with pkgs; [ jetbrains-mono ];
   };
 
-  # Hyperland Specific
-  programs.hyprland = {
-    enable = true;
-
-    # These two are sometimes nice but I don't want em' for now
-    # withUWSM = true;
-    # xwayland.enable = false;
-  };
-
-  security = {
-    pam.services.hyprlock = { };
-  };
+  #hyprland.enable = true;
+  gnome.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {
@@ -165,12 +152,18 @@
     };
 
     displayManager = {
-      defaultSession = "hyprland";
-      sddm = {
+      defaultSession = "gnome";
+      gdm = {
         enable = true;
-        wayland.enable = true;
-        theme = "${import ./sddm.nix { inherit pkgs; }}";
+        settings = {
+          greeter.IncludeAll = true;
+        };
       };
+      #sddm = {
+      #enable = true;
+      #wayland.enable = true;
+      #theme = "${import ./sddm.nix { inherit pkgs; }}";
+      #};
     };
   };
 }
