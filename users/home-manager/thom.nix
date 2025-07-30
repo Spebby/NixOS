@@ -1,6 +1,7 @@
 # /users/home-manager/thom.nix
 
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -11,6 +12,48 @@ let
   allowedSigners = "${builtins.getEnv "HOME"}/.ssh/allowed_signers";
 in
 {
+  # Specific packages.
+  imports = [ ../../modules ];
+
+  terminals = {
+    alacritty.enable = false;
+    ghostty.enable = false;
+    kitty.enable = true;
+
+    zsh.enable = true;
+    starship.enable = true;
+
+    bat.enable = true;
+    eza = {
+      enable = true;
+      enableZshIntegration = true;
+      git = true;
+      colors = "always";
+      icons = "always";
+      extraOptions = [
+        "--group-directories-first"
+        "--header"
+      ];
+    };
+  };
+
+  lazygit.enable = true;
+  yazi.enable = true;
+  zathura.enable = true;
+
+  firefox.enable = true;
+  discord = {
+    enable = true;
+    customClient.enable = true;
+  };
+
+  obsidian = {
+    enable = true;
+    useGitSync.enable = true;
+  };
+
+  todoist.enable = false;
+
   home = {
     packages = with pkgs; [
       lutris
@@ -28,7 +71,7 @@ in
 
     sessionVariables = rec {
       XDG_BOOKS_DIR = "$HOME/Media/Books";
-      TERMINAL = "kitty";
+      TERMINAL = lib.mkDefault (config.terminals.default or "kitty");
     };
   };
 

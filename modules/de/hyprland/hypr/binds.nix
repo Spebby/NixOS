@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
+  terminal = config.terminals.default or "kitty";
+
   booksScript = pkgs.writeScriptBin "open_books" ''
     #!/bin/sh
 
@@ -26,7 +28,7 @@ let
       echo "# Scratch Note (''$TIMESTAMP)" > "''$SCRATCH_FILE"
     fi
 
-    exec "''${TERMINAL:-kitty}" --class scratch-note -e nvim "''$SCRATCH_FILE"
+    exec "''${TERMINAL:-${terminal}}" --class scratch-note -e nvim "''$SCRATCH_FILE"
   '';
 in
 {

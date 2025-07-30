@@ -1,5 +1,4 @@
-# /home-manager/default.nix
-
+# /modules/default.nix
 {
   inputs,
   user,
@@ -13,12 +12,6 @@ let
   inherit (inputs) nixvim;
 in
 {
-  imports = [
-    ./modules
-    ./home-packages.nix
-    #./flatpak.nix
-  ];
-
   home = {
     username = user;
     homeDirectory = "/home/${user}";
@@ -28,4 +21,13 @@ in
       NIXOS_OZONE_WL = "1";
     };
   };
+
+  # Blanket import everything. The user's configuration in
+  # ../users/home-manager/ will enable the specific packages
+  # they actually want.
+  imports = [
+    ./art
+    ./development
+
+  ];
 }
