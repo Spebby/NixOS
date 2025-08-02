@@ -2,7 +2,7 @@
 
 {
   config,
-  pkgs,
+  pkgs-stable,
   lib,
   ...
 }:
@@ -24,19 +24,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.config = {
-      allowUnfree = true;
-      permittedInsecurePackages = [ "openssl-1.1.1w" ];
-    };
 
     home.packages =
-      with pkgs;
+      with pkgs-stable;
       [
-        openssl_1_1 # My heart knows only hate
         (pkgs.unityhub.override {
           extraLibs =
-            pkgs: with pkgs; [
-              openssl_1_1
+            pkgs-stable: with pkgs-stable; [
               harfbuzz
               libogg
             ];
@@ -47,7 +41,7 @@ in
     xdg.desktopEntries.unityhub = {
       name = "Unity Hub";
       # Note: env GDK_SCALE=2 GDK_DPI_SCALE=0.5 works well for higher res displays. Does not work great for my laptop!
-      exec = "${pkgs.unityhub}/bin/unityhub --ozone-platform-hint=auto --  %U";
+      exec = "${pkgs-stable.unityhub}/bin/unityhub --ozone-platform-hint=auto --  %U";
       icon = "unityhub";
       comment = "The Official Unity Hub";
       type = "Application";

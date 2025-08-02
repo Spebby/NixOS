@@ -27,7 +27,8 @@ inputs.home-manager.lib.homeManagerConfiguration {
         home.stateVersion = lib.mkDefault stateVersion;
       }
     )
-  ] ++ hostModules;
+  ]
+  ++ hostModules;
 
   extraSpecialArgs = {
     inherit

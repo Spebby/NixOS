@@ -17,7 +17,7 @@
 
     # Theming Manager
     stylix = {
-      url = "github:danth/stylix/";
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -45,6 +45,12 @@
     };
 
     yt-x.url = "github:Benexl/yt-x";
+
+    # Cosmic Desktop
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -116,14 +116,6 @@ with lib.hm.gvariant;
         sources = [
           (mkTuple [
             "xkb"
-            "pt"
-          ])
-          (mkTuple [
-            "xkb"
-            "br"
-          ])
-          (mkTuple [
-            "xkb"
             "us"
           ])
         ];
@@ -231,10 +223,6 @@ with lib.hm.gvariant;
       "org/gnome/desktop/notifications/application/steam" = {
         application-id = "steam.desktop";
       };
-
-      #"org/gnome/desktop/notifications/application/vivaldi-stable" = {
-      #  application-id = "vivaldi-stable.desktop";
-      #};
 
       "org/gnome/desktop/peripherals/touchpad" = {
         click-method = "areas";
@@ -465,7 +453,6 @@ with lib.hm.gvariant;
           "trayIconsReloaded@selfmade.pl"
           "Vitals@CoreCoding.com"
         ];
-        # favorite-apps = [ "org.gnome.Nautilus.desktop" "org.gnome.Console.desktop" "floorp.desktop" ];
         last-selected-power-profile = "power-saver";
         welcome-dialog-last-shown-version = "42.4";
       };
@@ -474,29 +461,13 @@ with lib.hm.gvariant;
         current-workspace-only = false;
       };
 
-      /*
-        # you are better off doing it manually
-        active-profile = "/home/yeshey/.config/burn-my-windows/profiles/1716743297152538.conf"; # with
-        [burn-my-windows-profile]
-        fire-enable-effect=false
-        hexagon-enable-effect=true
-        hexagon-animation-time=550
-      */
       "org/gnome/shell/extensions/burn-my-windows" = {
-        close-preview-effect = "";
-        fire-close-effect = false;
-        glide-close-effect = false;
-        glitch-close-effect = true;
-        glitch-open-effect = true;
-        hexagon-animation-time = 600;
-        hexagon-close-effect = false;
-        hexagon-open-effect = true;
-        incinerate-animation-time = 1000;
-        incinerate-close-effect = false;
         open-preview-effect = "";
-        tv-close-effect = true;
-        tv-open-effect = false;
-        wisps-open-effect = false;
+        close-preview-effect = "";
+
+        glide-close-effect = true;
+        glide-open-effect = true;
+        glide-animation-time = 250;
       };
 
       # Vitals metrics display extension configuration

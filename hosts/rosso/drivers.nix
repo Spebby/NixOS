@@ -11,6 +11,9 @@
   ...
 }:
 
+let
+  cfg = config.nvidia;
+in
 {
   imports = [
     nixos-hardware.nixosModules.common-cpu-amd
@@ -21,12 +24,21 @@
     nixos-hardware.nixosModules.common-pc-ssd
   ];
 
-  options = {
-    nvidia.enable = lib.mkEnableOption "enables proprietary drivers for NVIDIA GPUs";
-    # TL;DR, Gnome has power management settings that don't mix w/ TLP
+  options.nvidia = {
+    enable = lib.mkEnableOption "Enable proprietary NVIDIA GPU drivers";
+    useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
   };
 
-  config = lib.mkIf config.nvidia.enable {
+  config = lib.mkIf cfg.enable {
+    nix = {
+      settings = {
+        substituters = [ "https://cuda-maintainers.cachix.org" ];
+        trusted-public-keys = [
+          "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+        ];
+      };
+    };
+
     nixpkgs.config = {
       cudaSupport = true;
       # Only add this if you’re running Nix on something exotic or experimental:
@@ -115,7 +127,8 @@
         # Enable these if issues persist, then check `journalctl -b`:
         # "pm_debug_messages"
         "nvidia.NVreg_EnableMSI=1"
-      ];
+      ]
+      ++ lib.optional cfg.useNvidiaFramebuffer "nvidia_drm.fbdev=1";
 
       # This is mainly an X11 support thing. Investigate if we need it.
       blacklistedKernelModules = [ "nouveau" ];

@@ -29,8 +29,13 @@ in
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.burn-my-windows
       gnomeExtensions.hibernate-status-button
-      gnomeExtensions.tray-icons-reloaded
       gnomeExtensions.vitals
+      gnomeExtensions.forge
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.zilence
+      gnomeExtensions.xwayland-indicator
+      gnomeExtensions.appindicator
+      gnomeExtensions.app-menu-is-back
 
       # nix specific gnome utils
       dconf2nix

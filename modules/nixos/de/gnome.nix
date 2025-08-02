@@ -11,6 +11,7 @@ in
 {
   options.gnome = {
     enable = lib.mkEnableOption "Enable GNOME Desktop Environment";
+    usePowerProfile = lib.mkEnableOption "Enable GNOME's Power Profile Daemon";
   };
 
   config = lib.mkIf cfg.enable {
@@ -36,7 +37,13 @@ in
 
     services = {
       #displayManager.gdm.enable = true; #for whatever reason, broken
-      desktopManager.gnome.enable = true;
+      desktopManager.gnome = {
+        enable = true;
+        extraGSettingsOverrides = ''
+          [org.gnome.mutter]
+          experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
+        '';
+      };
       udev.packages = [ pkgs.gnome-settings-daemon ];
 
       pulseaudio.enable = false;
@@ -49,8 +56,7 @@ in
         pulse.enable = true;
       };
 
-      # Disable GNOME's power profile daemon
-      power-profiles-daemon.enable = false;
+      power-profiles-daemon.enable = cfg.usePowerProfile;
     };
 
     security.rtkit.enable = true;

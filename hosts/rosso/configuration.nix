@@ -21,9 +21,6 @@
     ../../users/max.nix
   ];
 
-  # Enable NVIDIA Drivers
-  nvidia.enable = true;
-
   # TODO: move the theme specific stuff to machine specific configs.
   # I also like owl, Loader 2, Spinner Alt, Splash, Cuts Alt, DNA, Hexagon Dots Alt, Hexagons
   boot = {
@@ -54,8 +51,6 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
       "resume=/.swapfile"
-
-      "console=tty2"
     ];
     # Hide OS choice for bootloader
     # loader.timeout = 0;
@@ -89,7 +84,14 @@
     packages = with pkgs; [ jetbrains-mono ];
   };
 
-  gnome.enable = true;
+  cosmic = {
+    enable = true;
+    useCosmicGreeter = false;
+  };
+  gnome = {
+    enable = true;
+    usePowerProfile = false;
+  };
   hyprland.enable = true;
 
   users.defaultUserShell = pkgs.zsh;
@@ -151,9 +153,6 @@
       };
     };
 
-    power-profiles-daemon.enable = false;
-
-    desktopManager.gnome.enable = true;
     displayManager = {
       defaultSession = "gnome";
       sddm = {

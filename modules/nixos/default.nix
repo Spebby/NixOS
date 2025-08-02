@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./hyprland.nix
-    ./gnome.nix
-  ];
-}
+{ imports = [ ./de ]; }
