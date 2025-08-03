@@ -11,7 +11,6 @@ let
   cfg = config.gnome;
 in
 {
-  imports = [ ./dconf.nix ];
   options.gnome = with lib; {
     enable = mkOption {
       type = types.bool;
@@ -21,21 +20,32 @@ in
     };
   };
 
+  imports = [ ./dconf.nix ];
   config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = [
+      (import ./overlays/simple-weather.nix)
+      (import ./overlays/dconf2nix.nix)
+    ];
+
     home.packages = with pkgs; [
       gnome-tweaks
 
-      # For gnome
-      gnomeExtensions.clipboard-indicator
-      gnomeExtensions.burn-my-windows
-      gnomeExtensions.hibernate-status-button
-      gnomeExtensions.vitals
-      gnomeExtensions.forge
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.zilence
-      gnomeExtensions.xwayland-indicator
-      gnomeExtensions.appindicator
+      # Visuals
       gnomeExtensions.app-menu-is-back
+      gnomeExtensions.appindicator
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.compact-top-bar
+      gnomeExtensions.hibernate-status-button
+      gnomeExtensions.media-controls
+      #gnomeExtensions.simple-weather
+
+      # Productivity
+      gnomeExtensions.forge
+      gnomeExtensions.vitals
+
+      # Functionality
+      gnomeExtensions.xwayland-indicator
 
       # nix specific gnome utils
       dconf2nix

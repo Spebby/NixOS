@@ -87,6 +87,8 @@
       lshw-gui
       usbutils
       # Consider Toybox?
+
+      nix-prefetch-git
     ];
 
     variables = {

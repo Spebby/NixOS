@@ -93,9 +93,14 @@
     usePowerProfile = false;
   };
   hyprland.enable = true;
+  kde = {
+    enable = false;
+    useSDDM = true;
+  };
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {
+    backupFileExtension = "hm-backup";
     sharedModules = [ { home.stateVersion = stateVersion; } ];
   };
 
