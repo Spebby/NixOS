@@ -1,1 +1,6 @@
-{ imports = [ ./de ]; }
+{
+  imports = [
+    ./de
+    ./ollama.nix
+  ];
+}

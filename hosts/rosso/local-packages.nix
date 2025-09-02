@@ -9,6 +9,9 @@
     rocmPackages.rocm-smi
     rocmPackages.rocminfo
 
+    vulkan-loader
+    vulkan-tools
+
     distrobox
     podman
     xorg.xhost
@@ -46,6 +49,7 @@
         gamescope
         gamemode
         mangohud
+        steamtinkerlaunch
       ];
     };
 

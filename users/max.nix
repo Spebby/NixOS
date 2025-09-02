@@ -9,6 +9,7 @@
         "wheel"
         "networkmanager"
         "home-manager"
+        "gamemode"
       ];
     };
   };

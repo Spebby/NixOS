@@ -15,6 +15,7 @@ let
     dotnetCorePackages.sdk_8_0
     dotnetPackages.Nuget
     mono
+    msbuild
   ];
 
   extra-lib = with pkgs-stable; [
@@ -29,19 +30,25 @@ in
 {
   options.rider.enable = lib.mkEnableOption "Enable JetBrains Rider";
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      (pkgs-stable.symlinkJoin {
-        name = "rider-wrapped";
-        paths = [ pkgs-stable.jetbrains.rider ];
-        buildInputs = [ pkgs-stable.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/rider \
-            --argv0 rider \
-            --prefix PATH : "${lib.makeBinPath extra-path}" \
-            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
-        '';
-      })
-    ];
+    home = {
+      packages = [
+        (pkgs-stable.symlinkJoin {
+          name = "rider-wrapped";
+          paths = [ pkgs-stable.jetbrains.rider ];
+          buildInputs = [ pkgs-stable.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/rider \
+              --argv0 rider \
+              --prefix PATH : "${lib.makeBinPath extra-path}" \
+              --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
+          '';
+        })
+      ];
+      sessionVariables = {
+        DOTNET_ROOT = "${pkgs-stable.dotnetCorePackages.dotnet_8.sdk}";
+        MSBuildSDKsPath = "${pkgs-stable.dotnetCorePackages.dotnet_8.sdk}/sdk/8.0.100/Sdks"; # adjust version if needed
+      };
+    };
 
     # Keep the desktop file
     xdg.dataFile."applications/jetbrains-rider.desktop".text = ''

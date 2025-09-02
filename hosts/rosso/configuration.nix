@@ -52,6 +52,7 @@
       "udev.log_priority=3"
       "resume=/.swapfile"
     ];
+    kernelPackages = pkgs.linuxPackages_zen;
     # Hide OS choice for bootloader
     # loader.timeout = 0;
   };
@@ -97,6 +98,8 @@
     enable = false;
     useSDDM = true;
   };
+
+  ollama.enable = false;
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {

@@ -52,6 +52,10 @@
       description = "Launcher/menu program.";
     };
 
+    debug = {
+      full_cm_proto = true;
+    };
+
     env = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [

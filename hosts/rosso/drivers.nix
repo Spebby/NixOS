@@ -47,6 +47,10 @@ in
     environment.variables = {
       CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
       BACKLIGHT_DEVICE = "amdgpu_bl1";
+      VK_ICD_FILENAMES = ''
+        ${config.boot.kernelPackages.nvidiaPackages.stable}/share/vulkan/icd.d/nvidia_icd.json
+        /run/opengl-driver/share/vulkan/icd.d/radv_icd64.json
+      '';
     };
 
     environment.systemPackages = with pkgs; [

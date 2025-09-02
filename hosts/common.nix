@@ -3,9 +3,9 @@
 { inputs, pkgs, ... }:
 
 {
-  # General Package Stuff
+  # This is gross but unless I want to hardcode pkgs in /lib/makeSystem.nix, I have to do this.
+  # This is also why pkgs-stable is not configurable here.
   nixpkgs.config.allowUnfree = true;
-
   imports = [ inputs.home-manager.nixosModules.default ];
   home-manager.backupFileExtension = "backup";
   nix.settings.experimental-features = [
@@ -126,7 +126,7 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      #jack.enable = true; # review if i actually need this one
+      jack.enable = true; # review if i actually need this one
 
       # This is not valid nix: Essentially, my PC always has the camera active,
       # even when it really should be disabled. With some TLP wizardry I could

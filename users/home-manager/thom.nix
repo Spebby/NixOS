@@ -64,6 +64,7 @@ in
   home = {
     # local packages
     packages = with pkgs; [
+      reaper
       lutris
       gh
 
@@ -139,9 +140,10 @@ in
       #npm
 
       # WM
-      libsForQt5.xwaylandvideobridge
       libnotify
       xdg-desktop-portal-gtk
+
+      gtt
     ];
 
     # GPG Signing for Git
