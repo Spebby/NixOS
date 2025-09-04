@@ -12,11 +12,11 @@
     extraModules = [ ];
   };
 
-  #tink = {
-  #hostname = "tink";
-  #system = "x86_64-linux";
-  #config = import ./tink/configuration.nix;
-  #users = [ "max" ];
-  #extraModules = [ ];
-  #};
+  tink = {
+    hostname = "tink";
+    system = "x86_64-linux";
+    config = import ./tink/configuration.nix;
+    users = [ "max" ];
+    extraModules = [ ];
+  };
 }
