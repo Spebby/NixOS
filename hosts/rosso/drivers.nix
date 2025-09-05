@@ -27,18 +27,47 @@ in
   options.nvidia = {
     enable = lib.mkEnableOption "Enable proprietary NVIDIA GPU drivers";
     useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
+    mode = lib.mkOption {
+      type = lib.types.enum [
+        "offload"
+        "sync"
+        "clamshell"
+      ];
+      default = "offload";
+      description = ''
+        Sets the NVIDIA mode:
+          - offload: iGPU primary, dGPU used on demand
+          - sync: dGPU renders everything, iGPU idle
+          - clamshell: reverse sync mode, dGPU primary
+      '';
+    };
+
+    usePowerd = lib.mkEnableOption "Enable NVIDIA's powerd daemon & power profile cycling.";
+    powerManagement = lib.mkEnableOption "Enable NVIDIA's power management service.";
+    useFinegrain = lib.mkEnableOption "Enable NVIDIA's finegrain power saving? Disabled if offloading is not enabled.";
+
+    nvidiaBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the NVIDIA GPU.";
+    };
+
+    # The AMD/iGPU bus ID
+    amdBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the AMD GPU (if present).";
+    };
+
+    # The Intel iGPU bus ID
+    intelBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the Intel GPU (if present).";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    nix = {
-      settings = {
-        substituters = [ "https://cuda-maintainers.cachix.org" ];
-        trusted-public-keys = [
-          "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-        ];
-      };
-    };
-
     nixpkgs.config = {
       cudaSupport = true;
       # Only add this if you’re running Nix on something exotic or experimental:
@@ -85,26 +114,27 @@ in
 
         # Fine Grained Power Management for use w/ offload. Turning+
         powerManagement = {
-          enable = true;
-          finegrained = true;
+          enable = cfg.powerManagement;
+          finegrained = cfg.powerManagement && cfg.mode == "offload" && cfg.useFinegrain;
         };
-        dynamicBoost.enable = true;
+        dynamicBoost.enable = cfg.powerManagement && cfg.usePowerd;
 
         prime = {
+          amdgpuBusId = cfg.amdBus;
+          intelBusId = cfg.intelBus;
+          nvidiaBusId = cfg.nvidiaBus;
+
           # Offload Mode puts dGPU to sleep, until it is told to wake up. Applications must be explicitly "offloaded" to the dGPU for this to happen. This mode is very battery efficient.
           # Offload CMD mode enables the wrapper script, `nvidia-offload`, which sets certain env variables to offload an application.
           offload = {
-            enable = true;
+            enable = cfg.mode == "offload";
             enableOffloadCmd = true;
           };
 
           # Sync Mode delegates rendering to dGPU entirely... dGPU does *not go to sleep* when sync is enabled.
           # In Reverse Sync Mode, the iGPU is bypassed entirely, and the dGPU becomes the primairy output device. May be desirable for Clamshell mode.
-          sync.enable = false;
-          reverseSync.enable = false;
-
-          amdgpuBusId = "PCI:35:0:0";
-          nvidiaBusId = "PCI:1:0:0";
+          sync.enable = cfg.mode == "sync";
+          reverseSync.enable = cfg.mode == "clamshell";
         };
 
         # Set True for potential screen-tearing fix

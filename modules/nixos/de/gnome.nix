@@ -16,7 +16,6 @@ in
 
   config = lib.mkIf cfg.enable {
     environment = {
-      systemPackages = with pkgs; [ firefox ];
       gnome.excludePackages = with pkgs; [
         gedit # text editor
         epiphany # web browser

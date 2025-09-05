@@ -1,9 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   cfg = config.cosmic;
@@ -15,13 +10,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    nix.settings = {
-      substituters = [ "https://cosmic.cachix.org/" ];
-      trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-    };
-
     environment = {
-      systemPackages = with pkgs; [ firefox ];
       sessionVariables = {
         NIXOS_OZONE_WL = "1";
         COSMIC_DATA_CONTROL_ENABLED = 1;

@@ -14,7 +14,6 @@
 
     distrobox
     podman
-    distroshelf
     xorg.xhost
   ];
 

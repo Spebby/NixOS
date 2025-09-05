@@ -144,11 +144,27 @@ in
       xdg-desktop-portal-gtk
 
       gtt
+
+      distroshelf
     ];
 
-    # GPG Signing for Git
-    file."${allowedSigners}".text =
-      "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
+    file = {
+      # GPG Signing for Git
+      "${allowedSigners}".text =
+        "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
+
+      # Distrobox Config
+      ".config/distrobox/distrobox.conf".text = ''
+        # List of environment variables to pass from host to container
+        container_envvars="DISPLAY WAYLAND_DISPLAY XAUTHORITY"
+
+        # Optional: Also pass these common GUI variables
+        container_envvars+=" QT_QPA_PLATFORM GDK_BACKEND CLUTTER_BACKEND"
+
+        # If using Flatpak or other special cases
+        container_envvars+=" DBUS_SESSION_BUS_ADDRESS"
+        			'';
+    };
 
     sessionVariables = rec {
       XDG_BOOKS_DIR = "$HOME/Media/Books";
@@ -197,4 +213,5 @@ in
       "inode/directory" = [ "dolphin.desktop" ];
     };
   };
+
 }

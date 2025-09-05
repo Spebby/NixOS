@@ -7,6 +7,12 @@
   nvidia = {
     enable = true;
     useNvidiaFramebuffer = true;
+    mode = "clamshell";
+    powerManagement = false;
+    useFinegrain = false;
+    usePowerd = false;
+    amdBus = "PCI:35:0:0";
+    nvidiaBus = "PCI:1:0:0";
   };
 
   boot = {
