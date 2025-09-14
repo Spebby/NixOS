@@ -8,7 +8,13 @@
 }:
 
 {
-  networking.hostName = hostname;
+  networking = {
+    hostName = hostname;
+    firewall.extraCommands = ''
+      iptables -A nixos-fw -p tcp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
+      iptables -A nixos-fw -p udp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
+    '';
+  };
   system.stateVersion = stateVersion;
 
   boot.loader.efi.canTouchEfiVariables = true;

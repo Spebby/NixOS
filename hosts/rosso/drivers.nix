@@ -94,7 +94,7 @@ in
     hardware = {
       # If I have issues, uncomment this. For the moment, since we boot w/ iGPU,
       # This will let Plymouth work at boot.
-      amdgpu.initrd.enable = true;
+      amdgpu.initrd.enable = cfg.mode != "clamshell";
       graphics = {
         enable = true;
       };
@@ -102,7 +102,7 @@ in
       nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-        # Use Open Source (not nouveau) kernel modules? Turning+
+        # Use Open Source (not nouveau) kernel modules? Turing+
         open = false;
 
         # Required
@@ -112,7 +112,7 @@ in
         # NVIDIA X Server Settings
         nvidiaSettings = false;
 
-        # Fine Grained Power Management for use w/ offload. Turning+
+        # Fine Grained Power Management for use w/ offload. Turing+
         powerManagement = {
           enable = cfg.powerManagement;
           finegrained = cfg.powerManagement && cfg.mode == "offload" && cfg.useFinegrain;
@@ -167,13 +167,11 @@ in
       # This is mainly an X11 support thing. Investigate if we need it.
       blacklistedKernelModules = [ "nouveau" ];
 
-      # This probably won't work properly.
-      # I was right this shit didn't work.
       initrd.kernelModules = [
-        #"nvidia"
-        #"nvidia_modeset"
-        #"nvidia_uvm"
-        #"nvidia_drm"
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
       ];
       kernelModules = [
         "amdgpu"
