@@ -5,6 +5,7 @@
     users.max = {
       isNormalUser = true;
       home = "/home/max";
+      icon = ./icons/max.png;
       extraGroups = [
         "wheel"
         "networkmanager"

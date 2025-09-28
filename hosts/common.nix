@@ -123,6 +123,10 @@
       cachix
       wayland-utils
       edid-decode
+
+      # SDDM Themes
+      sddm-astronaut
+      sddm-chili-theme
     ];
 
     variables = {

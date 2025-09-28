@@ -1,12 +1,49 @@
 # /hosts/rosso/configuration.nix
 
 {
+  inputs,
   pkgs,
   stateVersion,
   hostname,
   ...
 }:
 
+let
+  maple-bg = pkgs.runCommand "maple-bg.jpg" { } ''
+    cp ${../../backgrounds/maple.jpg} $out
+  '';
+  winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
+    	cp ${../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
+    	'';
+  grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
+    	cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
+    	'';
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+    theme = "default";
+    extraBackgrounds = [
+      maple-bg
+      winter-bg
+      grass-bg
+    ];
+    # https://github.com/uiriansan/SilentSDDM/wiki/Options/
+    theme-overrides = {
+      "General" = {
+        enable-animations = true;
+        background-fill-mode = "fill";
+      };
+      "LoginScreen" = {
+        background = "${winter-bg.name}";
+      };
+      "LockScreen" = {
+        background = "${winter-bg.name}";
+        blur = "0";
+      };
+      "LoginScreen.MenuArea.Session" = {
+        position = "bottom-left";
+      };
+    };
+  };
+in
 {
   networking = {
     hostName = hostname;
@@ -84,6 +121,8 @@
       bottles
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
+      sddm-theme
+      sddm-theme.test
     ];
   };
 
@@ -171,9 +210,18 @@
     displayManager = {
       defaultSession = "gnome";
       sddm = {
+        package = pkgs.kdePackages.sddm; # qt6 version
         enable = true;
         wayland.enable = true;
-        theme = "${import ./sddm.nix { inherit pkgs; }}";
+        theme = sddm-theme.pname;
+        extraPackages = sddm-theme.propagatedBuildInputs;
+        settings = {
+          # required for styling the virtual keyboard
+          General = {
+            GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+            InputMethod = "qtvirtualkeyboard";
+          };
+        };
       };
     };
   };

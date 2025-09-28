@@ -44,11 +44,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    yt-x.url = "github:Benexl/yt-x";
-
     # Cosmic Desktop
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    silentSDDM = {
+      url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

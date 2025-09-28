@@ -1,12 +1,38 @@
 # /hosts/rosso/configuration.nix
 
 {
+  inputs,
   pkgs,
   stateVersion,
   hostname,
   ...
 }:
 
+let
+  grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
+    	cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
+    	'';
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+    theme = "rei";
+    extraBackgrounds = [ grass-bg ];
+    # https://github.com/uiriansan/SilentSDDM/wiki/Options/
+    theme-overrides = {
+      "General" = {
+        enable-animations = true;
+        background-fill-mode = "fill";
+      };
+      "LoginScreen" = {
+        background = "${grass-bg.name}";
+      };
+      "LockScreen" = {
+        background = "${grass-bg.name}";
+      };
+      "LoginScreen.MenuArea.Session" = {
+        position = "bottom-left";
+      };
+    };
+  };
+in
 {
   networking = {
     hostName = hostname;
@@ -16,8 +42,6 @@
     '';
   };
   system.stateVersion = stateVersion;
-
-  boot.loader.efi.canTouchEfiVariables = true;
 
   imports = [
     ./hardware-configuration.nix
@@ -30,9 +54,12 @@
   # TODO: move the theme specific stuff to machine specific configs.
   # I also like owl, Loader 2, Spinner Alt, Splash, Cuts Alt, DNA, Hexagon Dots Alt, Hexagons
   boot = {
-    loader.grub = {
-      theme = "${import ../rosso/grubtheme.nix { inherit pkgs; }}";
-      configurationLimit = 5;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+        theme = "${import ../rosso/grubtheme.nix { inherit pkgs; }}";
+        configurationLimit = 5;
+      };
     };
     plymouth = {
       enable = true;
@@ -82,6 +109,8 @@
       bottles
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
+      sddm-theme
+      sddm-theme.test
     ];
   };
 
@@ -119,9 +148,18 @@
     displayManager = {
       defaultSession = "gnome";
       sddm = {
+        package = pkgs.kdePackages.sddm; # qt6 version
         enable = true;
         wayland.enable = true;
-        theme = "${import ../rosso/sddm.nix { inherit pkgs; }}";
+        theme = sddm-theme.pname;
+        extraPackages = sddm-theme.propagatedBuildInputs;
+        settings = {
+          # required for styling the virtual keyboard
+          General = {
+            GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+            InputMethod = "qtvirtualkeyboard";
+          };
+        };
       };
     };
   };
