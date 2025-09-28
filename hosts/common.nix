@@ -99,7 +99,7 @@
       binutils
 
       ## Other
-      python311Full
+      python311
       zig
 
       # Basic editors
@@ -120,6 +120,9 @@
       # Consider Toybox?
 
       nix-prefetch-git
+      cachix
+      wayland-utils
+      edid-decode
     ];
 
     variables = {
