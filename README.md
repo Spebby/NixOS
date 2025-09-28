@@ -94,3 +94,11 @@ work, but that needs more of my time then I can devote to it at the moment due
 to some issues with systemd and wayland. As such, while verco is included in
 this configuration (and you can use it w/ git!), the DistroBox setup is not
 managed and you must manually set that up if you intend to use it.
+
+## Acknowledgements
+
+[Winter Forest Snow](https://moewalls.com/landscape/winter-forest-snow-live-wallpaper/)
+Live wallpaper
+
+[Wavy Grass](https://moewalls.com/landscape/wavy-grass-live-wallpaper/) Live
+wallpaper

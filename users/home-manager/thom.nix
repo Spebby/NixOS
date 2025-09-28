@@ -68,8 +68,6 @@ in
       lutris
       gh
 
-      inputs.yt-x.packages."${pkgs.system}".default
-
       # Games
       prismlauncher # Minecraft
 
