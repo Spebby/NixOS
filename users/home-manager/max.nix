@@ -16,7 +16,7 @@
   firefox.enable = true;
   discord = {
     enable = true;
-    useCustomClient = false;
+    useCustomClient = true;
   };
 
   terminals = {
@@ -133,12 +133,13 @@
   # Stylix Overrides
   stylix = lib.mkForce {
     polarity = "light";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-light-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
 
     image = pkgs.fetchurl {
-      url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-light-rainbow.png";
-      sha256 = "0mq378fqqafgzjl4l8lz1v0zv0d14v0b0abgqff7i4s0dcp8kbyg";
+      url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-dark-rainbow.png";
+      sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
     };
+
     imageScalingMode = "fill";
   };
 
