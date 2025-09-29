@@ -39,10 +39,23 @@
     };
 
     "/home" = {
+      device = "/dev/disk/by-uuid/53bfe944-4393-4694-a57e-593c5d8e0cb6";
+      fsType = "ext4";
+    };
+
+    "/mnt/vaults" = {
       device = "/dev/disk/by-uuid/0c476c22-af86-417a-9667-dd23a092f85d";
       fsType = "ext4";
     };
+
+    "/mnt/max/Vault" = {
+      device = "/mnt/vaults/max";
+      fsType = "none";
+      options = [ "bind" ];
+    };
   };
+
+  systemd.tmpfiles.rules = [ "d /mnt/vaults/max 0700 max users - -" ];
 
   swapDevices = [ { device = "/dev/disk/by-uuid/5fae22da-fde4-4603-9ce9-ba65f78d63c5"; } ];
 
