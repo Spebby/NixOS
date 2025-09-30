@@ -49,6 +49,15 @@ complicated otherwise.
 I need to figure out what I'd like to do with `/nixos`, originally I intended it
 as "global" packages for all systems, though now I'm not so sure.
 
+## FHS
+
+Sometimes, you just need to break out of nix for a stubborn binary that relies
+on FHS. Thankfully, _NixOS & Flakes Book_ provides a handy
+[environment](https://nixos-and-flakes.thiscute.world/best-practices/run-downloaded-binaries-on-nixos)
+to simulate the FHS if needed, and that environment is included in this
+configuration. Simply run `fhs` anyway from the terminal, and you can run just
+about any linux binary, no problem.
+
 ## Oddities
 
 While this config should work mostly out of the box, there are a few

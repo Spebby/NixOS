@@ -10,22 +10,32 @@
 
 let
   grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-    	cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
-    	'';
+    cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
+  '';
+  grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
+    cp ${../../backgrounds/wavy-grass-placeholder.png} $out
+  '';
   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
     theme = "rei";
-    extraBackgrounds = [ grass-bg ];
+    extraBackgrounds = [
+      grass-bg
+      grass-placeholder
+    ];
     # https://github.com/uiriansan/SilentSDDM/wiki/Options/
     theme-overrides = {
       "General" = {
+        scale = "1.0";
         enable-animations = true;
         background-fill-mode = "fill";
+        animated-background-placeholder = "${grass-placeholder.name}";
       };
       "LoginScreen" = {
         background = "${grass-bg.name}";
+        animated-background-placeholder = "${grass-placeholder.name}";
       };
       "LockScreen" = {
         background = "${grass-bg.name}";
+        animated-background-placeholder = "${grass-placeholder.name}";
       };
       "LoginScreen.MenuArea.Session" = {
         position = "bottom-left";
