@@ -54,6 +54,8 @@
       url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
   };
 
   outputs =

@@ -127,6 +127,31 @@ in
     };
   };
 
+  nixpkgs.overlays = [
+    (
+      self: super:
+      (
+        let
+          mypkgs = import inputs.amuletMapEditor {
+            inherit (self) system;
+            config.allowUnfree = true;
+          };
+
+        in
+        {
+          amulet-map-editor = mypkgs.amulet-map-editor.overrideAttrs (oldAttrs: {
+            src = super.fetchFromGitHub {
+              owner = "Amulet-Team";
+              repo = "Amulet-Map-Editor";
+              tag = oldAttrs.version; # Use the existing version
+              sha256 = "sha256-wGil3FXlnGN/2pa47dDljpo9BRWVIji3F3v10icGuVw="; # Updated hash
+            };
+          });
+        }
+      )
+    )
+  ];
+
   environment = {
     systemPackages = with pkgs; [
       home-manager
@@ -135,6 +160,7 @@ in
       libsForQt5.qt5.qtgraphicaleffects
       sddm-theme
       sddm-theme.test
+      amulet-map-editor
     ];
   };
 

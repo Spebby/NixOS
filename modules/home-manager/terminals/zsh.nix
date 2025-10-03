@@ -63,11 +63,11 @@ in
       '';
 
       # There is for sure a better way of doing this
-      #profileExtra = ''
-      #if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
-      #	Hyprland > /dev/null
-      #fi
-      #'';
+      profileExtra = ''
+        	  if command -v nix-your-shell > /dev/null; then
+        		nix-your-shell zsh | source /dev/stdin
+        	  fi
+      '';
     };
   };
 }

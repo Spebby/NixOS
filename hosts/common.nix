@@ -127,11 +127,14 @@
       # SDDM Themes
       sddm-astronaut
       sddm-chili-theme
+
+      nix-your-shell
     ];
 
     variables = {
       CC = "clang";
       CXX = "clang++";
+      NIX_BUILD_SHELL = "/run/current-system/sw/bin/zsh";
     };
 
     sessionVariables = rec {
