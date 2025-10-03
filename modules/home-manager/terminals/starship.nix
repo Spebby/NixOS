@@ -100,10 +100,11 @@ in
   config.programs.starship = {
     inherit (cfg) enable enableZshIntegration;
     settings = {
-      format = " 󱄅 (red)$username $directory ${
+      format = " 󱄅 (red)$username$hostname $directory ${
          lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
            languages
            buildTooling
+           [ "custom.fhs" ]
            environment
            containerization
            [
@@ -143,6 +144,17 @@ in
         format = "via [$state($name)]($style) ";
         impure_msg = "󰼩 ";
         pure_msg = "󱩰 ";
+      };
+
+      custom.fhs_shell = {
+        when = "test \"$FHS\" = 1";
+        format = "[FHS](bold yellow) ";
+        description = "Show FHS mode indicator when FHS=1 is set";
+        shell = [
+          "bash"
+          "sh"
+          "zsh"
+        ];
       };
 
       git_branch = {

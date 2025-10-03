@@ -22,10 +22,11 @@
             ++ (with pkgs; [
               pkg-config
               ncurses
+              zsh
               # Feel free to add more packages here if needed.
             ]);
           profile = "export FHS=1";
-          runScript = "bash";
+          runScript = "zsh --login";
           extraOutputsToInstall = [ "dev" ];
         }
       )

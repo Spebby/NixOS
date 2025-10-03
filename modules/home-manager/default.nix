@@ -12,6 +12,7 @@ let
   inherit (inputs) nixvim;
 in
 {
+  manual.html.enable = lib.mkForce false;
   home = {
     username = user;
     homeDirectory = "/home/${user}";
