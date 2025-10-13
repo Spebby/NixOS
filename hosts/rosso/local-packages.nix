@@ -15,6 +15,8 @@
     distrobox
     podman
     xorg.xhost
+
+    amulet-map-editor
   ];
 
   programs = {

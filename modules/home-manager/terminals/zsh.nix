@@ -59,14 +59,12 @@ in
 
       # it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
       initContent = ''
-        	# If I ever start using TMUX or  UWSM, put it here.
+
       '';
 
       # There is for sure a better way of doing this
       profileExtra = ''
-        	  if command -v nix-your-shell > /dev/null; then
-        		nix-your-shell zsh | source /dev/stdin
-        	  fi
+
       '';
     };
   };

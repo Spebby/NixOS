@@ -104,7 +104,6 @@ in
          lib.concatMapStringsSep "" (prependDollarAndJoinWith "") [
            languages
            buildTooling
-           [ "custom.fhs" ]
            environment
            containerization
            [
