@@ -97,9 +97,11 @@
       gnumake
       cpio
       binutils
+      gdb
 
-      ## Other
+      # Other
       python311
+      live-server
       zig
 
       # Basic editors
@@ -128,13 +130,14 @@
       sddm-astronaut
       sddm-chili-theme
 
+      # Nix Utils
+      nurl
       nix-your-shell
     ];
 
     variables = {
       CC = "clang";
       CXX = "clang++";
-      NIX_BUILD_SHELL = "/run/current-system/sw/bin/zsh";
     };
 
     sessionVariables = rec {

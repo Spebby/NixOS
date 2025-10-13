@@ -51,7 +51,7 @@
     };
 
     silentSDDM = {
-      url = "github:uiriansan/SilentSDDM";
+      url = "github:uiriansan/SilentSDDM/cfb0e3eb380cfc61e73ad4bce90e4dcbb9400291";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -138,7 +138,7 @@
               enable = true;
               settings.ignore = [ "flake.lock" ];
             };
-            deadnix.enable = true;
+            deadnix.enable = false; # deadnix has been pissing me off
             nil.enable = true; # Nix LSP diagnostics
 
             # Optional: Other useful hooks
