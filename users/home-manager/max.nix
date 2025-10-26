@@ -55,6 +55,14 @@
     useVerco = false;
   };
 
+  zed = {
+    enable = true;
+    settings = {
+      ai = false;
+      vim_mode = false;
+    };
+  };
+
   # For
   home.packages = with pkgs; [
     google-chrome
@@ -145,8 +153,12 @@
 
   programs.git = {
     enable = true;
-    userName = "Max Brockmann";
-    userEmail = "max.marika.brock@gmail.com";
-    extraConfig.init.defaultBranch = "main";
+    settings = {
+      user = {
+        name = "Max Brockmann";
+        email = "max.marika.brock@gmail.com";
+      };
+      defaultBranch = "main";
+    };
   };
 }

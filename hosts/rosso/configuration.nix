@@ -127,6 +127,31 @@ in
     };
   };
 
+  # Set up virtualisation
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+
+      # Enable TPM emulation (for Windows 11)
+      qemu = {
+        swtpm.enable = true;
+      };
+    };
+
+    # Enable USB redirection
+    spiceUSBRedirection.enable = true;
+  };
+
+  users = {
+    defaultUserShell = pkgs.zsh;
+
+    # Allow VM management
+    groups = {
+      libvirtd.members = [ "your-account-here" ];
+      kvm.members = [ "your-account-here" ];
+    };
+  };
+
   environment = {
     systemPackages = with pkgs; [
       home-manager
@@ -135,6 +160,10 @@ in
       libsForQt5.qt5.qtgraphicaleffects
       sddm-theme
       sddm-theme.test
+
+      gnome-boxes
+      dnsmasq
+      phodav
     ];
   };
 
@@ -159,7 +188,6 @@ in
 
   ollama.enable = false;
 
-  users.defaultUserShell = pkgs.zsh;
   home-manager = {
     backupFileExtension = "hm-backup";
     sharedModules = [ { home.stateVersion = stateVersion; } ];

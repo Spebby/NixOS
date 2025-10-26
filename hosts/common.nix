@@ -103,6 +103,7 @@
       python311
       live-server
       zig
+      odin
 
       # Basic editors
       vim
