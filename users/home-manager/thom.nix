@@ -61,9 +61,18 @@ in
     useVerco = true;
   };
 
+  zed = {
+    enable = true;
+    settings = {
+      ai = false;
+      vim_mode = true;
+    };
+  };
+
   home = {
     # local packages
     packages = with pkgs; [
+      aseprite
       reaper
       lutris
       gh
@@ -185,13 +194,16 @@ in
   # Git
   programs.git = {
     enable = true;
-    userName = "Thom Mott";
-    userEmail = "thommott@proton.me";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Thom Mott";
+        email = "thommott@proton.me";
+      };
       gpg.ssh.allowedSignersFile = allowedSigners;
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
     };
+
     signing = {
       key = "~/.ssh/NixOS.pub";
       signByDefault = true;
