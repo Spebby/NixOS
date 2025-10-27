@@ -192,25 +192,29 @@ in
   };
 
   # Git
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Thom Mott";
-        email = "thommott@proton.me";
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Thom Mott";
+          email = "thommott@proton.me";
+        };
+        gpg.ssh.allowedSignersFile = allowedSigners;
+        init.defaultBranch = "main";
+        push.autoSetupRemote = true;
       };
-      gpg.ssh.allowedSignersFile = allowedSigners;
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
+
+      signing = {
+        key = "~/.ssh/NixOS.pub";
+        signByDefault = true;
+      };
     };
 
-    signing = {
-      key = "~/.ssh/NixOS.pub";
-      signByDefault = true;
-    };
+    difftastic.enable = true;
+    gpg.enable = true;
   };
 
-  programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -223,5 +227,4 @@ in
       "inode/directory" = [ "dolphin.desktop" ];
     };
   };
-
 }
