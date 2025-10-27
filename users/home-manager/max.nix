@@ -151,14 +151,17 @@
     imageScalingMode = "fill";
   };
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Max Brockmann";
-        email = "max.marika.brock@gmail.com";
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Max Brockmann";
+          email = "max.marika.brock@gmail.com";
+        };
+        defaultBranch = "main";
       };
-      defaultBranch = "main";
     };
+    difftastic.enable = true;
   };
 }
