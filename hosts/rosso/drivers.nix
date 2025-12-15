@@ -69,7 +69,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config = {
-      cudaSupport = true;
+      cudaSupport = false;
       # Only add this if you’re running Nix on something exotic or experimental:
       allowUnsupportedSystem = true;
     };

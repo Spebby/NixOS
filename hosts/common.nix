@@ -87,6 +87,7 @@
       # Audio Tooling
       alsa-tools
       pavucontrol
+      ffmpeg-full
 
       # Programming Stuff
       ## CXX
@@ -117,7 +118,7 @@
       lsof
       pciutils
       udisks
-      glxinfo
+      mesa-demos
       lshw-gui
       usbutils
       # Consider Toybox?

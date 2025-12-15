@@ -135,6 +135,7 @@ in
       wtype
       yt-dlp
       zip
+      losslesscut-bin
       inputs.nixvim.packages.${pkgs.system}.default
 
       # CXX - Adj
@@ -204,6 +205,8 @@ in
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
       };
+
+      lfs.enable = true;
 
       signing = {
         key = "~/.ssh/NixOS.pub";
