@@ -7,6 +7,7 @@ in
   options.cosmic = {
     enable = lib.mkEnableOption "Enable COSMIC Desktop Environment";
     useCosmicGreeter = lib.mkEnableOption "Enable the COSMIC Greeter";
+    use76Schedular = lib.mkEnableOption "Enable COSMIC's custom scheduler";
   };
 
   config = lib.mkIf cfg.enable {
@@ -18,11 +19,9 @@ in
     };
 
     services = {
-      desktopManager.cosmic = {
-        enable = true;
-      };
-
+      desktopManager.cosmic.enable = true;
       displayManager.cosmic-greeter.enable = cfg.useCosmicGreeter;
+      system76-scheduler.enable = cfg.use76Schedular;
 
       pulseaudio.enable = false;
       pipewire = {
@@ -38,5 +37,10 @@ in
     };
 
     security.rtkit.enable = true;
+
+    programs.firefox.preferences = {
+      # disable libadwaita theming for Firefox
+      "widget.gtk.libadwaita-colors.enabled" = false;
+    };
   };
 }

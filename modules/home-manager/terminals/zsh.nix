@@ -43,7 +43,7 @@ in
         microfetch = "microfetch && echo";
         ".." = "cd ..";
 
-        vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
+        vim = lib.getExe inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
         ls = "eza --group-directories-first --icons";
         cat = "bat";
         lf = "${config.programs.yazi.shellWrapperName}";

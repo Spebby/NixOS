@@ -24,7 +24,7 @@ let
   grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
     cp ${../../backgrounds/wavy-grass-placeholder.png} $out
   '';
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     theme = "default";
     extraBackgrounds = [
       maple-bg
@@ -161,7 +161,6 @@ in
       sddm-theme
       sddm-theme.test
 
-      gnome-boxes
       dnsmasq
       phodav
     ];
@@ -177,7 +176,7 @@ in
     useCosmicGreeter = false;
   };
   gnome = {
-    enable = true;
+    enable = false;
     usePowerProfile = false;
   };
   hyprland.enable = true;
@@ -185,8 +184,6 @@ in
     enable = false;
     useSDDM = true;
   };
-
-  ollama.enable = false;
 
   home-manager = {
     backupFileExtension = "hm-backup";
@@ -249,7 +246,7 @@ in
     };
 
     displayManager = {
-      defaultSession = "gnome";
+      defaultSession = "cosmic";
       sddm = {
         package = pkgs.kdePackages.sddm; # qt6 version
         enable = true;

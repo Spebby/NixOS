@@ -1,7 +1,4 @@
-# /flake.nix
-
 {
-  # This may not be the best way of doing this; at some point it may make more sense to move system to be controlled by the systems, but this makes more sense for the moment.
   description = "NixOS Config";
 
   inputs = {
@@ -15,7 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Theming Manager
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Cosmic Desktop
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,49 +65,97 @@
       # NEVER CHANGE THIS STRING. IT IS A FAILSAFE PROVIDED BY NIXOS.
       stateVersion = "24.11";
       inherit (nixpkgs) lib;
-      hosts = import ./hosts/hosts.nix;
-      makeSystem = import ./lib/makeSystem.nix { inherit inputs stateVersion; };
-      makeHome = import ./lib/makeHome.nix { inherit inputs lib stateVersion; };
 
       defaultSystem = "x86_64-linux";
+      hosts = import ./hosts/hosts.nix;
+
+      # Shared pkgs-stable config
+      stablePkgsConfig = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+        ];
+      };
+
+      # Build a NixOS system configuration
+      mkSystem =
+        _: host:
+        # See ./hosts/hosts.nix for more context
+        nixpkgs.lib.nixosSystem {
+          system = host.system or "x86_64-linux";
+          specialArgs = {
+            inherit inputs stateVersion;
+            inherit (inputs) nixos-hardware;
+            inherit (host) hostname;
+            pkgs-stable = import nixpkgs-stable {
+              system = host.system or "x86_64-linux";
+              config = stablePkgsConfig;
+            };
+          };
+
+          modules = [
+            (host.config or ./hosts/${host.hostname}/configuration.nix)
+          ]
+          ++ (host.extraModules or [ ]);
+        };
+
+      # Build a home-manager configuration
+      mkHome =
+        host: user:
+        let
+          system = host.system or "x86_64-linux";
+          hostHMConfig = host.config.home-manager.users.${user} or { };
+        in
+        inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit lib;
+
+          modules = [
+            ./modules/home-manager
+            ./users/home-manager/${user}.nix
+            { home.stateVersion = lib.mkDefault stateVersion; }
+            hostHMConfig
+          ];
+          extraSpecialArgs = {
+            inherit inputs user stateVersion;
+            pkgs-stable = import nixpkgs-stable {
+              inherit system;
+              config = stablePkgsConfig;
+            };
+          };
+        };
+
+      # Generate all home-manager configurations
+      mkHomeConfigurations =
+        let
+          # Create list of all host-user pairs
+          hostUserPairs = lib.flatten (
+            lib.mapAttrsToList (_: host: map (user: { inherit host user; }) (host.users or [ ])) hosts
+          );
+        in
+        lib.listToAttrs (
+          map (
+            { host, user }:
+            {
+              name = "${user}@${host.hostname}";
+              value = mkHome host user;
+            }
+          ) hostUserPairs
+        );
+
+      # Pick the first host as a sane default for nix commands
+      firstHostName = builtins.head (builtins.attrNames hosts);
     in
     {
-      # Previously "name: makeSystem", but unused and deadnix complained.
-      nixosConfigurations = builtins.mapAttrs (_: makeSystem) hosts;
-      homeConfigurations = builtins.foldl' (
-        acc: host:
-        acc
-        // builtins.foldl' (
-          userAcc: user:
-          let
-            hostHMConfig = host.config.home-manager.users.${user} or { };
-          in
-          userAcc
-          // {
-            "${user}@${host.hostname}" = makeHome {
-              inherit inputs user;
-              pkgs = import nixpkgs {
-                inherit (host) system;
-                config = {
-                  allowUnfree = true;
-                };
-              };
-              pkgs-stable = import nixpkgs-stable {
-                inherit (host) system;
-                config = {
-                  allowUnfree = true;
-                  # msbuild requires this eol stuff
-                  permittedInsecurePackages = [
-                    "dotnet-sdk-6.0.428"
-                    "dotnet-runtime-6.0.36"
-                  ];
-                };
-              };
-              hostModules = [ hostHMConfig ];
-            };
-          }
-        ) acc (host.users or [ ])
-      ) { } (builtins.attrValues hosts);
+      nixosConfigurations = builtins.mapAttrs mkSystem hosts;
+      homeConfigurations = mkHomeConfigurations;
+
+      packages.${defaultSystem}.default =
+        self.nixosConfigurations.${firstHostName}.config.system.build.toplevel;
 
       devShells.${defaultSystem}.default = nixpkgs.legacyPackages.${defaultSystem}.mkShell {
         shellHook = ''
@@ -127,8 +170,8 @@
             ".*/submodules/.*"
             "^submodules/.*"
           ];
+
           hooks = {
-            # Official hooks from cachix/pre-commit-hooks.nix
             flake-checker.enable = true;
             nixfmt-rfc-style = {
               enable = true;
@@ -138,10 +181,8 @@
               enable = true;
               settings.ignore = [ "flake.lock" ];
             };
-            deadnix.enable = false; # deadnix has been pissing me off
-            nil.enable = true; # Nix LSP diagnostics
-
-            # Optional: Other useful hooks
+            deadnix.enable = false;
+            nil.enable = true;
             shellcheck.enable = true;
             shfmt.enable = true;
             typos.enable = true;

@@ -136,7 +136,7 @@ in
       yt-dlp
       zip
       losslesscut-bin
-      inputs.nixvim.packages.${pkgs.system}.default
+      inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # CXX - Adj
       meson

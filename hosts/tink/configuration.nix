@@ -15,7 +15,7 @@ let
   grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
     cp ${../../backgrounds/wavy-grass-placeholder.png} $out
   '';
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     theme = "rei";
     extraBackgrounds = [
       grass-bg
@@ -142,8 +142,6 @@ in
     enable = false;
     useSDDM = false;
   };
-
-  ollama.enable = false;
 
   users.defaultUserShell = pkgs.zsh;
   home-manager = {
