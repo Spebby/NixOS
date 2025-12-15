@@ -8,7 +8,7 @@
 }:
 
 let
-  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+  nixvim-stylix = nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (inputs) nixvim;
 in
 {

@@ -121,7 +121,7 @@
     wtype
     yt-dlp # i forgor what this is
     zip
-    inputs.nixvim.packages.${pkgs.system}.default # this is my neovim config im so cooool
+    inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default # this is my neovim config im so cooool
 
     # CXX
     meson

@@ -14,6 +14,6 @@ in
 {
   options.blender.enable = lib.mkEnableOption "Enable Blender";
   config = lib.mkIf cfg.enable {
-    home.packages = [ inputs.blender.packages.${pkgs.system}.default ];
+    home.packages = [ inputs.blender.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 }
