@@ -149,7 +149,6 @@ in
 
       # WM
       libnotify
-      xdg-desktop-portal-gtk
 
       gtt
 

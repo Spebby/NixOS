@@ -1,6 +1,11 @@
 # /hosts/common.nix
 
-{ inputs, pkgs, ... }:
+{
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   # This is gross but unless I want to hardcode pkgs in /lib/makeSystem.nix, I have to do this.
@@ -74,6 +79,51 @@
   };
   programs.zsh.enable = true;
 
+  xdg.portal = {
+    enable = true;
+
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+
+    # Don't set configPackages - let each DE use its own
+    # Or set it to an empty list to prevent auto-configuration
+    configPackages = lib.mkForce [ ];
+
+    # Configure portal backend each DE should use
+    config = {
+      # Default fallback for unknown DEs
+      common = {
+        default = [ "gtk" ];
+      };
+
+      # COSMIC Desktop
+      cosmic = {
+        default = [
+          "cosmic"
+          "gtk"
+        ];
+        # specify per-interface if needed:
+        # "org.freedesktop.impl.portal.Screenshot" = [ "cosmic" ];
+        # "org.freedesktop.impl.portal.FileChooser" = [ "cosmic" ];
+      };
+
+      # GNOME
+      gnome = {
+        default = [
+          "gnome"
+          "gtk"
+        ];
+      };
+
+      # Hyprland
+      hyprland = {
+        default = [
+          "hyprland"
+          "gtk"
+        ];
+      };
+    };
+  };
+
   # Global Packages
   environment = {
     systemPackages = with pkgs; [
@@ -124,7 +174,6 @@
       # Consider Toybox?
 
       nix-prefetch-git
-      cachix
       wayland-utils
       edid-decode
 
@@ -160,7 +209,6 @@
   };
 
   services = {
-    cachix-agent.enable = true; # Binary Cache platform
     flatpak.enable = true;
     gvfs.enable = true; # Mount, Trash, etc
     tumbler.enable = true; # Thumbnail support for images

@@ -20,7 +20,7 @@ in
     home.packages =
       with pkgs;
       [
-        (discord-canary.override {
+        (discord.override {
           withOpenASAR = true;
           withVencord = true;
         })

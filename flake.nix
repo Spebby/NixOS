@@ -1,3 +1,4 @@
+# /flake.nix
 {
   description = "NixOS Config";
 
@@ -37,11 +38,6 @@
 
     blender = {
       url = "github:edolstra/nix-warez?dir=blender";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -171,6 +167,7 @@
             "^submodules/.*"
           ];
 
+          # Hooks that are ran during pre-commit stage.
           hooks = {
             flake-checker.enable = true;
             nixfmt-rfc-style = {
@@ -181,8 +178,8 @@
               enable = true;
               settings.ignore = [ "flake.lock" ];
             };
-            deadnix.enable = false;
-            nil.enable = true;
+            deadnix.enable = false; # This is good, but can sometimes force awkward changes
+            nil.enable = true; # Nix LSP diagnostics
             shellcheck.enable = true;
             shfmt.enable = true;
             typos.enable = true;
