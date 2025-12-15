@@ -59,8 +59,8 @@ in
 
       # it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
       initContent = ''
-
-      '';
+        eval "$(keychain --eval --quiet)"
+        	  '';
 
       # There is for sure a better way of doing this
       profileExtra = ''

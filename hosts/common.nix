@@ -132,7 +132,7 @@
       home-manager
       openssl
       wget
-      gnome-keyring
+      keychain
 
       # Audio Tooling
       alsa-tools
