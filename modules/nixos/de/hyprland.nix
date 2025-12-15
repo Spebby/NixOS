@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
   cfg = config.hyprland;
@@ -13,8 +18,10 @@ in
   };
 
   config = {
-    environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
+    environment = {
+      sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+      };
     };
 
     programs.hyprland = { inherit (cfg) enable withUWSM; };
@@ -35,5 +42,7 @@ in
       pam.services.hyprlock = { };
       rtkit.enable = true;
     };
+
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
 }

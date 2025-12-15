@@ -27,6 +27,8 @@ in
         kdiff3 # Compares and merges 2 or 3 files or directories
         kdePackages.isoimagewriter # Optional: Program to write hybrid ISO files onto USB disks
         kdePackages.partitionmanager # Optional Manage the disk devices, partitions and file systems on your computer
+        kdePackages.xdg-desktop-portal-kde
+
         hardinfo2 # System information and benchmarks for Linux systems
         haruna # Open source video player built with Qt/QML and libmpv
         wayland-utils # Wayland utilities
@@ -57,5 +59,7 @@ in
     };
 
     security.rtkit.enable = true;
+
+    xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
   };
 }
