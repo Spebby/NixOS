@@ -216,7 +216,7 @@ in
         #WIFI_PWR_ON_BAT = "on";
 
         AUTO_PLATFORM_PROFILE = 0;
-        PLATFORM_PROFILE_ON_AC = "balanced";
+        PLATFORM_PROFILE_ON_AC = "low-power";
         PLATFORM_PROFILE_ON_BAT = "low-power";
 
         # Radio Device

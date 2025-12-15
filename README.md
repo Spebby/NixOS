@@ -14,20 +14,7 @@ process. This repository will be somewhat active as long as I'm using this
 system--I go back and forwards between this and a old Thinkpad running Gentoo,
 which I have no intention of moving over to Nix.
 
-The RICE is based off of Ampersands' RICE.
-
-## Tinkering
-
-If you're using a similar system to my own, one with an AMD iGPU and a NVIDIA
-dGPU, my Hyprland config should work out of the box for you, hooray! However, in
-the likely scenario that you are not, you'll have to do some tweaking. I
-generally note chunks of code that I think are not platform agnostic, I intend
-to slowly go through and update them to be more modular and control more of the
-hardware-specific environmental variables at host-level. For the moment though,
-consult the Hyprland wiki, and remove incompatible features.
-
-If you get any errors about missing precommit hooks, make sure to run
-`nix develop`!
+The Hyprland RICE is based off of Ampersands' RICE.
 
 ## Philosophy
 
@@ -55,13 +42,23 @@ Sometimes, you just need to break out of nix for a stubborn binary that relies
 on FHS. Thankfully, _NixOS & Flakes Book_ provides a handy
 [environment](https://nixos-and-flakes.thiscute.world/best-practices/run-downloaded-binaries-on-nixos)
 to simulate the FHS if needed, and that environment is included in this
-configuration. Simply run `fhs` anyway from the terminal, and you can run just
-about any linux binary, no problem.
+configuration. Simply run `fhs` in the terminal, and you can run just about any
+Linux binary, no problem.
 
 ## Oddities
 
 While this config should work mostly out of the box, there are a few
 applications which will require some tinkering.
+
+### COSMIC DE
+
+I use COSMIC DE as my daily driver on `rosso` and GNOME as my daily driver on
+`tink`. Both configs are somewhat actively maintained, but there are some bugs I
+should note with COSMIC specifically. Currently, screenshots & screensharing are
+broken due to an issue with `xdg-desktop-portal`. I am unsure why exactly this
+feature, which works fine on every other GUI environment I use regularly refuses
+to work on COSMIC no matter what I do, but I have accepted that for the time
+being it will _be_ broken.
 
 ### Cider
 
@@ -103,6 +100,12 @@ work, but that needs more of my time then I can devote to it at the moment due
 to some issues with systemd and wayland. As such, while verco is included in
 this configuration (and you can use it w/ git!), the DistroBox setup is not
 managed and you must manually set that up if you intend to use it.
+
+### Keychain
+
+I use Keychain to manage my SSH & GPG keys. It is automatically launched by zsh
+via `.zshrc`. The command written in zsh's config expects that an agent config
+file can be found in `~/.ssh/`, so you should define one!
 
 ## Acknowledgements
 
