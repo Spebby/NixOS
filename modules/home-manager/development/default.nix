@@ -5,5 +5,6 @@
     ./godot.nix
     ./rider.nix
     ./unity.nix
+    ./zed.nix
   ];
 }

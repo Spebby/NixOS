@@ -55,6 +55,14 @@
     useVerco = false;
   };
 
+  zed = {
+    enable = true;
+    settings = {
+      ai = false;
+      vim_mode = false;
+    };
+  };
+
   # For
   home.packages = with pkgs; [
     google-chrome
@@ -113,7 +121,7 @@
     wtype
     yt-dlp # i forgor what this is
     zip
-    inputs.nixvim.packages.${pkgs.system}.default # this is my neovim config im so cooool
+    inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default # this is my neovim config im so cooool
 
     # CXX
     meson
@@ -126,7 +134,6 @@
 
     # WM
     libnotify
-    xdg-desktop-portal-gtk
     gtt
   ];
 
@@ -143,10 +150,17 @@
     imageScalingMode = "fill";
   };
 
-  programs.git = {
-    enable = true;
-    userName = "Max Brockmann";
-    userEmail = "max.marika.brock@gmail.com";
-    extraConfig.init.defaultBranch = "main";
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Max Brockmann";
+          email = "max.marika.brock@gmail.com";
+        };
+        defaultBranch = "main";
+      };
+    };
+    difftastic.enable = true;
   };
 }

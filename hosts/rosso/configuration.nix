@@ -13,30 +13,42 @@ let
     cp ${../../backgrounds/maple.jpg} $out
   '';
   winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
-    	cp ${../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
-    	'';
+    cp ${../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
+  '';
+  winter-placeholder = pkgs.runCommand "winter-placeholder.png" { } ''
+    	cp ${../../backgrounds/winter-forest-placeholder.png} $out
+  '';
   grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-    	cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
-    	'';
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+    cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
+  '';
+  grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
+    cp ${../../backgrounds/wavy-grass-placeholder.png} $out
+  '';
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     theme = "default";
     extraBackgrounds = [
       maple-bg
       winter-bg
       grass-bg
+      winter-placeholder
+      grass-placeholder
     ];
     # https://github.com/uiriansan/SilentSDDM/wiki/Options/
     theme-overrides = {
       "General" = {
+        scale = "1.5";
         enable-animations = true;
         background-fill-mode = "fill";
+        animated-background-placeholder = "${winter-placeholder.name}";
       };
       "LoginScreen" = {
         background = "${winter-bg.name}";
+        animated-background-placeholder = "${winter-placeholder.name}";
       };
       "LockScreen" = {
         background = "${winter-bg.name}";
-        blur = "0";
+        animated-background-placeholder = "${winter-placeholder.name}";
+        blur = "1";
       };
       "LoginScreen.MenuArea.Session" = {
         position = "bottom-left";
@@ -115,6 +127,31 @@ in
     };
   };
 
+  # Set up virtualisation
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+
+      # Enable TPM emulation (for Windows 11)
+      qemu = {
+        swtpm.enable = true;
+      };
+    };
+
+    # Enable USB redirection
+    spiceUSBRedirection.enable = true;
+  };
+
+  users = {
+    defaultUserShell = pkgs.zsh;
+
+    # Allow VM management
+    groups = {
+      libvirtd.members = [ "your-account-here" ];
+      kvm.members = [ "your-account-here" ];
+    };
+  };
+
   environment = {
     systemPackages = with pkgs; [
       home-manager
@@ -123,6 +160,9 @@ in
       libsForQt5.qt5.qtgraphicaleffects
       sddm-theme
       sddm-theme.test
+
+      dnsmasq
+      phodav
     ];
   };
 
@@ -136,7 +176,7 @@ in
     useCosmicGreeter = false;
   };
   gnome = {
-    enable = true;
+    enable = false;
     usePowerProfile = false;
   };
   hyprland.enable = true;
@@ -145,9 +185,6 @@ in
     useSDDM = true;
   };
 
-  ollama.enable = false;
-
-  users.defaultUserShell = pkgs.zsh;
   home-manager = {
     backupFileExtension = "hm-backup";
     sharedModules = [ { home.stateVersion = stateVersion; } ];
@@ -160,7 +197,7 @@ in
       settings = {
         TLP_DEFAULT_MODE = "BAT";
 
-        CPU_BOOST_ON_AC = 0;
+        CPU_BOOST_ON_AC = 1;
         CPU_BOOST_ON_BAT = 0;
 
         CPU_SCALING_GOVERNOR_ON_AC = "performance";
@@ -178,7 +215,8 @@ in
         #WIFI_PWR_ON_AC  = "on";
         #WIFI_PWR_ON_BAT = "on";
 
-        PLATFORM_PROFILE_ON_AC = "performance";
+        AUTO_PLATFORM_PROFILE = 0;
+        PLATFORM_PROFILE_ON_AC = "low-power";
         PLATFORM_PROFILE_ON_BAT = "low-power";
 
         # Radio Device
@@ -198,7 +236,7 @@ in
         USB_EXCLUDE_PHONE = 0;
 
         #START_CHARGE_THRESH_BAT0 = 40;
-        STOP_CHARGE_THRESH_BAT0 = 80;
+        STOP_CHARGE_THRESH_BAT0 = 1;
 
         #RADEON_DPM_PERF_LEVEL_ON_AC  = "auto";
         #RADEON_DPM_PERF_LEVEL_ON_BAT = "auto";
@@ -208,7 +246,7 @@ in
     };
 
     displayManager = {
-      defaultSession = "gnome";
+      defaultSession = "cosmic";
       sddm = {
         package = pkgs.kdePackages.sddm; # qt6 version
         enable = true;

@@ -61,9 +61,18 @@ in
     useVerco = true;
   };
 
+  zed = {
+    enable = true;
+    settings = {
+      ai = false;
+      vim_mode = true;
+    };
+  };
+
   home = {
     # local packages
     packages = with pkgs; [
+      aseprite
       reaper
       lutris
       gh
@@ -126,7 +135,8 @@ in
       wtype
       yt-dlp
       zip
-      inputs.nixvim.packages.${pkgs.system}.default
+      losslesscut-bin
+      inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # CXX - Adj
       meson
@@ -139,7 +149,6 @@ in
 
       # WM
       libnotify
-      xdg-desktop-portal-gtk
 
       gtt
 
@@ -183,22 +192,31 @@ in
   };
 
   # Git
-  programs.git = {
-    enable = true;
-    userName = "Thom Mott";
-    userEmail = "thommott@proton.me";
-    extraConfig = {
-      gpg.ssh.allowedSignersFile = allowedSigners;
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Thom Mott";
+          email = "thommott@proton.me";
+        };
+        gpg.ssh.allowedSignersFile = allowedSigners;
+        init.defaultBranch = "main";
+        push.autoSetupRemote = true;
+      };
+
+      lfs.enable = true;
+
+      signing = {
+        key = "~/.ssh/NixOS.pub";
+        signByDefault = true;
+      };
     };
-    signing = {
-      key = "~/.ssh/NixOS.pub";
-      signByDefault = true;
-    };
+
+    difftastic.enable = true;
+    gpg.enable = true;
   };
 
-  programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -211,5 +229,4 @@ in
       "inode/directory" = [ "dolphin.desktop" ];
     };
   };
-
 }

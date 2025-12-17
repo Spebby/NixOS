@@ -12,7 +12,7 @@ in
   options.protonUp.enable = lib.mkEnableOption "Enable ProtonUp";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ protonup ];
+    home.packages = with pkgs; [ protonup-ng ];
 
     # Make sure to run "protonup" every now and then.
     home.sessionVariables = {

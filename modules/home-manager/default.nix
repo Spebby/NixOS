@@ -8,10 +8,11 @@
 }:
 
 let
-  nixvim-stylix = nixvim.packages.${pkgs.system}.default;
+  nixvim-stylix = nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (inputs) nixvim;
 in
 {
+  manual.html.enable = lib.mkForce false;
   home = {
     username = user;
     homeDirectory = "/home/${user}";

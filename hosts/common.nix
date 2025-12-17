@@ -1,6 +1,11 @@
 # /hosts/common.nix
 
-{ inputs, pkgs, ... }:
+{
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   # This is gross but unless I want to hardcode pkgs in /lib/makeSystem.nix, I have to do this.
@@ -82,11 +87,12 @@
       home-manager
       openssl
       wget
-      gnome-keyring
+      keychain
 
       # Audio Tooling
       alsa-tools
       pavucontrol
+      ffmpeg-full
 
       # Programming Stuff
       ## CXX
@@ -97,10 +103,13 @@
       gnumake
       cpio
       binutils
+      gdb
 
-      ## Other
+      # Other
       python311
+      live-server
       zig
+      odin
 
       # Basic editors
       vim
@@ -109,30 +118,34 @@
       # Utils
       acpid
       cowsay
+      door-knocker # Portal Debugger
       gparted
       ncdu
       lsof
       pciutils
       udisks
-      glxinfo
+      mesa-demos
       lshw-gui
       usbutils
       # Consider Toybox?
 
       nix-prefetch-git
-      cachix
       wayland-utils
       edid-decode
 
       # SDDM Themes
       sddm-astronaut
       sddm-chili-theme
+
+      # Nix Utils
+      nurl
+      nix-your-shell
     ];
 
-    variables = {
-      CC = "clang";
-      CXX = "clang++";
-    };
+    pathsToLink = [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ];
 
     sessionVariables = rec {
       TERMINAL = "kitty";
@@ -141,6 +154,11 @@
       ROFI_SCREENSHOT_DIR = "$HOME/Media/screenshots/";
       PATH = [ "${XDG_BIN_HOME}" ];
       MOZ_USE_XINPUT2 = "1";
+    };
+
+    variables = {
+      CC = "clang";
+      CXX = "clang++";
     };
   };
 
@@ -152,7 +170,6 @@
   };
 
   services = {
-    cachix-agent.enable = true; # Binary Cache platform
     flatpak.enable = true;
     gvfs.enable = true; # Mount, Trash, etc
     tumbler.enable = true; # Thumbnail support for images
@@ -209,6 +226,18 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    };
+
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 
   # ZRAM
