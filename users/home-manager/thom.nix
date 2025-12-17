@@ -58,6 +58,7 @@ in
   godot.enable = true;
   unity = {
     enable = true;
+    usePlastic = true;
     useVerco = true;
   };
 

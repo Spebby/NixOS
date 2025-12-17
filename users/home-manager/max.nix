@@ -52,6 +52,7 @@
   godot.enable = true;
   unity = {
     enable = true;
+    usePlastic = false;
     useVerco = false;
   };
 
@@ -66,6 +67,7 @@
   # For
   home.packages = with pkgs; [
     google-chrome
+    via # keyboard management software
 
     lutris # wine wrapper
     gh # github cli tool
@@ -83,7 +85,7 @@
     obs-studio
     pinta
 
-    geogebra6
+    #geogebra6
 
     spotify # you know what this is
     #cider-2 # 3rd party apple music client
@@ -158,7 +160,8 @@
           name = "Max Brockmann";
           email = "max.marika.brock@gmail.com";
         };
-        defaultBranch = "main";
+        init.defaultBranch = "main";
+        push.autoSetupRemote = true;
       };
     };
     difftastic.enable = true;
