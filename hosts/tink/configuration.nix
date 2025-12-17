@@ -130,7 +130,7 @@ in
   };
 
   cosmic = {
-    enable = false;
+    enable = true;
     useCosmicGreeter = false;
   };
   gnome = {
