@@ -71,7 +71,7 @@ in
     nixpkgs.config = {
       cudaSupport = true;
       # Only add this if you’re running Nix on something exotic or experimental:
-      allowUnsupportedSystem = true;
+      allowUnsupportedSystem = false;
     };
     environment.variables = {
       CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";

@@ -16,7 +16,7 @@ in
         "deepseek-r1:1.5b"
         "qwen2.5:7b"
       ];
-      acceleration = "cuda"; # or "rocm" or false
+      package = "cuda";
     };
   };
 }

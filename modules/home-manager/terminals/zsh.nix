@@ -43,7 +43,7 @@ in
         microfetch = "microfetch && echo";
         ".." = "cd ..";
 
-        vim = lib.getExe inputs.nixvim.packages.${pkgs.system}.default;
+        vim = lib.getExe inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
         ls = "eza --group-directories-first --icons";
         cat = "bat";
         lf = "${config.programs.yazi.shellWrapperName}";
@@ -59,15 +59,13 @@ in
 
       # it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
       initContent = ''
-        	# If I ever start using TMUX or  UWSM, put it here.
-      '';
+        eval "$(keychain --eval --quiet)"
+        	  '';
 
       # There is for sure a better way of doing this
-      #profileExtra = ''
-      #if [[ -z $SSH_TTY && $TTY == /dev/tty1 ]]; then
-      #	Hyprland > /dev/null
-      #fi
-      #'';
+      profileExtra = ''
+
+      '';
     };
   };
 }

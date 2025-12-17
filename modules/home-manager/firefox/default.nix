@@ -56,7 +56,7 @@ in
           # Privacy Badger:
           "jid1-MnnxcxisBPnSXQ@jetpack" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-            installation_mode = "force_installed";
+            installation_mode = "normal_installed";
           };
 
           # Language Tool
@@ -69,7 +69,6 @@ in
           "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}" = {
             install_url = "chameleon-ext";
             installation_mode = "force_installed";
-
           };
 
           # GMail Checker
@@ -131,6 +130,7 @@ in
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
             installation_mode = "normal_installed";
           };
+
           # Shadertoy Unofficial Plugin
           "{cab6fe0d-6896-4cb6-a40c-1613dd3ed8f9}" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/shadertoy-unofficial-plugin/latest.xpi";
