@@ -77,6 +77,19 @@ in
       "widget.gtk.libadwaita-colors.enabled" = false;
     };
 
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-cosmic ];
+    xdg.portal = {
+      config.cosmic = {
+        default = [
+          "cosmic"
+          "gtk"
+        ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "cosmic" ];
+      };
+
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-cosmic
+        xdg-desktop-portal-gtk
+      ];
+    };
   };
 }

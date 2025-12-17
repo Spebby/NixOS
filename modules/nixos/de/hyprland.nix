@@ -42,7 +42,6 @@ in
       pam.services.hyprlock = { };
       rtkit.enable = true;
     };
-
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    # Hyprland auto-installs and configures its XDG portal
   };
 }
