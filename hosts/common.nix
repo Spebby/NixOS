@@ -79,51 +79,6 @@
   };
   programs.zsh.enable = true;
 
-  xdg.portal = {
-    enable = true;
-
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-
-    # Don't set configPackages - let each DE use its own
-    # Or set it to an empty list to prevent auto-configuration
-    configPackages = lib.mkForce [ ];
-
-    # Configure portal backend each DE should use
-    config = {
-      # Default fallback for unknown DEs
-      common = {
-        default = [ "gtk" ];
-      };
-
-      # COSMIC Desktop
-      cosmic = {
-        default = [
-          "cosmic"
-          "gtk"
-        ];
-        # specify per-interface if needed:
-        # "org.freedesktop.impl.portal.Screenshot" = [ "cosmic" ];
-        # "org.freedesktop.impl.portal.FileChooser" = [ "cosmic" ];
-      };
-
-      # GNOME
-      gnome = {
-        default = [
-          "gnome"
-          "gtk"
-        ];
-      };
-
-      # Hyprland
-      hyprland = {
-        default = [
-          "hyprland"
-          "gtk"
-        ];
-      };
-    };
-  };
-
   # Global Packages
   environment = {
     systemPackages = with pkgs; [
@@ -163,6 +118,7 @@
       # Utils
       acpid
       cowsay
+      door-knocker # Portal Debugger
       gparted
       ncdu
       lsof
@@ -186,10 +142,10 @@
       nix-your-shell
     ];
 
-    variables = {
-      CC = "clang";
-      CXX = "clang++";
-    };
+    pathsToLink = [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ];
 
     sessionVariables = rec {
       TERMINAL = "kitty";
@@ -198,6 +154,11 @@
       ROFI_SCREENSHOT_DIR = "$HOME/Media/screenshots/";
       PATH = [ "${XDG_BIN_HOME}" ];
       MOZ_USE_XINPUT2 = "1";
+    };
+
+    variables = {
+      CC = "clang";
+      CXX = "clang++";
     };
   };
 
@@ -265,6 +226,18 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    };
+
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 
   # ZRAM

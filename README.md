@@ -91,21 +91,18 @@ the maintainer to make a flake for it, and instructions are on that repository.
 
 #### PlasticSCM
 
-PlasticSCM does have a native Linux package, but only for Ubuntu, Fedora, Cent
-and other more popular distros. Nix is not one of those. I had originally
-intended to unpack it myself, but I didn't feel it was worth my time. Instead,
-my setup involves using a TUI application, "verco", and using DistroBox to
-install the cli version of PlasticSCM. I had intended to get the GUI version to
-work, but that needs more of my time then I can devote to it at the moment due
-to some issues with systemd and wayland. As such, while verco is included in
-this configuration (and you can use it w/ git!), the DistroBox setup is not
-managed and you must manually set that up if you intend to use it.
+PlasticSCM previously did not have a NixOS package. This has recently changed!
+Unfortunately, it is often broken due to hash mismatches. I try to keep it up to
+date via overlays, but occasionally I may fall behind. Previously, I relied on
+Verco and DistroBox for this purpose. These are still included, if you want to
+use them. My DistroBox setup is not managed by nix, so you must set it up
+yourself if you wish to use it.
 
 ### Keychain
 
 I use Keychain to manage my SSH & GPG keys. It is automatically launched by zsh
-via `.zshrc`. The command written in zsh's config expects that an agent config
-file can be found in `~/.ssh/`, so you should define one!
+via `.zshrc`. The command written in zsh's config expects that a SSH Config File
+can be found in `~/.ssh/`, so you should define one!
 
 ## Acknowledgements
 
