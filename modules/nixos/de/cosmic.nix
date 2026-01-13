@@ -27,8 +27,8 @@ in
       };
 
       cosmic.excludePackages = with pkgs; [
-        cosmic-term
-        cosmic-store
+        #cosmic-term
+        #cosmic-store
       ];
 
       systemPackages = with pkgs; [
@@ -77,19 +77,10 @@ in
       "widget.gtk.libadwaita-colors.enabled" = false;
     };
 
-    xdg.portal = {
-      config.cosmic = {
-        default = [
-          "cosmic"
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "cosmic" ];
-      };
-
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-cosmic
-        xdg-desktop-portal-gtk
-      ];
-    };
+    # Workaround for COSMIC not importing PATH into systemd user env
+    # https://github.com/pop-os/cosmic-session/issues/166
+    systemd.user.extraConfig = ''
+      DefaultEnvironment="PATH=/run/current-system/sw/bin"
+    '';
   };
 }

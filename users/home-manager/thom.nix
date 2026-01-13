@@ -50,8 +50,11 @@ in
 
   protonUp.enable = true;
 
-  hyprland.enable = true;
-  gnome.enable = true;
+  # For some reason, Hyprpaper or some utility conflicts with COSMIC.
+  # and COSMIC will fail to load XDG Portal. I need to track down
+  # this bug at some point, but I'm not sure what exactly is causing it
+  hyprland.enable = false;
+  gnome.enable = false;
 
   blender.enable = true;
   rider.enable = true;
@@ -77,6 +80,8 @@ in
       reaper
       lutris
       gh
+
+      via
 
       # Games
       prismlauncher # Minecraft
@@ -108,7 +113,6 @@ in
       # CLI Utils
       acpid
       alsa-utils
-      bat
       bc
       bottom
       brightnessctl
@@ -150,9 +154,7 @@ in
 
       # WM
       libnotify
-
       gtt
-
       distroshelf
     ];
 

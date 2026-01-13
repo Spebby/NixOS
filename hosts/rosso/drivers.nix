@@ -76,10 +76,6 @@ in
     environment.variables = {
       CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
       BACKLIGHT_DEVICE = "amdgpu_bl1";
-      VK_ICD_FILENAMES = ''
-        ${config.boot.kernelPackages.nvidiaPackages.stable}/share/vulkan/icd.d/nvidia_icd.json
-        /run/opengl-driver/share/vulkan/icd.d/radv_icd64.json
-      '';
     };
 
     environment.systemPackages = with pkgs; [
@@ -87,6 +83,7 @@ in
       egl-wayland
       corectrl
       nvtopPackages.full
+      vulkan-tools
     ];
 
     # For the moment, I only want to use Offload. However, at some point it may be worth making specialisations for Clamshell & other modes.
@@ -97,6 +94,7 @@ in
       amdgpu.initrd.enable = cfg.mode != "clamshell";
       graphics = {
         enable = true;
+        enable32Bit = true;
       };
 
       nvidia = {

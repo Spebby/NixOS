@@ -1,11 +1,6 @@
 # /hosts/common.nix
 
-{
-  lib,
-  inputs,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 
 {
   # This is gross but unless I want to hardcode pkgs in /lib/makeSystem.nix, I have to do this.
@@ -226,18 +221,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-
-    config.common = {
-      default = [ "gtk" ];
-      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-    };
-
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 
   # ZRAM

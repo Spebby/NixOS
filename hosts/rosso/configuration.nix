@@ -176,10 +176,10 @@ in
     useCosmicGreeter = false;
   };
   gnome = {
-    enable = false;
+    enable = true;
     usePowerProfile = false;
   };
-  hyprland.enable = true;
+  hyprland.enable = false;
   kde = {
     enable = false;
     useSDDM = true;
