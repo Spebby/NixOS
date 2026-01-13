@@ -1,6 +1,7 @@
 # /users/home-manager/max.nix
 
 {
+  config,
   inputs,
   pkgs,
   pkgs-stable,
@@ -65,79 +66,86 @@
   };
 
   # For
-  home.packages = with pkgs; [
-    google-chrome
-    via # keyboard management software
+  home = {
+    packages = with pkgs; [
+      google-chrome
+      via # keyboard management software
 
-    lutris # wine wrapper
-    gh # github cli tool
+      lutris # wine wrapper
+      gh # github cli tool
 
-    # Games
-    prismlauncher # 3rd Party Minecraft Launcher
+      # Games
+      prismlauncher # 3rd Party Minecraft Launcher
 
-    # Desktop Apps
-    pkgs-stable.audacity
-    #gimp-with-plugins
+      # Desktop Apps
+      pkgs-stable.audacity
+      #gimp-with-plugins
 
-    libreoffice-qt6
-    mpv
-    vlc
-    obs-studio
-    pinta
+      libreoffice-qt6
+      mpv
+      vlc
+      obs-studio
+      pinta
 
-    #geogebra6
+      #geogebra6
 
-    spotify # you know what this is
-    #cider-2 # 3rd party apple music client
+      spotify
+      #cider-2 # 3rd party apple music client
 
-    # Steam Helpers
-    steam-tui
-    steamcmd
+      # Steam Helpers
+      steam-tui
+      steamcmd
 
-    # CLI Utilities
-    acpid
-    alsa-utils
-    bc
-    bottom
-    brightnessctl
-    btop
-    fastfetch
-    ffmpeg
-    ffmpegthumbnailer
-    fzf
-    git-graph
-    netcat-gnu
-    ntfs3g
-    mediainfo
-    microfetch
-    playerctl # media player formatter
-    ripgrep
-    showmethekey # debugging keycodes for exotic keys
-    silicon
-    udisks
-    ueberzugpp
-    unzip
-    w3m
-    wget
-    wl-clipboard # clipboard for wayland
-    wtype
-    yt-dlp # i forgor what this is
-    zip
-    inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default # this is my neovim config im so cooool
+      # CLI Utilities
+      acpid
+      alsa-utils
+      bc
+      bottom
+      brightnessctl
+      btop
+      fastfetch
+      ffmpeg
+      ffmpegthumbnailer
+      fzf
+      git-graph
+      netcat-gnu
+      ntfs3g
+      mediainfo
+      microfetch
+      playerctl # media player formatter
+      ripgrep
+      showmethekey # debugging keycodes for exotic keys
+      silicon
+      udisks
+      ueberzugpp
+      unzip
+      w3m
+      wget
+      wl-clipboard # clipboard for wayland
+      wtype
+      yt-dlp # i forgor what this is
+      zip
+      inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-    # CXX
-    meson
-    cpio
-    doxygen_gui
+      # CXX
+      meson
+      cpio
+      doxygen_gui
 
-    # ECMA
-    nodejs
-    #npm
+      # ECMA
+      nodejs
+      #npm
 
-    # WM
-    libnotify
-    gtt
-  ];
+      # WM
+      libnotify
+      gtt
+    ];
+
+    sessionVariables = rec {
+      XDG_BOOKS_DIR = "$HOME/Media/Books";
+      TERMINAL = lib.mkDefault (config.terminals.default or "kitty");
+    };
+  };
 
   # Stylix Overrides
   stylix = lib.mkForce {

@@ -2,8 +2,6 @@
 
 [![wakatime](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb.svg)](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb)
 
-![screenshot](./screenshots/cover1.png)
-
 This is my NixOS config. The backbone (nix/home-manager) is based heavily on
 Ampersand's "Reborn" config. I've taken that config, and blended it with my old
 dots from my Gentoo days. This setup is made for a Lonovo Legion 5 Pro 16ARH7H,
