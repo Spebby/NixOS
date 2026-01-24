@@ -19,6 +19,8 @@ let
         inherit (old.src) url;
         sha256 = "gs9XGqpgxWue+Cke8x5FeyUDfQK8R/IrwWP59NRmubI=";
       };
+
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
     });
 
     plasticscm-client-gui-unwrapped = super.plasticscm-client-gui-unwrapped.overrideAttrs (old: rec {
@@ -26,6 +28,8 @@ let
         inherit (old.src) url;
         sha256 = "cilxGuy5Y6t/UImje0625qrfwgNp1gp7qKA1fpPcw2g=";
       };
+
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
     });
 
     plasticscm-client-core-unwrapped = super.plasticscm-client-core-unwrapped.overrideAttrs (old: {
@@ -33,6 +37,8 @@ let
         inherit (old.src) url;
         sha256 = "/tfZLJ3a/6Jdk3opRKs+3/l09bFViN7/YuQ0hxVy4J8=";
       };
+
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
     });
   };
 in
@@ -46,22 +52,10 @@ in
       default = true;
       description = "Enable the Plastic SCM GUI client";
     };
-    useVerco = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable the Verco Plastic SCM client";
-    };
   };
 
   config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [ plasticOverlay ];
-
-    assertions = [
-      {
-        assertion = !cfg.useVerco || cfg.usePlastic;
-        message = "unity.useVerco requires unity.usePlastic to be enabled.";
-      }
-    ];
 
     home.packages =
       with pkgs;
@@ -74,7 +68,7 @@ in
             ];
         })
       ]
-      ++ lib.optionals cfg.usePlastic ([ plasticscm-client-complete ] ++ lib.optional cfg.useVerco verco);
+      ++ lib.optionals cfg.usePlastic [ plasticscm-client-complete ];
 
     xdg.desktopEntries.unityhub = {
       name = "Unity Hub";
