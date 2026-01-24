@@ -4,60 +4,64 @@
 
 {
   config,
-  pkgs-stable,
   lib,
+  pkgs-stable,
   ...
 }:
 
 let
-  extra-path = with pkgs-stable; [
-    dotnetCorePackages.dotnet_8.sdk
+  cfg = config.rider;
+
+  extraPath = with pkgs-stable; [
     dotnetCorePackages.sdk_8_0
     dotnetPackages.Nuget
     mono
-    msbuild
   ];
 
-  extra-lib = with pkgs-stable; [
+  extraLib = with pkgs-stable; [
     xorg.libX11
     xorg.libXcursor
     xorg.libXrandr
     libglvnd
   ];
 
-  cfg = config.rider;
+  riderWrapped = pkgs-stable.jetbrains.rider.overrideAttrs (attrs: {
+    postInstall = (attrs.postInstall or "") + ''
+      # Wrap Rider with required tooling
+      mv $out/bin/rider $out/bin/.rider-unwrapped
+      makeWrapper $out/bin/.rider-unwrapped $out/bin/rider \
+        --argv0 rider \
+        --prefix PATH : "${lib.makeBinPath extraPath}" \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extraLib}"
+
+      # Unity Rider plugin expects:
+      #   <root>/bin/rider
+      #   <root>/{lib,plugins,...}
+      # It walks up one directory from the binary.
+      shopt -s extglob
+      ln -s $out/rider/!(bin) $out/
+      shopt -u extglob
+    '';
+  });
+
 in
 {
-  options.rider.enable = lib.mkEnableOption "Enable JetBrains Rider";
-  config = lib.mkIf cfg.enable {
-    home = {
-      packages = [
-        (pkgs-stable.symlinkJoin {
-          name = "rider-wrapped";
-          paths = [ pkgs-stable.jetbrains.rider ];
-          buildInputs = [ pkgs-stable.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/rider \
-              --argv0 rider \
-              --prefix PATH : "${lib.makeBinPath extra-path}" \
-              --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extra-lib}"
-          '';
-        })
-      ];
-      sessionVariables = {
-        DOTNET_ROOT = "${pkgs-stable.dotnetCorePackages.dotnet_8.sdk}";
-        MSBuildSDKsPath = "${pkgs-stable.dotnetCorePackages.dotnet_8.sdk}/sdk/8.0.100/Sdks"; # adjust version if needed
-      };
-    };
+  ###### Options ######
+  options.rider = {
+    enable = lib.mkEnableOption "JetBrains Rider (wrapped for engine integrations)";
+  };
 
-    # Keep the desktop file
-    xdg.dataFile."applications/jetbrains-rider.desktop".text = ''
-      [Desktop Entry]
-      Name=Rider
-      Exec="${pkgs-stable.jetbrains.rider}/bin/rider"
-      Icon=rider
-      Type=Application
-      NoDisplay=true
-    '';
+  config = lib.mkIf cfg.enable {
+    home.packages = [ riderWrapped ];
+    xdg.desktopEntries.jetbrains-rider = {
+      name = "Rider";
+      exec = "\"${riderWrapped}/bin/rider\"";
+      icon = "rider";
+      terminal = false;
+      categories = [
+        "Development"
+        "IDE"
+      ];
+    };
   };
 }
