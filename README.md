@@ -92,9 +92,9 @@ the maintainer to make a flake for it, and instructions are on that repository.
 PlasticSCM previously did not have a NixOS package. This has recently changed!
 Unfortunately, it is often broken due to hash mismatches. I try to keep it up to
 date via overlays, but occasionally I may fall behind. Previously, I relied on
-Verco and DistroBox for this purpose. These are still included, if you want to
-use them. My DistroBox setup is not managed by nix, so you must set it up
-yourself if you wish to use it.
+DistroBox for this purpose. This is still included, if you want to use it. My
+DistroBox setup is not managed by nix, so you must set it up yourself if you
+wish to use it.
 
 ### Keychain
 

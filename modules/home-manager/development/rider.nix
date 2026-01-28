@@ -23,6 +23,7 @@ let
     xorg.libXcursor
     xorg.libXrandr
     libglvnd
+    icu
   ];
 
   riderWrapped = pkgs-stable.jetbrains.rider.overrideAttrs (attrs: {

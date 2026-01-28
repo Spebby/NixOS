@@ -19,16 +19,5 @@ in
       dotnetCorePackages.dotnet_8.sdk
       godot-export-templates-bin
     ];
-
-    xdg.desktopEntries.godot-mono = {
-      name = "Godot Engine (Mono)";
-      exec = "${pkgs.godot-mono}/bin/godot-mono --single-window %F";
-      icon = "godot";
-      terminal = false;
-      categories = [
-        "Development"
-        "X-GameEngine"
-      ];
-    };
   };
 }

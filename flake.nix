@@ -170,7 +170,7 @@
           # Hooks that are ran during pre-commit stage.
           hooks = {
             flake-checker.enable = true;
-            nixfmt-rfc-style = {
+            nixfmt = {
               enable = true;
               settings.width = 100;
             };

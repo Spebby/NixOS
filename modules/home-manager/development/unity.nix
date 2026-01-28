@@ -17,7 +17,7 @@ let
     plasticscm-theme = super.plasticscm-theme.overrideAttrs (old: rec {
       src = super.fetchurl {
         inherit (old.src) url;
-        sha256 = "gs9XGqpgxWue+Cke8x5FeyUDfQK8R/IrwWP59NRmubI=";
+        sha256 = "PK6fq9ZtKmmiLVVamKIjCzI721avIgxfxl5bWrAXEmw=";
       };
 
       nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
@@ -26,7 +26,7 @@ let
     plasticscm-client-gui-unwrapped = super.plasticscm-client-gui-unwrapped.overrideAttrs (old: rec {
       src = super.fetchurl {
         inherit (old.src) url;
-        sha256 = "cilxGuy5Y6t/UImje0625qrfwgNp1gp7qKA1fpPcw2g=";
+        sha256 = "9K1ttKQFSW5iMVnBvDGEnSgm3gnUaErfktjgNDooZOo=";
       };
 
       nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
@@ -35,7 +35,7 @@ let
     plasticscm-client-core-unwrapped = super.plasticscm-client-core-unwrapped.overrideAttrs (old: {
       src = super.fetchurl {
         inherit (old.src) url;
-        sha256 = "/tfZLJ3a/6Jdk3opRKs+3/l09bFViN7/YuQ0hxVy4J8=";
+        sha256 = "yOVcZUXeNfcd21jXUUpuaLs8P6z7s3dbQMKmQy/3m2Y=";
       };
 
       nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
