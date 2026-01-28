@@ -54,7 +54,6 @@
   unity = {
     enable = true;
     usePlastic = false;
-    useVerco = false;
   };
 
   zed = {
@@ -131,6 +130,7 @@
       meson
       cpio
       doxygen_gui
+      vscode
 
       # ECMA
       nodejs

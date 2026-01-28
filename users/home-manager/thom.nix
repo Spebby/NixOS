@@ -50,9 +50,11 @@ in
 
   protonUp.enable = true;
 
-  # For some reason, Hyprpaper or some utility conflicts with COSMIC.
-  # and COSMIC will fail to load XDG Portal. I need to track down
-  # this bug at some point, but I'm not sure what exactly is causing it
+  # Ahem. This is either a self-own, or stupidity on Home Manager's design, probably a bit of both
+  # If you manage XDG via home manager in anyway (like hyprland's home manager package does)
+  # Then you overwrite the path that points to XDG installs to .nix-profiles, which will be
+  # lacking the ones managed by NixOS. Either I fix this manually, or stop managing hyprland
+  # via home manager.
   hyprland.enable = false;
   gnome.enable = false;
 
@@ -62,7 +64,6 @@ in
   unity = {
     enable = true;
     usePlastic = true;
-    useVerco = true;
   };
 
   zed = {

@@ -17,6 +17,8 @@
     xorg.xhost
 
     amulet-map-editor
+
+    sc-controller
   ];
 
   programs = {
@@ -24,8 +26,16 @@
       enable = true;
       capSysNice = true;
     };
+    # this is a module that allows a more "traditional" experience, by recreating loaders.
+    # This is necessary when trying to use programs not already packaged for nix
+    # and therefor, do not know where their required libraries are.
+    # https://wiki.nixos.org/wiki/Nix-ld <- more libs included
     nix-ld = {
       enable = true;
+      libraries = with pkgs; [
+        # Any library that is required when running a package.
+        SDL2
+      ];
     };
 
     steam = {

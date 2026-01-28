@@ -174,6 +174,7 @@ in
       kernelModules = [
         "amdgpu"
         "kvm-amd"
+        "joydev"
       ];
     };
   };

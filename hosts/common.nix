@@ -72,7 +72,10 @@
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
   };
-  programs.zsh.enable = true;
+  programs = {
+    direnv.enable = true;
+    zsh.enable = true;
+  };
 
   # Global Packages
   environment = {
