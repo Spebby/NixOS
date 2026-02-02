@@ -12,35 +12,6 @@
 let
   cfg = config.unity;
 
-  # downstream overlay for hash mismatch fix. will be irrelevant at some point.
-  plasticOverlay = self: super: {
-    plasticscm-theme = super.plasticscm-theme.overrideAttrs (old: rec {
-      src = super.fetchurl {
-        inherit (old.src) url;
-        sha256 = "PK6fq9ZtKmmiLVVamKIjCzI721avIgxfxl5bWrAXEmw=";
-      };
-
-      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
-    });
-
-    plasticscm-client-gui-unwrapped = super.plasticscm-client-gui-unwrapped.overrideAttrs (old: rec {
-      src = super.fetchurl {
-        inherit (old.src) url;
-        sha256 = "9K1ttKQFSW5iMVnBvDGEnSgm3gnUaErfktjgNDooZOo=";
-      };
-
-      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
-    });
-
-    plasticscm-client-core-unwrapped = super.plasticscm-client-core-unwrapped.overrideAttrs (old: {
-      src = super.fetchurl {
-        inherit (old.src) url;
-        sha256 = "yOVcZUXeNfcd21jXUUpuaLs8P6z7s3dbQMKmQy/3m2Y=";
-      };
-
-      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ super.dpkg ];
-    });
-  };
 in
 {
 
@@ -55,7 +26,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    nixpkgs.overlays = [ plasticOverlay ];
 
     home.packages =
       with pkgs;
