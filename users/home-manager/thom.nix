@@ -14,7 +14,10 @@ let
 in
 {
   # Specific packages.
-  imports = [ ../../modules/home-manager ];
+  imports = [
+    ../../modules/home-manager
+    ../../modules/overlays
+  ];
 
   terminals = {
     alacritty.enable = false;
@@ -77,6 +80,7 @@ in
   home = {
     # local packages
     packages = with pkgs; [
+      hytale-launcher
       aseprite
       reaper
       lutris
@@ -157,6 +161,9 @@ in
       libnotify
       gtt
       distroshelf
+
+      # EVIL
+      opencode
     ];
 
     file = {

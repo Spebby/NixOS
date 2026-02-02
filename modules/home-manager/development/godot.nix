@@ -16,8 +16,8 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       godot-mono
-      dotnetCorePackages.dotnet_8.sdk
       godot-export-templates-bin
+      dotnetCorePackages.dotnet_8.sdk
     ];
   };
 }

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./amulet.nix ];
+  imports = [ ./../../overlays/amulet.nix ];
 
   environment.systemPackages = with pkgs; [
     raylib

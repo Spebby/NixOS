@@ -4,7 +4,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
@@ -47,6 +47,7 @@
     };
 
     amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
+    hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
   };
 
   outputs =
