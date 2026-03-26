@@ -19,11 +19,18 @@ let
   ];
 
   extraLib = with pkgs-stable; [
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
+    libx11
+    libxcursor
+    libxrandr
     libglvnd
     icu
+  ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      python3 = prev.python312;
+      python3Packages = prev.python312Packages;
+    })
   ];
 
   riderWrapped = pkgs-stable.jetbrains.rider.overrideAttrs (attrs: {

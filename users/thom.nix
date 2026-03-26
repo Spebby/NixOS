@@ -11,7 +11,12 @@
         "networkmanager"
         "home-manager"
         "gamemode"
+        "docker"
       ];
     };
+  };
+
+  virtualisation.docker = {
+    enable = true;
   };
 }

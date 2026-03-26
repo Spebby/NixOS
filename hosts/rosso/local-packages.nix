@@ -14,7 +14,7 @@
 
     distrobox
     podman
-    xorg.xhost
+    xhost
 
     amulet-map-editor
 

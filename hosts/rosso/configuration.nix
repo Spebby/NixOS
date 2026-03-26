@@ -82,7 +82,7 @@ in
   boot = {
     loader.grub = {
       theme = "${import ./grubtheme.nix { inherit pkgs; }}";
-      configurationLimit = 5;
+      configurationLimit = 3;
     };
     plymouth = {
       enable = true;
@@ -122,8 +122,8 @@ in
     };
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
+      dates = "daily";
+      options = "--delete-older-than 7d";
     };
   };
 
@@ -176,7 +176,7 @@ in
     useCosmicGreeter = false;
   };
   gnome = {
-    enable = true;
+    enable = false;
     usePowerProfile = false;
   };
   hyprland.enable = false;
