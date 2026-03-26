@@ -111,7 +111,7 @@ in
              "fill"
            ]
          ]
-       }${prependDollarAndJoinWith " " versionControl}$line_break$character";
+       }${prependDollarAndJoinWith "" versionControl}$line_break$character";
 
       add_newline = true;
       fill.symbol = " ";
@@ -156,12 +156,6 @@ in
         ];
       };
 
-      git_branch = {
-        format = "[$symbol$branch(:$remote_branch)]($style)";
-        style = "white";
-        symbol = " ";
-      };
-
       status = {
         format = "[$symbol](red)";
         symbol = "";
@@ -169,8 +163,14 @@ in
         disabled = false;
       };
 
+      git_branch = {
+        format = " [$symbol$branch(:$remote_branch)]($style)";
+        style = "white";
+        symbol = " ";
+      };
+
       git_status = {
-        format = "[[(${
+        format = "( [${
           prependDollarAndJoinWith "" [
             "conflicted"
             "untracked"
@@ -179,26 +179,31 @@ in
             "renamed"
             "deleted"
           ]
-        })](218)($ahead_behind$stashed)]($style)";
-        ahead = "[⇡${starshipVar "count"}](lavender) ";
-        conflicted = "🏳";
-        deleted = "󰗨 ${starshipVar "count"} ";
-        diverged = "⇕⇡${starshipVar "ahead_count"}⇣${starshipVar "behind_count"} ";
-        modified = "[ ${starshipVar "count"}]($style) ";
-        staged = "[+$count](green) ";
-        stashed = " ${starshipVar "count"} ";
+        }](218) [$ahead_behind$stashed]($style))";
         style = "red";
-        untracked = "[ ${starshipVar "count"}]($style) ";
+        ahead = "[⇡${starshipVar "count"}](lavender)";
+        conflicted = " ";
+        deleted = "󰗨 ${starshipVar "count"}";
+        diverged = "⇕⇡${starshipVar "ahead_count"}⇣${starshipVar "behind_count"}";
+        modified = "[ ${starshipVar "count"}]($style)";
+        staged = "[+$count](green)";
+        stashed = " ${starshipVar "count"}";
+        untracked = "[ ${starshipVar "count"}]($style)";
       };
 
       git_state = {
-        format = "([$state( $progress_current/$progress_total)]($style))";
-        style = "fg";
+        format = "\\([$state( $progress_current/$progress_total)]($style)\\)";
+        style = "bold yellow";
+        bisect = "BISECTING";
+      };
+
+      git_commit = {
+        format = " [\\($hash$tag\\)]($style)";
       };
 
       git_metrics = {
         disabled = false;
-        format = "[+$added](green)|[-$deleted](red) ";
+        format = " [+$added](green)|[-$deleted](red)";
         only_nonzero_diffs = true;
       };
     };

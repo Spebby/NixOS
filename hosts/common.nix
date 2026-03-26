@@ -125,6 +125,7 @@
       mesa-demos
       lshw-gui
       usbutils
+      cbonsai
       # Consider Toybox?
 
       nix-prefetch-git

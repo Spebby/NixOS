@@ -80,11 +80,12 @@ in
   home = {
     # local packages
     packages = with pkgs; [
-      hytale-launcher
+      #hytale-launcher
       aseprite
       reaper
       lutris
       gh
+      melonds
 
       via
 
