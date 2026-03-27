@@ -1,48 +1,12 @@
 # /hosts/rosso/configuration.nix
 
 {
-  inputs,
   pkgs,
   stateVersion,
   hostname,
   ...
 }:
 
-let
-  grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-    cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
-  '';
-  grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
-    cp ${../../backgrounds/wavy-grass-placeholder.png} $out
-  '';
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    theme = "rei";
-    extraBackgrounds = [
-      grass-bg
-      grass-placeholder
-    ];
-    # https://github.com/uiriansan/SilentSDDM/wiki/Options/
-    theme-overrides = {
-      "General" = {
-        scale = "1.0";
-        enable-animations = true;
-        background-fill-mode = "fill";
-        animated-background-placeholder = "${grass-placeholder.name}";
-      };
-      "LoginScreen" = {
-        background = "${grass-bg.name}";
-        animated-background-placeholder = "${grass-placeholder.name}";
-      };
-      "LockScreen" = {
-        background = "${grass-bg.name}";
-        animated-background-placeholder = "${grass-placeholder.name}";
-      };
-      "LoginScreen.MenuArea.Session" = {
-        position = "bottom-left";
-      };
-    };
-  };
-in
 {
   networking = {
     hostName = hostname;
@@ -56,9 +20,8 @@ in
   imports = [
     ./hardware-configuration.nix
     ./local-packages.nix
-    ../common.nix # Common to hosts
-    ../../modules/nixos
-    ../../users/max.nix
+    ../../nixos
+    ../../../users/max.nix
   ];
 
   # TODO: move the theme specific stuff to machine specific configs.
@@ -119,8 +82,6 @@ in
       bottles
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
-      sddm-theme
-      sddm-theme.test
     ];
   };
 
@@ -155,20 +116,6 @@ in
 
     displayManager = {
       defaultSession = "gnome";
-      sddm = {
-        package = pkgs.kdePackages.sddm; # qt6 version
-        enable = true;
-        wayland.enable = true;
-        theme = sddm-theme.pname;
-        extraPackages = sddm-theme.propagatedBuildInputs;
-        settings = {
-          # required for styling the virtual keyboard
-          General = {
-            GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-            InputMethod = "qtvirtualkeyboard";
-          };
-        };
-      };
     };
   };
 }

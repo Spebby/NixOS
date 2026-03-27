@@ -3,14 +3,11 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
 }:
 
 {
-  imports = [ inputs.stylix.homeModules.stylix ];
-
   home.packages = with pkgs; [
     dejavu_fonts
     jetbrains-mono

@@ -1,12 +1,15 @@
-# /flake.nix
 {
-  description = "NixOS Config";
+  description = "Spebby's NixOS config";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -24,6 +27,16 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprland-unity-fix.url = "github:nnra6864/HyprlandUnityFix";
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # not using unstable, so just override them to avoid cloning
+      inputs.niri-unstable.follows = "niri/niri-stable";
+      inputs.xwayland-satellite-unstable.follows = "niri/xwayland-satellite-stable";
+    };
+
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +47,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland-unity-fix.url = "github:nnra6864/HyprlandUnityFix";
 
     blender = {
       url = "github:edolstra/nix-warez?dir=blender";
@@ -46,146 +58,63 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+	nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+
+	nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-index-database.follows = "nix-index-database";
+    };
+
+	lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit.inputs.flake-compat.follows = "nix-alien/flake-compat";
+    };
+
+	nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
     hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
   };
 
+  # Ripped from https://tangled.org/quasigod.xyz/nixconfig
+  nixConfig = {
+    extra-substituters = [
+      "https://chaotic-nyx.cachix.org/"
+      "https://nix-community.cachix.org"
+      "https://nix-gaming.cachix.org"
+      "https://quasigod.cachix.org"
+      "https://attic.xuyh0120.win/lantian" # cachyos kernels
+      "https://cache.numtide.com" # llm-agents
+    ];
+    extra-trusted-public-keys = [
+      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "quasigod.cachix.org-1:z+auA/0uS8vy6DDtUZhRQagZvVdl5WYnE/7lveoM3Do="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
+  };
+
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-stable,
-      pre-commit-hooks,
+    inputs@{
+      flake-parts,
       ...
-    }@inputs:
-    let
-      # NEVER CHANGE THIS STRING. IT IS A FAILSAFE PROVIDED BY NIXOS.
-      stateVersion = "24.11";
-      inherit (nixpkgs) lib;
-
-      defaultSystem = "x86_64-linux";
-      hosts = import ./hosts/hosts.nix;
-
-      # Shared pkgs-stable config
-      stablePkgsConfig = {
-        allowUnfree = true;
-        permittedInsecurePackages = [
-          "dotnet-sdk-6.0.428"
-          "dotnet-runtime-6.0.36"
-        ];
-      };
-
-      # Build a NixOS system configuration
-      mkSystem =
-        _: host:
-        # See ./hosts/hosts.nix for more context
-        nixpkgs.lib.nixosSystem {
-          system = host.system or "x86_64-linux";
-          specialArgs = {
-            inherit inputs stateVersion;
-            inherit (inputs) nixos-hardware;
-            inherit (host) hostname;
-            pkgs-stable = import nixpkgs-stable {
-              system = host.system or "x86_64-linux";
-              config = stablePkgsConfig;
-            };
-          };
-
-          modules = [
-            (host.config or ./hosts/${host.hostname}/configuration.nix)
-          ]
-          ++ (host.extraModules or [ ]);
-        };
-
-      # Build a home-manager configuration
-      mkHome =
-        host: user:
-        let
-          system = host.system or "x86_64-linux";
-          hostHMConfig = host.config.home-manager.users.${user} or { };
-        in
-        inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          inherit lib;
-
-          modules = [
-            ./modules/home-manager
-            ./users/home-manager/${user}.nix
-            { home.stateVersion = lib.mkDefault stateVersion; }
-            hostHMConfig
-          ];
-          extraSpecialArgs = {
-            inherit inputs user stateVersion;
-            pkgs-stable = import nixpkgs-stable {
-              inherit system;
-              config = stablePkgsConfig;
-            };
-          };
-        };
-
-      # Generate all home-manager configurations
-      mkHomeConfigurations =
-        let
-          # Create list of all host-user pairs
-          hostUserPairs = lib.flatten (
-            lib.mapAttrsToList (_: host: map (user: { inherit host user; }) (host.users or [ ])) hosts
-          );
-        in
-        lib.listToAttrs (
-          map (
-            { host, user }:
-            {
-              name = "${user}@${host.hostname}";
-              value = mkHome host user;
-            }
-          ) hostUserPairs
-        );
-
-      # Pick the first host as a sane default for nix commands
-      firstHostName = builtins.head (builtins.attrNames hosts);
-    in
-    {
-      nixosConfigurations = builtins.mapAttrs mkSystem hosts;
-      homeConfigurations = mkHomeConfigurations;
-
-      packages.${defaultSystem}.default =
-        self.nixosConfigurations.${firstHostName}.config.system.build.toplevel;
-
-      devShells.${defaultSystem}.default = nixpkgs.legacyPackages.${defaultSystem}.mkShell {
-        shellHook = ''
-          ${self.checks.${defaultSystem}.pre-commit-check.shellHook}
-        '';
-      };
-
-      checks.${defaultSystem} = {
-        pre-commit-check = pre-commit-hooks.lib.${defaultSystem}.run {
-          src = ./.;
-          excludes = [
-            ".*/submodules/.*"
-            "^submodules/.*"
-          ];
-
-          # Hooks that are ran during pre-commit stage.
-          hooks = {
-            flake-checker.enable = true;
-            nixfmt = {
-              enable = true;
-              settings.width = 100;
-            };
-            statix = {
-              enable = true;
-              settings.ignore = [ "flake.lock" ];
-            };
-            deadnix.enable = false; # This is good, but can sometimes force awkward changes
-            nil.enable = true; # Nix LSP diagnostics
-            shellcheck.enable = true;
-            shfmt.enable = true;
-            typos.enable = true;
-          };
-        };
-      };
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        (inputs.import-tree ./modules/parts)
+        ./modules/hosts/common/
+        ./modules/nixos/sddm/module.nix
+      ];
     };
 }

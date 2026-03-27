@@ -1,7 +1,6 @@
 # /modules/default.nix
 {
   inputs,
-  user,
   lib,
   pkgs,
   ...
@@ -13,14 +12,9 @@ let
 in
 {
   manual.html.enable = lib.mkForce false;
-  home = {
-    username = user;
-    homeDirectory = "/home/${user}";
-
-    sessionVariables = {
-      EDITOR = lib.getExe nixvim-stylix;
-      NIXOS_OZONE_WL = "1";
-    };
+  home.sessionVariables = {
+    EDITOR = lib.getExe nixvim-stylix;
+    NIXOS_OZONE_WL = "1";
   };
 
   # Blanket import everything. The user's configuration in

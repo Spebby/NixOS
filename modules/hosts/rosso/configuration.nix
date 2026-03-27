@@ -1,61 +1,12 @@
 # /hosts/rosso/configuration.nix
 
 {
-  inputs,
   pkgs,
   stateVersion,
   hostname,
   ...
 }:
 
-let
-  maple-bg = pkgs.runCommand "maple-bg.jpg" { } ''
-    cp ${../../backgrounds/maple.jpg} $out
-  '';
-  winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
-    cp ${../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
-  '';
-  winter-placeholder = pkgs.runCommand "winter-placeholder.png" { } ''
-    	cp ${../../backgrounds/winter-forest-placeholder.png} $out
-  '';
-  grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-    cp ${../../backgrounds/wavy-grass-moewalls-com.mp4} $out
-  '';
-  grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
-    cp ${../../backgrounds/wavy-grass-placeholder.png} $out
-  '';
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    theme = "default";
-    extraBackgrounds = [
-      maple-bg
-      winter-bg
-      grass-bg
-      winter-placeholder
-      grass-placeholder
-    ];
-    # https://github.com/uiriansan/SilentSDDM/wiki/Options/
-    theme-overrides = {
-      "General" = {
-        scale = "1.5";
-        enable-animations = true;
-        background-fill-mode = "fill";
-        animated-background-placeholder = "${winter-placeholder.name}";
-      };
-      "LoginScreen" = {
-        background = "${winter-bg.name}";
-        animated-background-placeholder = "${winter-placeholder.name}";
-      };
-      "LockScreen" = {
-        background = "${winter-bg.name}";
-        animated-background-placeholder = "${winter-placeholder.name}";
-        blur = "1";
-      };
-      "LoginScreen.MenuArea.Session" = {
-        position = "bottom-left";
-      };
-    };
-  };
-in
 {
   networking = {
     hostName = hostname;
@@ -71,10 +22,9 @@ in
     ./hardware-configuration.nix
     ./local-packages.nix
     ./drivers.nix
-    ../common.nix # Common to hosts
-    ../../modules/nixos
-    ../../users/thom.nix
-    ../../users/max.nix
+    ../../nixos
+    ../../../users/thom.nix
+    ../../../users/max.nix
   ];
 
   # TODO: move the theme specific stuff to machine specific configs.
@@ -158,8 +108,6 @@ in
       bottles
       libsForQt5.qt5.qtquickcontrols2
       libsForQt5.qt5.qtgraphicaleffects
-      sddm-theme
-      sddm-theme.test
 
       dnsmasq
       phodav
@@ -247,20 +195,6 @@ in
 
     displayManager = {
       defaultSession = "cosmic";
-      sddm = {
-        package = pkgs.kdePackages.sddm; # qt6 version
-        enable = true;
-        wayland.enable = true;
-        theme = sddm-theme.pname;
-        extraPackages = sddm-theme.propagatedBuildInputs;
-        settings = {
-          # required for styling the virtual keyboard
-          General = {
-            GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-            InputMethod = "qtvirtualkeyboard";
-          };
-        };
-      };
     };
   };
 }
