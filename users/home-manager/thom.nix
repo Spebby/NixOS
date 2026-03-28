@@ -15,8 +15,8 @@ in
 {
   # Specific packages.
   imports = [
-    ../../modules/home-manager
-    ../../modules/overlays
+    ../../modules/_home_manager
+    ../../modules/_overlays
   ];
 
   terminals = {

@@ -2,10 +2,10 @@
   description = "Spebby's NixOS config";
 
   inputs = {
-	# Dendritic pattern
+    # Dendritic pattern
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-	den.url = "github:vic/den/v0.10.0";
+    den.url = "github:vic/den/v0.10.0";
     flake-aspects.url = "github:vic/flake-aspects/v0.5.0";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -40,10 +40,11 @@
 
     niri = {
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # not using unstable, so just override them to avoid cloning
-      inputs.niri-unstable.follows = "niri/niri-stable";
-      inputs.xwayland-satellite-unstable.follows = "niri/xwayland-satellite-stable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        niri-unstable.follows = "niri/niri-stable";
+        xwayland-satellite-unstable.follows = "niri/xwayland-satellite-stable";
+      };
     };
 
     pre-commit-hooks = {
@@ -56,7 +57,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     blender = {
       url = "github:edolstra/nix-warez?dir=blender";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,25 +67,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-	nix-gaming = {
+    nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
 
-	nix-alien = {
+    nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix-index-database.follows = "nix-index-database";
     };
 
-	lanzaboote = {
+    lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.inputs.flake-compat.follows = "nix-alien/flake-compat";
     };
 
-	nix-index-database = {
+    nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -115,15 +115,8 @@
   };
 
   outputs =
-    inputs@{
-      flake-parts,
-      ...
-    }:
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        (inputs.import-tree ./modules/parts)
-        ./modules/hosts/common/
-        ./modules/nixos/sddm/module.nix
-      ];
+      imports = [ (inputs.import-tree ./modules) ];
     };
 }

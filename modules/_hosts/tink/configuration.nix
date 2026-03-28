@@ -2,25 +2,21 @@
 
 {
   pkgs,
-  stateVersion,
-  hostname,
   ...
 }:
 
 {
   networking = {
-    hostName = hostname;
     firewall.extraCommands = ''
       iptables -A nixos-fw -p tcp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
       iptables -A nixos-fw -p udp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
     '';
   };
-  system.stateVersion = stateVersion;
 
   imports = [
     ./hardware-configuration.nix
     ./local-packages.nix
-    ../../nixos
+    ../../_nixos
     ../../../users/max.nix
   ];
 
@@ -105,11 +101,6 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
-  home-manager = {
-    backupFileExtension = "hm-backup";
-    sharedModules = [ { home.stateVersion = stateVersion; } ];
-  };
-
   services = {
     auto-cpufreq.enable = false;
     tlp.enable = false;

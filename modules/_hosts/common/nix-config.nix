@@ -1,8 +1,6 @@
 {
   nixpkgs.config.allowUnfree = true;
 
-  home-manager.backupFileExtension = "backup";
-
   nix.settings = {
     trusted-users = [
       "root"
