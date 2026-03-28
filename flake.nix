@@ -2,18 +2,27 @@
   description = "Spebby's NixOS config";
 
   inputs = {
+	# Dendritic pattern
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+	den.url = "github:vic/den/v0.10.0";
+    flake-aspects.url = "github:vic/flake-aspects/v0.5.0";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "git+https://tangled.org/quasigod.xyz/nur";
+      inputs.nixpkgs.url = "github:numtide/nixpkgs-unfree?ref=nixos-unstable";
+      inputs.flake-parts.follows = "flake-parts";
     };
 
     stylix = {
