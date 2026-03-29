@@ -1,0 +1,178 @@
+# nixos-hardware is a great resource, but im not getting good results from their setups.
+# I want a little more control, especially over TLP.
+
+{
+  config,
+  pkgs,
+  lib,
+  nixos-hardware,
+  ...
+}:
+let
+  cfg = config.nvidia;
+in
+{
+  imports = [
+    nixos-hardware.nixosModules.common-cpu-amd
+    nixos-hardware.nixosModules.common-amd-pstate
+    nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    nixos-hardware.nixosModules.common-cpu-amd
+    nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    nixos-hardware.nixosModules.common-pc-ssd
+  ];
+
+  options.nvidia = {
+    enable = lib.mkEnableOption "Enable proprietary NVIDIA GPU drivers";
+    useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
+    mode = lib.mkOption {
+      type = lib.types.enum [
+        "offload"
+        "sync"
+        "clamshell"
+      ];
+      default = "offload";
+      description = ''
+        Sets the NVIDIA mode:
+          - offload: iGPU primary, dGPU used on demand
+          - sync: dGPU renders everything, iGPU idle
+          - clamshell: reverse sync mode, dGPU primary
+      '';
+    };
+
+    usePowerd = lib.mkEnableOption "Enable NVIDIA's powerd daemon & power profile cycling.";
+    powerManagement = lib.mkEnableOption "Enable NVIDIA's power management service.";
+    useFinegrain = lib.mkEnableOption "Enable NVIDIA's finegrain power saving? Disabled if offloading is not enabled.";
+
+    nvidiaBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the NVIDIA GPU.";
+    };
+
+    # The AMD/iGPU bus ID
+    amdBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the AMD GPU (if present).";
+    };
+
+    # The Intel iGPU bus ID
+    intelBus = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "PCI Bus ID of the Intel GPU (if present).";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    nixpkgs.config = {
+      cudaSupport = false;
+      # Only add this if you’re running Nix on something exotic or experimental:
+      allowUnsupportedSystem = false;
+    };
+    environment.variables = {
+      CUDA_CACHE_PATH = "\${XDG_CACHE_HOME}/nv";
+      BACKLIGHT_DEVICE = "amdgpu_bl1";
+    };
+
+    environment.systemPackages = with pkgs; [
+      nvidia-vaapi-driver
+      egl-wayland
+      corectrl
+      nvtopPackages.full
+      vulkan-tools
+    ];
+
+    # For the moment, I only want to use Offload. However, at some point it may be worth making specialisations for Clamshell & other modes.
+    services.xserver.videoDrivers = [ "nvidia" ];
+    hardware = {
+      # If I have issues, uncomment this. For the moment, since we boot w/ iGPU,
+      # This will let Plymouth work at boot.
+      amdgpu.initrd.enable = cfg.mode != "clamshell";
+      graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
+
+      nvidia = {
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+        # Use Open Source (not nouveau) kernel modules? Turing+
+        open = false;
+
+        # Required
+        # nvidia-drm.modeset=1 is required for some wayland compositors
+        modesetting.enable = true;
+
+        # NVIDIA X Server Settings
+        nvidiaSettings = false;
+
+        # Fine Grained Power Management for use w/ offload. Turing+
+        powerManagement = {
+          enable = cfg.powerManagement;
+          finegrained = cfg.powerManagement && cfg.mode == "offload" && cfg.useFinegrain;
+        };
+        dynamicBoost.enable = cfg.powerManagement && cfg.usePowerd;
+
+        prime = {
+          amdgpuBusId = cfg.amdBus;
+          intelBusId = cfg.intelBus;
+          nvidiaBusId = cfg.nvidiaBus;
+
+          # Offload Mode puts dGPU to sleep, until it is told to wake up. Applications must be explicitly "offloaded" to the dGPU for this to happen. This mode is very battery efficient.
+          # Offload CMD mode enables the wrapper script, `nvidia-offload`, which sets certain env variables to offload an application.
+          offload = {
+            enable = cfg.mode == "offload";
+            enableOffloadCmd = true;
+          };
+
+          # Sync Mode delegates rendering to dGPU entirely... dGPU does *not go to sleep* when sync is enabled.
+          # In Reverse Sync Mode, the iGPU is bypassed entirely, and the dGPU becomes the primairy output device. May be desirable for Clamshell mode.
+          sync.enable = cfg.mode == "sync";
+          reverseSync.enable = cfg.mode == "clamshell";
+        };
+
+        # Set True for potential screen-tearing fix
+        forceFullCompositionPipeline = false;
+      };
+    };
+
+    boot = {
+      # Investigate if any of these are needed
+      kernelParams = [
+        # === NVIDIA-Specific Fixes ===
+        # Force s2idle (since S3 isn't supported)
+        "mem_sleep_default=s2idle"
+
+        # Disable PCIe power management quirks
+        #"pcie_aspm=off"
+        #"pcie_port_pm=off"
+        # GPU memory preservation
+        "nvidia.NVreg_PreserveVideoMemoryAllocations=0"
+        # Workaround for resume failures
+        "nvidia.NVreg_EnablePCIeGen3=1"
+
+        # === Debugging (temporary) ===
+        # Enable these if issues persist, then check `journalctl -b`:
+        # "pm_debug_messages"
+        "nvidia.NVreg_EnableMSI=1"
+      ]
+      ++ lib.optional cfg.useNvidiaFramebuffer "nvidia_drm.fbdev=1";
+
+      # This is mainly an X11 support thing. Investigate if we need it.
+      blacklistedKernelModules = [ "nouveau" ];
+
+      initrd.kernelModules = [
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
+      kernelModules = [
+        "amdgpu"
+        "kvm-amd"
+        "joydev"
+      ];
+    };
+  };
+}
