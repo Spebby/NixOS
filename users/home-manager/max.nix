@@ -143,7 +143,6 @@
 
     sessionVariables = rec {
       XDG_BOOKS_DIR = "$HOME/Media/Books";
-      TERMINAL = lib.mkDefault (config.terminals.default or "kitty");
     };
   };
 

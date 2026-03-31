@@ -1,7 +1,7 @@
 { inputs, ... }:
 let
   sops_config = {
-    defaultSopsFile = ./secrets.yaml;
+    defaultSopsFile = ./secrets.yml;
     defaultSopsFormat = "yaml";
     age.keyFile = "/var/lib/secrets/sops/age/keys.txt";
   };

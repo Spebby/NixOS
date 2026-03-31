@@ -2,6 +2,8 @@
   den.aspects.thom = {
     includes = [
       <dev/primary-user>
+      <my/apps/git>
+      <my/apps/stylix>
       <my/shell>
     ];
 
@@ -22,21 +24,18 @@
     };
 
     homeManager =
+      { config, ... }:
       {
-        inputs,
-        config,
-        lib,
-        pkgs,
-        ...
-      }:
-      let
-        allowedSigners = "${builtins.getEnv "HOME"}/.ssh/allowed_signers";
-      in
-      {
+        my.apps._.git = {
+          userName = "Thom";
+          userEmail = "thommott@proton.me";
+          lazygit.enable = true;
+        };
+
         home = {
           file = {
             # GPG Signing for Git
-            "${allowedSigners}".text =
+            "${config.home.homeDirectory}/.ssh/allowed_signers".text =
               "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
 
             # Distrobox Config
@@ -54,45 +53,7 @@
 
           sessionVariables = rec {
             XDG_BOOKS_DIR = "$HOME/Media/Books";
-            TERMINAL = lib.mkDefault (config.terminals.default or "kitty");
           };
-
-          stylix = lib.mkForce {
-            polarity = "dark";
-            base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-
-            image = pkgs.fetchurl {
-              url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-dark-rainbow.png";
-              sha256 = "036gqhbf6s5ddgvfbgn6iqbzgizssyf7820m5815b2gd748jw8zc";
-            };
-            imageScalingMode = "fill";
-          };
-        };
-
-        programs = {
-          git = {
-            settings = {
-              user = {
-                name = "Thom Mott";
-                email = "thommott@proton.me";
-              };
-              gpg.ssh.allowedSignersFile = allowedSigners;
-              init.defaultBranch = "main";
-              push.autoSetupRemote = true;
-            };
-            signing = {
-              key = "~/.ssh/NixOS.pub";
-              signByDefault = true;
-            };
-          };
-          difftastic.enable = true;
-          gpg.enable = true; # TODO: move these into git module.
-        };
-
-        services.gpg-agent = {
-          enable = true;
-          enableSshSupport = true;
-          pinetry.package = pkgs.pinetry-gtk2; # Hyprland quirk
         };
       };
 

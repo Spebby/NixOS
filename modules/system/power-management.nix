@@ -1,3 +1,4 @@
+{ my, ... }:
 {
   # TODO: review
   my.power-management.nixos.services = {

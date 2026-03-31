@@ -25,7 +25,7 @@
         <my/profiles/workstation>
         <my/boot/graphical>
         <my/boot/secure>
-        <my/power-mgmt>
+        <my/power-management>
         <my/performance/responsive>
       ];
     };

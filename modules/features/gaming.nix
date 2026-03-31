@@ -180,6 +180,10 @@
                 type = lib.types.bool;
                 default = true;
               };
+              openDedicatedServerFirewall = lib.mkOption {
+                type = lib.types.bool;
+                default = true;
+              };
               openLocalNetworkGameTransfersFirewall = lib.mkOption {
                 type = lib.types.bool;
                 default = true;
@@ -237,7 +241,9 @@
             programs.steam = {
               platformOptimizations.enable = cfg.steam.usePlatformOptimisations;
               remotePlay.openFirewall = cfg.steam.openRemotePlayFirewall;
+              dedicatedServer.openFirewall = cfg.steam.openDedicatedServerFirewall;
               localNetworkGameTransfers.openFirewall = cfg.steam.openLocalNetworkGameTransfersFirewall;
+              protontricks.enable = true;
             };
 
             environment.systemPackages =

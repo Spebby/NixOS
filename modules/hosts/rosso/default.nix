@@ -10,8 +10,8 @@
       includes = [
         <my/profiles/laptop>
         <my/profiles/modern>
-        <gaming/max>
-        <gaming/replay>
+        <my/gaming/max>
+        <my/gaming/replay>
 
         <my/desktops/cosmic>
       ];

@@ -45,17 +45,19 @@ in
 {
   options.den.default.security = myOptions;
 
-  den.default.nixos.security = {
-    sudo.enable = false;
-    sudo-rs = {
-      enable = true;
-      inherit (cfg.sudo-rs) execWheelOnly;
-    };
-    doas.enable = cfg.doas.enable;
-    polkit.enable = true;
-    pam = {
-      services.systemd-run0 = { };
-      inherit (cfg.pam) loginLimits;
+  config.den.default.nixos = {
+    security = {
+      sudo.enable = false;
+      sudo-rs = {
+        enable = true;
+        inherit (cfg.sudo-rs) execWheelOnly;
+      };
+      doas.enable = cfg.doas.enable;
+      polkit.enable = true;
+      pam = {
+        services.systemd-run0 = { };
+        inherit (cfg.pam) loginLimits;
+      };
     };
   };
 }
