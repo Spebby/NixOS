@@ -36,8 +36,7 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.pre-commit.inputs.flake-compat.follows = "nix-alien/flake-compat";
-      # ^ reaching into lanzaboote's inputs and setting lanzaboote's pre-commit reference, as to not pull it in twice
+      inputs.pre-commit.follows = "pre-commit-hooks";
     };
 
     # Desktop: Hyprland
