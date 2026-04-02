@@ -41,5 +41,22 @@
           };
         };
       };
+
+    homeManager =
+      { lib, config, ... }:
+      let
+        cfg = config.my.desktops._.hyprland.home;
+      in
+      {
+        options.my.desktops._.hyprland.home.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Enable Home Manager Hyprland desktop configuration bundle.";
+        };
+
+        imports = [ ./_home.nix ];
+
+        config.hyprland.enable = cfg.enable;
+      };
   };
 }

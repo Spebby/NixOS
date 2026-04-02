@@ -1,9 +1,11 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ config, lib, ... }:
+{ lib, config, ... }:
 
 with lib.hm.gvariant;
-{
-  dconf.settings = lib.mkIf config.gnome.enable {
+let
+  cfg = config.my.desktops._.gnome.home;
+
+  baseSettings = {
     "TextEditor" = {
       style-scheme = "stylix";
     };
@@ -545,7 +547,6 @@ with lib.hm.gvariant;
         "blur-my-shell@aunetx"
         "appindicatorsupport@rgcjonas.gmail.com"
         "xwayland-indicator@swsnr.de"
-        "forge@jmmaranan.com"
         "Vitals@CoreCoding.com"
         "clipboard-indicator@tudmotu.com"
         "appmenu-is-back@fthx"
@@ -721,61 +722,6 @@ with lib.hm.gvariant;
       history-size = 200;
     };
 
-    "shell/extensions/forge" = {
-      css-last-update = mkUint32 37;
-      css-updated = "1754169536805";
-      focus-border-toggle = true;
-      focus-on-hover-enabled = true;
-      move-pointer-focus-enabled = true;
-      tiling-mode-enabled = true;
-      window-gap-hidden-on-single = true;
-      window-gap-size = mkUint32 2;
-      window-gap-size-increment = mkUint32 1;
-    };
-
-    "shell/extensions/forge/keybindings" = {
-      con-split-horizontal = [ "<Super>z" ];
-      con-split-layout-toggle = [ "<Super>g" ];
-      con-split-vertical = [ "<Super>v" ];
-      con-stacked-layout-toggle = [ "<Shift><Super>s" ];
-      con-tabbed-layout-toggle = [ "<Shift><Super>t" ];
-      con-tabbed-showtab-decoration-toggle = [ "<Control><Alt>y" ];
-      focus-border-toggle = [ "<Super>x" ];
-      mod-mask-mouse-tile = "None";
-      prefs-tiling-toggle = [ "<Super>w" ];
-      window-focus-down = [ "<Super>Down" ];
-      window-focus-left = [ "<Super>Left" ];
-      window-focus-right = [ "<Super>Right" ];
-      window-focus-up = [ "<Super>Up" ];
-      window-gap-size-decrease = [ "<Control><Super>minus" ];
-      window-gap-size-increase = [ "<Control><Super>plus" ];
-      window-move-down = [ ];
-      window-move-left = [ ];
-      window-move-right = [ ];
-      window-move-up = [ ];
-      window-resize-bottom-decrease = [ "<Shift><Control><Super>i" ];
-      window-resize-bottom-increase = [ "<Control><Super>u" ];
-      window-resize-left-decrease = [ "<Shift><Control><Super>o" ];
-      window-resize-left-increase = [ "<Control><Super>y" ];
-      window-resize-right-decrease = [ "<Shift><Control><Super>y" ];
-      window-resize-right-increase = [ "<Control><Super>o" ];
-      window-resize-top-decrease = [ "<Shift><Control><Super>u" ];
-      window-resize-top-increase = [ "<Control><Super>i" ];
-      window-snap-center = [ "<Control><Alt>c" ];
-      window-snap-one-third-left = [ "<Control><Alt>d" ];
-      window-snap-one-third-right = [ "<Control><Alt>g" ];
-      window-snap-two-third-left = [ "<Control><Alt>e" ];
-      window-snap-two-third-right = [ "<Control><Alt>t" ];
-      window-swap-down = [ "<Shift><Super>Down" ];
-      window-swap-last-active = [ ];
-      window-swap-left = [ "<Shift><Super>Left" ];
-      window-swap-right = [ "<Shift><Super>Right" ];
-      window-swap-up = [ "<Shift><Super>Up" ];
-      window-toggle-always-float = [ "<Shift><Super>f" ];
-      window-toggle-float = [ "<Super>f" ];
-      workspace-active-tile-toggle = [ "<Shift><Super>w" ];
-    };
-
     "shell/extensions/hibernate-status-button" = {
       show-hybrid-sleep-dialog = false;
     };
@@ -863,5 +809,14 @@ with lib.hm.gvariant;
     "tweaks" = {
       show-extensions-notice = false;
     };
+  };
+
+  finalSettings = lib.recursiveUpdate (
+    if cfg.dconf.managed.enable then baseSettings else { }
+  ) cfg.dconf.extraSettings;
+in
+{
+  my.desktops._.gnome.provides.dconf.homeManager = lib.mkIf (cfg.enable && finalSettings != { }) {
+    dconf.settings = finalSettings;
   };
 }
