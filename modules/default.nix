@@ -4,7 +4,7 @@ let
 in
 {
   systems = [ "x86_64-linux" ];
-  den.defaults = {
+  den.default = {
     includes = [
       <den/home-manager>
       <den/define-user>

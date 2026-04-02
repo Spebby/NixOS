@@ -30,5 +30,16 @@
       ];
     };
     modern = den.lib.parametric.atLeast { includes = [ <my/bluetooth> ]; };
+
+    dev-tools = den.lib.parametric.atLeast {
+      includes = [
+        <my/apps/git>
+        <my/apps/terminal>
+        <my/apps/shell>
+        <my/apps/shell/tools>
+        <my/apps/shell/tui>
+      ];
+    };
+
   };
 }

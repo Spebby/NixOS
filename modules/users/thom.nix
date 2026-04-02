@@ -1,10 +1,9 @@
 {
   den.aspects.thom = {
     includes = [
-      <dev/primary-user>
-      <my/apps/git>
+      <den/primary-user>
+      <my/profiles/dev-tools>
       <my/apps/stylix>
-      <my/shell>
     ];
 
     nixos = {
