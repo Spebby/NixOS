@@ -1,5 +1,3 @@
-# /hosts/rosso/grubtheme.nix
-
 { pkgs }:
 pkgs.stdenv.mkDerivation {
   pname = "distro-grub-themes";

@@ -23,12 +23,12 @@ in
         ...
       }:
       let
-        cfg = config.den.defaults;
+        cfg = config.den.default;
       in
       {
         imports = with inputs; [ nixos-facter-modules.nixosModules.facter ];
 
-        options.den.defaults = {
+        options.den.default = {
           shell = {
             binSh = lib.mkOption {
               type = lib.types.nullOr lib.types.package;
@@ -230,10 +230,10 @@ in
         ...
       }:
       let
-        cfg = config.den.defaults.home;
+        cfg = config.den.default.home;
       in
       {
-        options.den.defaults.home = {
+        options.den.default.home = {
           allowUnfree = lib.mkOption {
             type = lib.types.bool;
             default = true;

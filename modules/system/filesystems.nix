@@ -19,7 +19,7 @@
               hourly = 24;
 
             };
-            datasets = builtins.listToArrs (
+            datasets = builtins.listToAttrs (
               map (pool: {
                 name = pool;
                 value = {
@@ -38,7 +38,7 @@
             path = with pkgs; [
               choose
               curl
-              nfty-sh
+              ntfy-sh
               zfs
             ];
             script = ''

@@ -10,7 +10,7 @@
       <my/profiles/laptop>
       <my/profiles/modern>
       <my/gaming/max>
-      <my/gaming/replay>
+      <my/gaming/replays>
 
       <my/desktops/cosmic>
     ];
@@ -19,14 +19,14 @@
       { pkgs, ... }:
       {
         imports = [
-          ./drivers.nix
-          ./hardware-configuration.nix
+          ./_drivers.nix
+          ./_hardware-configuration.nix
           ../_common/locale.nix
         ];
 
         boot = {
           loader.grub = {
-            theme = "${import ./grubtheme.nix { inherit pkgs; }}";
+            theme = "${import ./_grubtheme.nix { inherit pkgs; }}";
             configurationLimit = 3;
           };
           plymouth = {
@@ -38,8 +38,8 @@
           };
         };
 
-        kernelParams = [ "resume=/.swapfile" ];
-        kernelPackages = pkgs.linuxPackages_zen;
+        boot.kernelParams = [ "resume=/.swapfile" ];
+        boot.kernelPackages = pkgs.linuxPackages_zen;
 
         nix.gc = {
           dates = "daily";
@@ -48,7 +48,7 @@
 
         fonts = {
           enableDefaultPackages = true;
-          package = [ pkgs.jetbrains-mono ];
+          packages = [ pkgs.jetbrains-mono ];
         };
 
         services = {

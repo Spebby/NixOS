@@ -14,25 +14,28 @@ let
   '';
 in
 {
-  options.users.users = mkOption {
-    type = types.attrsOf (
-      types.submodule {
-        options.icon = mkOption {
-          type = types.nullOr types.path;
-          default = null;
-          description = "AccountsService icon for this user.";
-        };
-      }
-    );
-  };
-  config = mkIf (iconUsers != { }) {
-    services.accounts-daemon.enable = lib.mkDefault true;
-    system.activationScripts.userIcons = {
-      deps = [ "users" ];
-      text = ''
-        mkdir -p /var/lib/AccountsService/icons
-        ${concatStringsSep "\n" (mapAttrsToList mkLink iconUsers)}
-      '';
+  my.user-icons.nixos = {
+    options.users.users = mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          options.icon = mkOption {
+            type = types.nullOr types.path;
+            default = null;
+            description = "AccountsService icon for this user.";
+          };
+        }
+      );
+    };
+
+    config = mkIf (iconUsers != { }) {
+      services.accounts-daemon.enable = lib.mkDefault true;
+      system.activationScripts.userIcons = {
+        deps = [ "users" ];
+        text = ''
+          mkdir -p /var/lib/AccountsService/icons
+          ${concatStringsSep "\n" (mapAttrsToList mkLink iconUsers)}
+        '';
+      };
     };
   };
 }

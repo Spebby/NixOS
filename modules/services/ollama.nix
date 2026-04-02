@@ -1,13 +1,10 @@
 {
-  my.ai._.ollama.nixos =
-    { config, ... }:
-    {
-      services.ollama = {
-        inherit (config.ollama) enable;
-        user = "ollama";
-        host = "[::]";
-        openFirewall = true;
-        package = "cuda";
-      };
+  my.ai._.ollama.nixos = {
+    services.ollama = {
+      enable = true;
+      user = "ollama";
+      host = "[::]";
+      openFirewall = true;
     };
+  };
 }

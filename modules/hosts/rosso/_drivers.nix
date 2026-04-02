@@ -5,7 +5,7 @@
   config,
   pkgs,
   lib,
-  nixos-hardware,
+  inputs,
   ...
 }:
 let
@@ -13,12 +13,9 @@ let
 in
 {
   imports = [
-    nixos-hardware.nixosModules.common-cpu-amd
-    nixos-hardware.nixosModules.common-amd-pstate
-    nixos-hardware.nixosModules.common-cpu-amd-zenpower
-    nixos-hardware.nixosModules.common-cpu-amd
-    nixos-hardware.nixosModules.common-cpu-amd-zenpower
-    nixos-hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
   options.nvidia = {

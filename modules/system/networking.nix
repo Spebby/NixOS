@@ -6,8 +6,10 @@
       };
 
       wol.nixos = {
-        matchConfig.Type = "either";
-        linkConfig.WakeOnLan = "magic";
+        systemd.network.links."50-wol" = {
+          matchConfig.Type = "ether";
+          linkConfig.WakeOnLan = "magic";
+        };
       };
 
     };
