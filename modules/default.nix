@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, __findFile, ... }:
 let
   stateVersion = "24.11";
 in
@@ -26,7 +26,10 @@ in
         cfg = config.den.default;
       in
       {
-        imports = with inputs; [ nixos-facter-modules.nixosModules.facter ];
+        imports = with inputs; [
+          home-manager.nixosModules.home-manager
+          nixos-facter-modules.nixosModules.facter
+        ];
 
         options.den.default = {
           shell = {

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, __findFile, ... }:
 {
   den.hosts.x86_64-linux.rosso = {
     instantiate =
@@ -16,9 +16,15 @@
     ];
 
     nixos =
-      { pkgs, ... }:
+      { pkgs, lib, ... }:
       {
         imports = [
+          inputs.nixos-hardware.nixosModules.common-cpu-amd
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+          inputs.nixos-hardware.nixosModules.common-gpu-amd
+          inputs.nixos-hardware.nixosModules.common-pc-laptop
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./_drivers.nix
           ./_hardware-configuration.nix
           ../_common/locale.nix
@@ -42,8 +48,8 @@
         boot.kernelPackages = pkgs.linuxPackages_zen;
 
         nix.gc = {
-          dates = "daily";
-          options = "--delete-older-than 7d";
+          dates = lib.mkForce "daily";
+          options = lib.mkForce "--delete-older-than 7d";
         };
 
         fonts = {

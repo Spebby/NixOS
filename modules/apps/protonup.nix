@@ -1,6 +1,11 @@
 {
   my.apps._.protonup.homeManager =
-    { config, lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       cfg = config.my.apps._.protonup;
     in

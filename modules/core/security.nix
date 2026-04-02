@@ -1,6 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.den.default.security;
+  cfg = lib.attrByPath [ "den" "default" "security" ] { } config;
+  sudoRsExecWheelOnly = lib.attrByPath [ "sudo-rs" "execWheelOnly" ] true cfg;
+  doasEnable = lib.attrByPath [ "doas" "enable" ] true cfg;
+  pamLoginLimits = lib.attrByPath [ "pam" "loginLimits" ] [ ] cfg;
 
   myOptions = {
     sudo-rs.execWheelOnly = lib.mkOption {
@@ -50,13 +53,13 @@ in
       sudo.enable = false;
       sudo-rs = {
         enable = true;
-        inherit (cfg.sudo-rs) execWheelOnly;
+        execWheelOnly = sudoRsExecWheelOnly;
       };
-      doas.enable = cfg.doas.enable;
+      doas.enable = doasEnable;
       polkit.enable = true;
       pam = {
         services.systemd-run0 = { };
-        inherit (cfg.pam) loginLimits;
+        loginLimits = pamLoginLimits;
       };
     };
   };

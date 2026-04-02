@@ -1,3 +1,4 @@
+{ __findFile, ... }:
 {
   den.aspects.thom = {
     includes = [

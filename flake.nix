@@ -37,6 +37,7 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.inputs.flake-compat.follows = "nix-alien/flake-compat";
+      # ^ reaching into lanzaboote's inputs and setting lanzaboote's pre-commit reference, as to not pull it in twice
     };
 
     # Desktop: Hyprland
@@ -103,18 +104,14 @@
   # Ripped from https://tangled.org/quasigod.xyz/nixconfig
   nixConfig = {
     extra-substituters = [
-      "https://chaotic-nyx.cachix.org/"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
-      "https://quasigod.cachix.org"
       "https://attic.xuyh0120.win/lantian" # cachyos kernels
       "https://cache.numtide.com" # llm-agents
     ];
     extra-trusted-public-keys = [
-      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      "quasigod.cachix.org-1:z+auA/0uS8vy6DDtUZhRQagZvVdl5WYnE/7lveoM3Do="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];

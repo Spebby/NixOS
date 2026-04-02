@@ -6,18 +6,7 @@
       boot = {
         loader = {
           systemd-boot.enable = lib.mkForce false;
-        };
-
-        grub = {
-          enable = true;
-          devices = [ "nodev" ];
-          efiSupport = true;
-          useOSProber = true;
-
-          memtest86 = {
-            enable = false;
-            params = [ "onepass" ];
-          };
+          grub.enable = lib.mkForce false;
         };
 
         tmp.cleanOnBoot = true;

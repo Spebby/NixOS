@@ -112,7 +112,6 @@
       includes = [
         my.gaming._.replays
         my.gaming._.min
-        my.gaming._.mcsr
       ];
       nixos =
         {
@@ -221,12 +220,12 @@
             };
           };
 
-          config = {
-            imports = [
-              inputs.nix-gaming.nixosModules.platformOptimizations
-              inputs.nix-gaming.nixosModules.pipewireLowLatency
-            ];
+          imports = [
+            inputs.nix-gaming.nixosModules.platformOptimizations
+            inputs.nix-gaming.nixosModules.pipewireLowLatency
+          ];
 
+          config = {
             hardware.opentabletdriver.enable = lib.mkIf cfg.tablet.enable true;
 
             services = {

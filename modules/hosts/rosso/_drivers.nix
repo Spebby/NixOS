@@ -5,19 +5,12 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
   cfg = config.nvidia;
 in
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-amd
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-  ];
-
   options.nvidia = {
     enable = lib.mkEnableOption "Enable proprietary NVIDIA GPU drivers";
     useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
