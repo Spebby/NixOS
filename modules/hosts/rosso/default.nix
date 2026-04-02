@@ -28,7 +28,7 @@
           inputs.nixos-hardware.nixosModules.common-pc-ssd
           ./_drivers.nix
           ./_hardware-configuration.nix
-          ../_common/locale.nix
+          ../_common
         ];
 
         #my.boot.grub = {

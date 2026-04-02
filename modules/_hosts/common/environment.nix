@@ -5,7 +5,6 @@
     systemPackages = with pkgs; [
       ntfs3g
       git
-      home-manager
       openssl
       wget
       keychain

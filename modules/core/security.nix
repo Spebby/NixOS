@@ -55,7 +55,16 @@ in
         enable = true;
         execWheelOnly = sudoRsExecWheelOnly;
       };
-      doas.enable = doasEnable;
+      doas = {
+        enable = doasEnable;
+        extraRules = [
+          {
+            keepEnv = true;
+            groups = [ "wheel" ];
+            noPass = true;
+          }
+        ];
+      };
       polkit.enable = true;
       pam = {
         services.systemd-run0 = { };
