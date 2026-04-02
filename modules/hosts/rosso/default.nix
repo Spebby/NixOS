@@ -7,6 +7,7 @@
 
   den.aspects.rosso = {
     includes = [
+      <my/boot/secure>
       <my/profiles/laptop>
       <my/profiles/modern>
       <my/gaming/max>
@@ -30,11 +31,16 @@
           ../_common/locale.nix
         ];
 
+        #my.boot.grub = {
+        #   enable = true;
+        #   devices = [ "nodev" ];
+        #   efiSupport = true;
+        #   useOSProber = true;
+        #   configurationLimit = 3;
+        #   theme = rossoGrubTheme;
+        #};
+
         boot = {
-          loader.grub = {
-            theme = "${import ./_grubtheme.nix { inherit pkgs; }}";
-            configurationLimit = 3;
-          };
           plymouth = {
             theme = "cuts_alt";
             themePackages = with pkgs; [
@@ -42,10 +48,10 @@
             ];
             extraConfig = "DeviceScale=1.5";
           };
-        };
 
-        boot.kernelParams = [ "resume=/.swapfile" ];
-        boot.kernelPackages = pkgs.linuxPackages_zen;
+          kernelParams = [ "resume=/.swapfile" ];
+          kernelPackages = pkgs.linuxPackages_zen;
+        };
 
         nix.gc = {
           dates = lib.mkForce "daily";

@@ -12,7 +12,6 @@ let
 in
 {
   options.nvidia = {
-    enable = lib.mkEnableOption "Enable proprietary NVIDIA GPU drivers";
     useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
     mode = lib.mkOption {
       type = lib.types.enum [
@@ -54,7 +53,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     nixpkgs.config = {
       cudaSupport = false;
       # Only add this if you’re running Nix on something exotic or experimental:
@@ -113,7 +112,7 @@ in
           # Offload CMD mode enables the wrapper script, `nvidia-offload`, which sets certain env variables to offload an application.
           offload = {
             enable = cfg.mode == "offload";
-            enableOffloadCmd = true;
+            enableOffloadCmd = cfg.mode == "offload";
           };
 
           # Sync Mode delegates rendering to dGPU entirely... dGPU does *not go to sleep* when sync is enabled.

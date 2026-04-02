@@ -24,12 +24,17 @@
       includes = [
         <my/profiles/workstation>
         <my/boot/graphical>
-        <my/boot/secure>
         <my/power-management>
         <my/performance/responsive>
       ];
     };
-    modern = den.lib.parametric.atLeast { includes = [ <my/bluetooth> ]; };
+
+    modern = den.lib.parametric.atLeast {
+      includes = [
+        <my/bluetooth>
+        <my/boot/graphical>
+      ];
+    };
 
     dev-tools = den.lib.parametric.atLeast {
       includes = [

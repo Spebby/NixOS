@@ -119,6 +119,14 @@ in
           };
 
           docs = {
+            extraOutputsToInstall = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [
+                "man"
+                "info"
+              ];
+              description = "Extra package outputs to install globally. Keep this lean to avoid pulling heavyweight doc outputs.";
+            };
             doc = lib.mkOption {
               type = lib.types.bool;
               default = false;
@@ -185,6 +193,7 @@ in
           environment = {
             binsh = lib.mkIf (cfg.shell.binSh != null) "${cfg.shell.binSh}/bin/sh";
             defaultPackages = lib.mkForce cfg.shell.defaultPackages;
+            extraOutputsToInstall = lib.mkForce cfg.docs.extraOutputsToInstall;
           };
 
           services = {

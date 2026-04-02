@@ -1,8 +1,7 @@
 {
   nvidia = {
-    enable = true;
     useNvidiaFramebuffer = true;
-    mode = "clamshell";
+    mode = "sync";
     powerManagement = false;
     useFinegrain = false;
     usePowerd = false;
