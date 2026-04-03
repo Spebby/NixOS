@@ -1,20 +1,16 @@
 {
-  lib,
-  inputs,
-  ...
-}:
-{
   my.apps._.dev._.tooling.homeManager =
     {
+      lib,
       config,
       pkgs,
       ...
     }:
     let
-      cfg = config.my.apps._.dev.tooling;
+      cfg = config.my.apps._.dev._.tooling;
     in
     {
-      options.my.apps._.dev.tooling = {
+      options.my.apps._.dev._.tooling = {
         enable = lib.mkEnableOption "developer tooling application bundle";
 
         includeGithub = lib.mkOption {
@@ -41,12 +37,6 @@
           description = "Install meson and doxygen_gui.";
         };
 
-        includeNixvim = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Install NixVim from flake input.";
-        };
-
         extraPackages = lib.mkOption {
           type = lib.types.listOf lib.types.package;
           default = [ ];
@@ -62,9 +52,6 @@
           ++ (lib.optionals cfg.includeBuildDocs [
             pkgs.meson
             pkgs.doxygen_gui
-          ])
-          ++ (lib.optionals cfg.includeNixvim [
-            inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
           ])
           ++ cfg.extraPackages;
       };

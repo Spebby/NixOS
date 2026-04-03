@@ -1,21 +1,12 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
   my.apps._.creative._.core.homeManager =
-    {
-      config,
-      pkgs,
-      ...
-    }:
+    { config, pkgs, ... }:
     let
       cfg = config.my.apps._.creative.core;
     in
     {
       options.my.apps._.creative.core = {
-        enable = lib.mkEnableOption "creative and content production applications";
-
         includeAudio = lib.mkOption {
           type = lib.types.bool;
           default = true;

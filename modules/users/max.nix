@@ -8,10 +8,12 @@
       <my/profiles/art/all>
       <my/profiles/math>
       <my/profiles/theming>
+
+      <my/apps/productivity/core>
     ];
 
     nixos = {
-      users.users.thom = {
+      users.users.max = {
         isNormalUser = true;
         home = "/home/max";
         icon = ../../assets/icons/max.png;
@@ -29,10 +31,31 @@
     homeManager =
       { config, ... }:
       {
-        my.apps._.git = {
-          userName = "Max Brockmann";
-          userEmail = "max.marika.brock@gmail.com";
-          lazygit.enable = true;
+        my.apps._ = {
+          git = {
+            userName = "Max Brockmann";
+            userEmail = "max.marika.brock@gmail.com";
+            lazygit.enable = true;
+          };
+
+          productivity._.core = {
+            includeBrowser = true;
+            includeMail = false;
+          };
+
+          math = {
+            geogebra.enable = true;
+          };
+        };
+
+        creative._.core = {
+          includeAudio = false;
+          icnludeVideo = false;
+        };
+
+        dev._.tooling = {
+          includeNode = false;
+          includeBuildDocs = false;
         };
       };
 

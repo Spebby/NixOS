@@ -59,6 +59,7 @@
           <my/apps/shell/tui>
           <my/apps/nix-tools>
           <my/apps/dev/localsend>
+          <my/apps/dev/tooling>
         ];
       };
 

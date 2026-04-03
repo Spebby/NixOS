@@ -98,6 +98,8 @@
     # Nixpkgs PRs
     amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
     hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
+
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   # Ripped from https://tangled.org/quasigod.xyz/nixconfig

@@ -8,6 +8,7 @@
       <my/profiles/art/modelling>
       <my/profiles/theming>
 
+      <my/apps/productivity/core>
     ];
 
     nixos = {
@@ -29,10 +30,12 @@
     homeManager =
       { config, ... }:
       {
-        my.apps._.git = {
-          userName = "Thom";
-          userEmail = "thommott@proton.me";
-          lazygit.enable = true;
+        my.apps._ = {
+          git = {
+            userName = "Thom";
+            userEmail = "thommott@proton.me";
+            lazygit.enable = true;
+          };
         };
 
         home = {

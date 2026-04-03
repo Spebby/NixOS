@@ -4,7 +4,6 @@
     let
       dconf2nixExport = pkgs.writeShellApplication {
         name = "dconf2nix-export";
-        meta.description = "Convenience tool for exporting GNOME dconf state into Nix language.";
         runtimeInputs = with pkgs; [
           dconf
           dconf2nix
