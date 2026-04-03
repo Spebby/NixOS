@@ -23,10 +23,10 @@
       { pkgs, lib, ... }:
       let
         winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
-          cp ${../../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
+          cp ${../../../assets/backgrounds/winter-forest-snow-moewalls-com.mp4} $out
         '';
         winter-placeholder = pkgs.runCommand "winter-placeholder.png" { } ''
-          cp ${../../../backgrounds/winter-forest-placeholder.png} $out
+          cp ${../../../assets/backgrounds/winter-forest-placeholder.png} $out
         '';
       in
       {

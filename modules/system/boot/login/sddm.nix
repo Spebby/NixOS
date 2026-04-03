@@ -15,7 +15,8 @@
           cfg.theme.package
         else
           inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-            inherit (cfg) preset extraBackgrounds;
+            theme = cfg.preset;
+            inherit (cfg) extraBackgrounds;
             theme-overrides = cfg.themeOverrides;
           };
     in

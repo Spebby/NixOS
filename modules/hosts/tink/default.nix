@@ -19,10 +19,10 @@
       { pkgs, lib, ... }:
       let
         grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-          cp ${../../../backgrounds/wavy-grass-moewalls-com.mp4} $out
+          cp ${../../../assets/backgrounds/wavy-grass-moewalls-com.mp4} $out
         '';
         grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
-          cp ${../../../backgrounds/wavy-grass-placeholder.png} $out
+          cp ${../../../assets/backgrounds/wavy-grass-placeholder.png} $out
         '';
       in
       {
