@@ -1,4 +1,9 @@
-{ my, ... }:
+{
+  inputs,
+  lib,
+  my,
+  ...
+}:
 {
   my.desktops._.hyprland = {
     includes = [
@@ -166,6 +171,24 @@
             ];
             description = "Extra environment variables for Hyprland sessions.";
           };
+
+          theme = lib.mkOption {
+            type = lib.types.anything;
+            default = with my.desktops._.hyprland._.themes._; default;
+            description = "Hyprland theme/settings generator function.";
+          };
+
+          useWrapper = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Build and use a wrapped Hyprland package from the selected theme.";
+          };
+
+          package = lib.mkOption {
+            type = lib.types.nullOr lib.types.package;
+            default = null;
+            description = "Optional Hyprland package override. Takes precedence over useWrapper when set.";
+          };
         };
 
         config = lib.mkIf (cfg.enable && cfg.shell.enable) {
@@ -186,4 +209,10 @@
         };
       };
   };
+
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.myHyprland = pkgs.hyprland;
+    };
 }
