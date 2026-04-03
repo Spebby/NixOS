@@ -3,8 +3,11 @@
   den.aspects.thom = {
     includes = [
       <den/primary-user>
-      <my/profiles/dev-tools>
-      <my/apps/stylix>
+      <my/profiles/common-use>
+      <my/profiles/dev/all>
+      <my/profiles/art/modelling>
+      <my/profiles/theming>
+
     ];
 
     nixos = {

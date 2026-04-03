@@ -3,7 +3,9 @@ let
   stateVersion = "24.11";
 in
 {
-  systems = [ "x86_64-linux" ];
+  systems = [
+    "x86_64-linux"
+  ];
   den.default = {
     includes = [
       <den/home-manager>
@@ -194,6 +196,10 @@ in
             binsh = lib.mkIf (cfg.shell.binSh != null) "${cfg.shell.binSh}/bin/sh";
             defaultPackages = lib.mkForce cfg.shell.defaultPackages;
             extraOutputsToInstall = lib.mkForce cfg.docs.extraOutputsToInstall;
+            systemPackages = with pkgs; [
+              nix-your-shell
+              nano
+            ];
           };
 
           services = {
@@ -235,12 +241,7 @@ in
       };
 
     homeManager =
-      {
-        pkgs,
-        config,
-        lib,
-        ...
-      }:
+      { config, lib, ... }:
       let
         cfg = config.den.default.home;
       in

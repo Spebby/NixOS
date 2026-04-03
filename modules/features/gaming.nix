@@ -71,6 +71,14 @@
               description = "Load the ntsync kernel module (low-overhead NT sync primitive for Wine/Proton).";
             };
 
+            gamemode = {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = true;
+                description = "Enable GameMode daemon for CPU/GPU performance tuning while gaming.";
+              };
+            };
+
             extraPackages = lib.mkOption {
               type = lib.types.listOf lib.types.package;
               default = [ ];
@@ -98,11 +106,16 @@
               steam = lib.mkIf cfg.steam.enable {
                 enable = true;
                 inherit (cfg.steam) extraCompatPackages;
+                gamescopeSession = {
+                  enable = true;
+                };
               };
               gamescope = lib.mkIf cfg.gamescope.enable {
                 enable = true;
                 args = cfg.gamescope.args ++ cfg.gamescope.extraArgs;
               };
+
+              gamemode.enable = cfg.gamemode.enable;
             };
           };
         };
@@ -205,6 +218,14 @@
               };
             };
 
+            hostUtilities = {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = true;
+                description = "Install extra host-side gaming diagnostics and controller utilities.";
+              };
+            };
+
             saves = {
               enable = lib.mkOption {
                 type = lib.types.bool;
@@ -237,12 +258,18 @@
               };
             };
 
-            programs.steam = {
-              platformOptimizations.enable = cfg.steam.usePlatformOptimisations;
-              remotePlay.openFirewall = cfg.steam.openRemotePlayFirewall;
-              dedicatedServer.openFirewall = cfg.steam.openDedicatedServerFirewall;
-              localNetworkGameTransfers.openFirewall = cfg.steam.openLocalNetworkGameTransfersFirewall;
-              protontricks.enable = true;
+            programs = {
+              steam = {
+                platformOptimizations.enable = cfg.steam.usePlatformOptimisations;
+                remotePlay.openFirewall = cfg.steam.openRemotePlayFirewall;
+                dedicatedServer.openFirewall = cfg.steam.openDedicatedServerFirewall;
+                localNetworkGameTransfers.openFirewall = cfg.steam.openLocalNetworkGameTransfersFirewall;
+                protontricks.enable = true;
+              };
+
+              gamescope.capSysNice = true;
+
+              nix-ld.libraries = [ pkgs.SDL2 ];
             };
 
             environment.systemPackages =
@@ -262,6 +289,11 @@
                 lsfg-vk-ui
               ]
               ++ lib.optionals cfg.saves.enable [ ludusavi ]
+              ++ lib.optionals cfg.hostUtilities.enable [
+                sc-controller
+                vulkan-loader
+                vulkan-tools
+              ]
               ++ cfg.extraPackages;
           };
         };

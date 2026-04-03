@@ -8,8 +8,11 @@
   den.aspects.rosso = {
     includes = [
       <my/boot/secure>
+      <my/boot/graphical>
+      <my/login/sddm>
+
       <my/profiles/laptop>
-      <my/profiles/modern>
+      <my/bluetooth>
       <my/gaming/max>
       <my/gaming/replays>
 
@@ -18,6 +21,14 @@
 
     nixos =
       { pkgs, lib, ... }:
+      let
+        winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
+          cp ${../../../backgrounds/winter-forest-snow-moewalls-com.mp4} $out
+        '';
+        winter-placeholder = pkgs.runCommand "winter-placeholder.png" { } ''
+          cp ${../../../backgrounds/winter-forest-placeholder.png} $out
+        '';
+      in
       {
         imports = [
           inputs.nixos-hardware.nixosModules.common-cpu-amd
@@ -39,6 +50,11 @@
         #   configurationLimit = 3;
         #   theme = rossoGrubTheme;
         #};
+
+        environment.systemPackages = with pkgs; [
+          dnsmasq
+          phodav
+        ];
 
         boot = {
           plymouth = {
@@ -67,6 +83,33 @@
           auto-cpufreq.enable = false;
           displayManager = {
             defaultSession = "cosmic";
+          };
+        };
+
+        my.login.sddm = {
+          enable = true;
+          preset = "default";
+          extraBackgrounds = [
+            winter-bg
+            winter-placeholder
+          ];
+          themeOverrides = {
+            General = {
+              scale = "1.5";
+              enable-animations = true;
+              background-fill-mode = "fill";
+              animated-background-placeholder = "${winter-placeholder.name}";
+            };
+            LoginScreen = {
+              background = "${winter-bg.name}";
+              animated-background-placeholder = "${winter-placeholder.name}";
+            };
+            LockScreen = {
+              background = "${winter-bg.name}";
+              animated-background-placeholder = "${winter-placeholder.name}";
+              blur = "1";
+            };
+            "LoginScreen.MenuArea.Session".position = "bottom-left";
           };
         };
       };

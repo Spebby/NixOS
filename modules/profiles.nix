@@ -10,6 +10,8 @@
         <my/ssh/client>
         <my/filesystems/ntfs>
         <my/xdg>
+        <my/system/openssl>
+        <my/profiles/desktop-utils>
       ];
     };
     desktop = den.lib.parametric.atLeast {
@@ -18,6 +20,7 @@
         <my/ssh/server>
         <my/performance/max>
         <my/networking/wol>
+        <my/system/acpid>
       ];
     };
     laptop = den.lib.parametric.atLeast {
@@ -26,25 +29,8 @@
         <my/boot/graphical>
         <my/power-management>
         <my/performance/responsive>
+        <my/system/acpid>
       ];
     };
-
-    modern = den.lib.parametric.atLeast {
-      includes = [
-        <my/bluetooth>
-        <my/boot/graphical>
-      ];
-    };
-
-    dev-tools = den.lib.parametric.atLeast {
-      includes = [
-        <my/apps/git>
-        <my/apps/terminal>
-        <my/apps/shell>
-        <my/apps/shell/tools>
-        <my/apps/shell/tui>
-      ];
-    };
-
   };
 }

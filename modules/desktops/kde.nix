@@ -15,12 +15,6 @@
       in
       {
         options.my.desktops._.kde = {
-          useSDDM = lib.mkOption {
-            type = lib.types.bool;
-            default = true;
-            description = "Enable SDDM as the display manager for Plasma.";
-          };
-
           extraPackages = lib.mkOption {
             type = lib.types.listOf lib.types.package;
             default = with pkgs; [
@@ -48,10 +42,6 @@
 
           services = {
             desktopManager.plasma6.enable = true;
-            displayManager.sddm = lib.mkIf cfg.useSDDM {
-              enable = true;
-              wayland.enable = true;
-            };
 
             pulseaudio.enable = false;
             pipewire = {

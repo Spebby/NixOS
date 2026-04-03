@@ -3,10 +3,18 @@
   my.desktops._.base = {
     includes = [ my.xdg ];
 
-    nixos = {
-      environment.sessionVariables.NIXOS_OZONE_WL = "1";
-      programs.xwayland.enable = true;
-    };
+    nixos =
+      { pkgs, ... }:
+      {
+        environment = {
+          sessionVariables.NIXOS_OZONE_WL = "1";
+          systemPackages = with pkgs; [
+            wlr-randr
+            wayland-utils
+          ];
+        };
+        programs.xwayland.enable = true;
+      };
 
     services = {
       gvfs.enable = true;

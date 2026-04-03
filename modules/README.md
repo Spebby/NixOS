@@ -2,8 +2,8 @@
 
 Here you'll find essentially all of my config's files.
 
-A reminder, any folder prefixed with `_` is ignored by `import-tree`, so must be
-manually imported. This is done for files not yet transitioned into a
+A reminder, any folder or file prefixed with `_` is ignored by `import-tree`, so
+must be manually imported. This is done for files not yet transitioned into a
 flake-parts module.
 
 ## Potential Refactors

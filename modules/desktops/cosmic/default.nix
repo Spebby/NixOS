@@ -14,18 +14,6 @@
       in
       {
         options.my.desktops._.cosmic = {
-          greeter = {
-            enable = lib.mkEnableOption "COSMIC greeter (display manager)";
-            extraConfig = lib.mkOption {
-              type = lib.types.attrs;
-              default = { };
-              description = ''
-                Attribute set merged into <option>services.displayManager.cosmic-greeter</option>.
-                For upstream options not explicitly wrapped here.
-              '';
-            };
-          };
-
           scheduler = {
             enable = lib.mkOption {
               type = lib.types.bool;
@@ -119,10 +107,6 @@
 
           services = {
             desktopManager.cosmic.enable = true;
-
-            displayManager.cosmic-greeter = lib.mkIf cfg.greeter.enable (
-              { enable = true; } // cfg.greeter.extraConfig
-            );
 
             system76-scheduler = lib.mkIf cfg.scheduler.enable { enable = true; };
 

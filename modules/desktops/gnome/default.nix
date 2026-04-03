@@ -21,7 +21,7 @@
         options.my.desktops._.gnome = {
           usePowerProfile = lib.mkOption {
             type = lib.types.bool;
-            default = true;
+            default = false;
             description = "Enable GNOME power-profiles-daemon integration.";
           };
 
