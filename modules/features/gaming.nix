@@ -123,7 +123,6 @@
 
     max = den.lib.parametric {
       includes = [
-        my.gaming._.replays
         my.gaming._.min
       ];
       nixos =

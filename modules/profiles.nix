@@ -11,7 +11,6 @@
         <my/filesystems/ntfs>
         <my/xdg>
         <my/system/openssl>
-        <my/profiles/desktop-utils>
       ];
     };
     desktop = den.lib.parametric.atLeast {

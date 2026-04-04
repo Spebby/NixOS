@@ -8,7 +8,6 @@ let
     concatStringsSep
     mkIf
     ;
-  iconUsers = filterAttrs (_: u: (u.icon or null) != null) config.users.users;
   mkAccountServiceLink = name: u: ''
     ln -sfn ${lib.escapeShellArg (toString u.icon)} /var/lib/AccountsService/icons/${name}
   '';
@@ -24,29 +23,28 @@ let
     '';
 in
 {
-  my.user-icons.nixos = {
-    options.users.users = mkOption {
-      type = types.attrsOf (
-        types.submodule {
-          options.icon = mkOption {
-            type = types.nullOr types.path;
-            default = null;
-            description = "AccountsService icon for this user.";
-          };
-        }
-      );
-    };
+  my.userIcons.nixos = {
+options.my.userIcons = mkOption {
+  type = types.attrsOf (types.nullOr types.path);
+  default = { };
+  description = "Map of username to AccountsService icon path.";
+};
 
-    config = mkIf (iconUsers != { }) {
-      services.accounts-daemon.enable = lib.mkDefault true;
-      system.activationScripts.userIcons = {
-        deps = [ "users" ];
-        text = ''
-          mkdir -p /var/lib/AccountsService/icons
-          ${concatStringsSep "\n" (mapAttrsToList mkAccountServiceLink iconUsers)}
-          ${concatStringsSep "\n" (mapAttrsToList mkFaceLink iconUsers)}
-        '';
+    config =
+      let
+        iconUsers = filterAttrs (_: u: (u.icon or null) != null) config.my.userIcons;
+      in
+      mkIf (iconUsers != { }) {
+        services.accounts-daemon.enable = lib.mkDefault true;
+        system.activationScripts.userIcons = {
+          deps = [ "users" ];
+          text = ''
+            mkdir -p /var/lib/AccountsService/icons
+            ${concatStringsSep "\n" (mapAttrsToList mkAccountServiceLink iconUsers)}
+            ${concatStringsSep "\n" (mapAttrsToList mkFaceLink iconUsers)}
+          '';
+        };
       };
-    };
   };
 }
+

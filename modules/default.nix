@@ -12,6 +12,7 @@ in
     includes = [
       <den/home-manager>
       <den/define-user>
+      <my/userIcons>
       (
         { host, ... }:
         {
@@ -243,11 +244,20 @@ in
       };
 
     homeManager =
-      { config, lib, ... }:
+      {
+        config,
+        lib,
+        ...
+      }:
       let
         cfg = config.den.default.home;
       in
       {
+        imports = [
+          inputs.hyprland-unity-fix.nixosModules.hyprlandUnityFixModule
+          inputs.stylix.homeModules.stylix
+        ];
+
         options.den.default.home = {
           allowUnfree = lib.mkOption {
             type = lib.types.bool;
@@ -315,9 +325,9 @@ in
         };
 
         config = {
-          programs.home-manager.enable = true;
+nixpkgs.config.allowUnfree = true;
 
-          nixpkgs.config.allowUnfree = cfg.allowUnfree;
+          programs.home-manager.enable = true;
 
           xdg = lib.mkIf cfg.xdg.enable {
             enable = true;
@@ -339,3 +349,5 @@ in
       };
   };
 }
+
+

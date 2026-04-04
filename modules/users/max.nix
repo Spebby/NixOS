@@ -23,7 +23,6 @@
       users.users.max = {
         isNormalUser = true;
         home = "/home/max";
-        icon = ../../assets/icons/max.png;
 
         extraGroups = [
           "wheel"
@@ -33,6 +32,7 @@
           "docker"
         ];
       };
+	my.userIcons.max = ../../assets/icons/max.png;
     };
 
     homeManager =

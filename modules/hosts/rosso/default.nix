@@ -17,7 +17,6 @@
       <my/gaming/replays>
 
       <my/desktops/cosmic>
-      <my/desktops/hyprland>
       <my/desktops/niri>
     ];
 
@@ -67,7 +66,7 @@
             extraConfig = "DeviceScale=1.5";
           };
 
-          kernelParams = [ "resume=/.swapfile" ];
+          #kernelParams = [ "resume=/.swapfile" ];
           kernelPackages = pkgs.linuxPackages_zen;
         };
 

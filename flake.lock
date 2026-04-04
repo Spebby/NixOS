@@ -528,11 +528,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775247674,
-        "narHash": "sha256-MCaiC3iWarAsmu8KJXgJHb1H8lf+BD9gymvxkbmNVdc=",
+        "lastModified": 1775268934,
+        "narHash": "sha256-Sa5tW5kYPJornQEkFVD43F/0d4/WP+/GLTNktTFe2qU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "03bdcf84f092956943dcf9ef164481e463512716",
+        "rev": "9dc93220c1c9a410ef6277d6dc55c571d9e592d0",
         "type": "github"
       },
       "original": {
@@ -1351,11 +1351,11 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1775261763,
-        "narHash": "sha256-f1bw0CYIFZHJS0T8pnQwQVpnWtFQfhlf7kMUCFvwhiU=",
+        "lastModified": 1775270009,
+        "narHash": "sha256-35b7T7TS2omyUqgJtbRTx9u+O/r/kO58w2TNjLVsuxU=",
         "owner": "Spebby",
         "repo": "nixvim",
-        "rev": "63629af8fca4e06f90e7e5ccddc4fd27d361c49b",
+        "rev": "15740fb95883f203052e98e6514eed90191721ac",
         "type": "github"
       },
       "original": {
@@ -1771,11 +1771,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1775171881,
-        "narHash": "sha256-+SHx//By93Q8qDqq6h7YY2mfvokU7To0doHCLF5lFTo=",
+        "lastModified": 1775274121,
+        "narHash": "sha256-cuZPzxukS5ywr7W2QXhkaXamDUHGwea9Rho5I/4zvBM=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "74a1aee6476ba8bf1991ae8e51cb0e5b3c0d8e98",
+        "rev": "708dd619b5096f93c55ccef25af9cae5e57d4190",
         "type": "github"
       },
       "original": {

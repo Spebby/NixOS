@@ -68,7 +68,6 @@
           <my/apps/nix-tools>
           <my/apps/dev/localsend>
           <my/apps/dev/tooling>
-          <my/apps/dev/common>
         ];
       };
 
@@ -93,7 +92,6 @@
     theming = den.lib.parametric.atLeast {
       includes = [
         <my/apps/stylix>
-        <my/apps/qt>
       ];
     };
 

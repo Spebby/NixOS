@@ -135,6 +135,8 @@
           enableSshSupport = cfg.gpg.sshSupport;
         };
 
+        services.ssh-agent.enable = lib.mkIf (cfg.gpg.enable && cfg.gpg.sshSupport) (lib.mkForce false);
+
         home.packages = with pkgs; [ git-graph ];
       };
     };

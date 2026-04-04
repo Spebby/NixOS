@@ -22,7 +22,6 @@
       users.users.thom = {
         isNormalUser = true;
         home = "/home/thom";
-        icon = ../../assets/icons/thom.png;
 
         extraGroups = [
           "wheel"
@@ -32,6 +31,8 @@
           "docker"
         ];
       };
+
+      my.userIcons.thom = ../../assets/icons/thom.png;
     };
 
     homeManager =
@@ -95,10 +96,9 @@
           };
         };
       };
-
-    # defining this will create a entry for this user for this host.
-    den.hosts.x86_64-linux.rosso.users.thom = { };
   };
+
+  den.hosts.x86_64-linux.rosso.users.thom = { };
 
   # standalone Home Manager entry for faster user-only switches
   den.homes.x86_64-linux."thom@rosso" = {

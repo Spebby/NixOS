@@ -174,7 +174,7 @@
 
           theme = lib.mkOption {
             type = lib.types.anything;
-            default = with my.desktops._.hyprland._.themes._; default;
+            default = import ./_themes/default.nix;
             description = "Hyprland theme/settings generator function.";
           };
 

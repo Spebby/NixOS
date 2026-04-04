@@ -168,66 +168,6 @@
       in
       {
         options.my.desktops._.cosmic.home = {
-          icons = {
-            useCosmic = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-              description = "Force the GTK icon theme to COSMIC icons.";
-            };
-            name = lib.mkOption {
-              type = lib.types.str;
-              default = "Cosmic";
-              description = "GTK icon theme name (only used when useCosmic is true).";
-            };
-          };
-
-          cursor = {
-            name = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = null;
-              description = "GTK/Wayland cursor theme name. Null leaves the default.";
-              example = "Bibata-Modern-Classic";
-            };
-            package = lib.mkOption {
-              type = lib.types.nullOr lib.types.package;
-              default = null;
-              description = "Package providing the cursor theme.";
-              example = lib.literalExpression "pkgs.bibata-cursors";
-            };
-            size = lib.mkOption {
-              type = lib.types.nullOr lib.types.int;
-              default = null;
-              description = "Cursor size in pixels. Null leaves the default.";
-              example = 24;
-            };
-          };
-
-          fonts = {
-            interface = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = null;
-              description = "GTK interface font name (e.g. \"Inter 11\"). Null leaves the default.";
-            };
-            monospace = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = null;
-              description = "GTK monospace font name. Null leaves the default.";
-            };
-          };
-
-          qt = {
-            enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-              description = "Enable Qt theming to follow the GTK/COSMIC style.";
-            };
-            style = lib.mkOption {
-              type = lib.types.str;
-              default = "kvantum";
-              description = "Qt platform theme style name passed to qt6ct.";
-            };
-          };
-
           dconf = {
             extraSettings = lib.mkOption {
               type = lib.types.attrs;
@@ -251,24 +191,6 @@
         };
 
         config = {
-          gtk = {
-            iconTheme = lib.mkIf cfg.icons.useCosmic {
-              name = lib.mkForce cfg.icons.name;
-              package = lib.mkForce pkgs.cosmic-icons;
-            };
-
-            cursorTheme = lib.mkIf (cfg.cursor.name != null) (
-              lib.filterAttrs (_: v: v != null) { inherit (cfg.cursor) name package size; }
-            );
-
-            font = lib.mkIf (cfg.fonts.interface != null) { name = lib.mkForce cfg.fonts.interface; };
-          };
-
-          qt = lib.mkIf cfg.qt.enable {
-            enable = true;
-            platformTheme.name = cfg.qt.style;
-          };
-
           dconf.settings = cfg.dconf.extraSettings;
         };
       };
