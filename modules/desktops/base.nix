@@ -11,6 +11,9 @@
           systemPackages = with pkgs; [
             wlr-randr
             wayland-utils
+            showmethekey
+            wl-clipboard
+            wtype
           ];
         };
         programs.xwayland.enable = true;

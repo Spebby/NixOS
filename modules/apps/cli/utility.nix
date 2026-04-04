@@ -1,21 +1,12 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
   my.apps._.cli._.utility.homeManager =
-    {
-      config,
-      pkgs,
-      ...
-    }:
+    { config, pkgs, ... }:
     let
       cfg = config.my.apps._.cli.utility;
     in
     {
       options.my.apps._.cli.utility = {
-        enable = lib.mkEnableOption "general-purpose CLI utility bundle";
-
         includeSystemHelpers = lib.mkOption {
           type = lib.types.bool;
           default = true;
@@ -28,12 +19,6 @@
           description = "Install media-oriented helper CLI tools.";
         };
 
-        includeWaylandHelpers = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Install Wayland interaction helper CLI tools.";
-        };
-
         extraPackages = lib.mkOption {
           type = lib.types.listOf lib.types.package;
           default = [ ];
@@ -41,12 +26,11 @@
         };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         home.packages =
           (lib.optionals cfg.includeSystemHelpers [
             pkgs.bc
             pkgs.bottom
-            pkgs.btop
             pkgs.fastfetch
             pkgs.fzf
             pkgs.netcat-gnu
@@ -59,12 +43,7 @@
             pkgs.ffmpegthumbnailer
             pkgs.mediainfo
             pkgs.playerctl
-            pkgs.yt-dlp
-          ])
-          ++ (lib.optionals cfg.includeWaylandHelpers [
-            pkgs.showmethekey
-            pkgs.wl-clipboard
-            pkgs.wtype
+            pkgs.ueberzugpp
           ])
           ++ cfg.extraPackages;
       };

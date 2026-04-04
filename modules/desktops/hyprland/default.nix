@@ -211,8 +211,8 @@
   };
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
-      packages.myHyprland = pkgs.hyprland;
+      packages = lib.optionalAttrs pkgs.stdenv.isLinux { myHyprland = pkgs.hyprland; };
     };
 }

@@ -11,6 +11,8 @@
         usbutils
         edid-decode
         wget
+        mission-center
+        udisks
       ];
     };
 }

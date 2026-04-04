@@ -5,6 +5,8 @@ in
 {
   systems = [
     "x86_64-linux"
+    "aarch64-linux"
+    "aarch64-darwin"
   ];
   den.default = {
     includes = [
@@ -315,6 +317,8 @@ in
         config = {
           programs.home-manager.enable = true;
 
+          nixpkgs.config.allowUnfree = cfg.allowUnfree;
+
           xdg = lib.mkIf cfg.xdg.enable {
             enable = true;
             mimeApps.enable = cfg.xdg.mimeApps;
@@ -324,12 +328,12 @@ in
 
           home = {
             sessionPath = cfg.extraSessionPath;
+            inherit stateVersion;
             sessionVariables =
               lib.optionalAttrs cfg.allowUnfree { NIXPKGS_ALLOW_UNFREE = "1"; }
               // lib.optionalAttrs (cfg.programs.defaultEditor != null) { EDITOR = cfg.programs.defaultEditor; }
               // lib.optionalAttrs (cfg.programs.manpager != null) { MANPAGER = cfg.programs.manpager; }
               // cfg.extraSessionVariables;
-            inherit stateVersion;
           };
         };
       };

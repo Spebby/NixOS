@@ -32,6 +32,12 @@
             description = "Install LibreOffice (Qt build).";
           };
 
+          includeCoreTools = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Install productivity utility tools (gtt).";
+          };
+
           extraPackages = lib.mkOption {
             type = lib.types.listOf lib.types.package;
             default = [ ];
@@ -48,6 +54,7 @@
               pkgs.zoom-us
             ])
             ++ (lib.optionals cfg.includeBrowser [ pkgs.google-chrome ])
+            ++ (lib.optionals cfg.includeCoreTools [ pkgs.gtt ])
             ++ cfg.extraPackages;
         };
       };

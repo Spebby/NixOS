@@ -134,6 +134,8 @@
           enable = true;
           enableSshSupport = cfg.gpg.sshSupport;
         };
+
+        home.packages = with pkgs; [ git-graph ];
       };
     };
 }

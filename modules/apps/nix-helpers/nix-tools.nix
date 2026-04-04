@@ -4,7 +4,7 @@
     homeManager =
       { config, pkgs, ... }:
       {
-        programs.ng = {
+        programs.nh = {
           enable = true;
           osFlake = "${config.home.homeDirectory}/.flake";
         };

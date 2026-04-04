@@ -1,5 +1,4 @@
 {
-  inputs,
   self',
   pkgs,
   lib,
@@ -68,6 +67,7 @@ in
         kitty
         xdotool
         jq
+        brightnessctl
         hyprKillOrHideSteam
         bemoji
         cliphist

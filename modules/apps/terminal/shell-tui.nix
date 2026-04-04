@@ -1,5 +1,5 @@
 {
-  my.apps._.shell.tui.homeManager =
+  my.apps._.shell.provides.tui.homeManager =
     {
       config,
       lib,
@@ -44,7 +44,10 @@
       config = {
         home.packages = lib.mkIf cfg.yazi.enable (with pkgs; [ yaziPlugins.git ]);
 
-        programs.yazi = lib.mkIf cfg.yazi.enable { inherit (cfg.yazi) enable enableZshIntegration; };
+        programs.yazi = lib.mkIf cfg.yazi.enable {
+          inherit (cfg.yazi) enable enableZshIntegration;
+          shellWrapperName = "lf";
+        };
         programs.zathura = lib.mkIf cfg.zathura.enable { inherit (cfg.zathura) enable mappings options; };
       };
     };

@@ -1,18 +1,10 @@
 {
   my.apps._.engines._.godot.homeManager =
+    { pkgs, ... }:
     {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.my.apps._.godot;
-    in
-    {
-      options.my.apps._.godot.enable = lib.mkEnableOption "Enable the Godot game engine";
+      options.my.apps._.godot = { };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         home = {
           packages = with pkgs; [
             godot-mono

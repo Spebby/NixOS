@@ -9,7 +9,7 @@
       options.my.apps._.creative.core = {
         includeAudio = lib.mkOption {
           type = lib.types.bool;
-          default = true;
+          default = false;
           description = "Install Audacity and Reaper.";
         };
 
@@ -32,7 +32,7 @@
         };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         home.packages =
           (lib.optionals cfg.includeAudio [
             pkgs.audacity

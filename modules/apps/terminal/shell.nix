@@ -75,13 +75,13 @@ let
     "vagrant"
   ];
 in
+{ inputs, ... }:
 {
   my.apps._.shell.homeManager =
     {
       config,
       lib,
       pkgs,
-      inputs,
       ...
     }:
     let
@@ -132,6 +132,7 @@ in
 
         programs.zsh = lib.mkIf cfg.zsh.enable {
           inherit (cfg.zsh) enable enableCompletion;
+          dotDir = config.home.homeDirectory;
           autosuggestion.enable = true;
           syntaxHighlighting.enable = true;
 
@@ -146,7 +147,6 @@ in
             vim = lib.getExe inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
             ls = "eza --group-directories-first --icons";
             cat = "bat";
-            lf = "${config.programs.yazi.shellWrapperName}";
             grep = "rg";
             grepchild = "grep -rnwe";
             firefox = "exec firefox";

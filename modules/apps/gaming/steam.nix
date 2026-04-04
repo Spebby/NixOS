@@ -4,7 +4,6 @@
       { lib, pkgs, ... }:
       {
         programs.steam = {
-          enable = lib.mkForce true;
           extraPackages = [ pkgs.steamtinkerlaunch ];
         };
       };
@@ -21,19 +20,26 @@
       in
       {
         options.my.apps._.steam = {
-          enable = lib.mkEnableOption "Steam helper tools for user profile";
           includeCliTools = lib.mkOption {
             type = lib.types.bool;
             default = true;
             description = "Install steam-tui and steamcmd.";
           };
+
+          includeLutris = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Install Lutris game launcher.";
+          };
         };
 
-        config = lib.mkIf cfg.enable {
-          home.packages = lib.optionals cfg.includeCliTools [
-            pkgs.steam-tui
-            pkgs.steamcmd
-          ];
+        config = {
+          home.packages =
+            (lib.optionals cfg.includeCliTools [
+              pkgs.steam-tui
+              pkgs.steamcmd
+            ])
+            ++ (lib.optionals cfg.includeLutris [ pkgs.lutris ]);
         };
       };
   };

@@ -7,7 +7,9 @@
       <my/profiles/dev/all>
       <my/profiles/art/modelling>
       <my/profiles/theming>
+      <my/profiles/desktop-utils>
 
+      <my/apps/creative/core>
       <my/apps/productivity/core>
     ];
 
@@ -36,6 +38,19 @@
             userEmail = "thommott@proton.me";
             lazygit.enable = true;
           };
+
+          productivity.core = {
+            includeCoreTools = true;
+          };
+
+          creative.core = {
+            includeAudio = true;
+            includeVideo = true;
+          };
+
+          dev._.tooling = {
+            includeAiTools.enable = true;
+          };
         };
 
         home = {
@@ -56,14 +71,16 @@
               container_envvars+=" DBUS_SESSION_BUS_ADDRESS"
             '';
           };
-
-          sessionVariables = rec {
-            XDG_BOOKS_DIR = "$HOME/Media/Books";
-          };
         };
       };
 
     # defining this will create a entry for this user for this host.
     den.hosts.x86_64-linux.rosso.users.thom = { };
+  };
+
+  # standalone Home Manager entry for faster user-only switches
+  den.homes.x86_64-linux."thom@rosso" = {
+    userName = "thom";
+    aspect = "thom";
   };
 }

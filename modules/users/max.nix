@@ -38,7 +38,7 @@
             lazygit.enable = true;
           };
 
-          productivity._.core = {
+          productivity.core = {
             includeBrowser = true;
             includeMail = false;
           };
@@ -48,18 +48,29 @@
           };
         };
 
-        creative._.core = {
+        creative.core = {
+          enable = true;
           includeAudio = false;
-          icnludeVideo = false;
+          includeVideo = false;
         };
 
         dev._.tooling = {
-          includeNode = false;
           includeBuildDocs = false;
+          includeAiTools.enable = false;
         };
+
+        emulators.enable = true;
+        steam.enable = true;
       };
 
     # defining this will create a entry for this user for this host.
     den.hosts.x86_64-linux.tink.users.max = { };
+
+  };
+
+  # standalone Home Manager entry for faster user-only switches
+  den.homes.x86_64-linux."max@tink" = {
+    userName = "max";
+    aspect = "max";
   };
 }

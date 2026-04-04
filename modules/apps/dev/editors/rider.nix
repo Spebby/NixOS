@@ -1,14 +1,7 @@
 {
   my.apps._.editors._.rider.homeManager =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
+    { lib, pkgs, ... }:
     let
-      cfg = config.my.apps._.rider;
-
       extraPath = with pkgs; [
         dotnetCorePackages.sdk_8_0
         dotnetPackages.Nuget
@@ -38,10 +31,9 @@
       });
     in
     {
-      options.my.apps._.rider.enable =
-        lib.mkEnableOption "JetBrains Rider (wrapped for engine integrations)";
+      options.my.apps._.rider = { };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         home.packages = [ riderWrapped ];
         xdg.desktopEntries.jetbrains-rider = {
           name = "Rider";

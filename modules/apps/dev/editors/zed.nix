@@ -6,7 +6,6 @@
     in
     {
       options.my.apps._.zed = {
-        enable = lib.mkEnableOption "Enable Zed Editor";
         settings = lib.mkOption {
           type = lib.types.attrs;
           default = {
@@ -19,7 +18,7 @@
       };
 
       config.programs.zed-editor = {
-        inherit (cfg) enable;
+        enable = true;
         extensions = [
           "html"
           "make"

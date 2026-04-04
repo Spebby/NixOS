@@ -2,12 +2,14 @@
   my.apps._.stylix.homeManager =
     {
       config,
+      options,
       lib,
       pkgs,
       ...
     }:
     let
       cfg = config.my.apps._.stylix;
+      hasStylix = options ? stylix;
     in
     {
       options.my.apps._.stylix = {
@@ -216,7 +218,8 @@
             powerline-symbols
           ]
           ++ cfg.extraPackages;
-
+      }
+      // lib.optionalAttrs hasStylix {
         stylix = {
           enable = true;
           autoEnable = true;

@@ -1,7 +1,6 @@
 # /users/home-manager/max.nix
 
 {
-  inputs,
   pkgs,
   pkgs-stable,
   lib,
@@ -9,9 +8,6 @@
 }:
 
 {
-  # Import all the home-manager modules
-  imports = [ ../../modules/_home_manager ];
-
   # And then selectively enable them as needed
   firefox.enable = true;
   discord = {
@@ -66,7 +62,6 @@
   # For
   home = {
     packages = with pkgs; [
-      google-chrome
       via # keyboard management software
 
       lutris # wine wrapper
@@ -77,7 +72,6 @@
 
       # Desktop Apps
       pkgs-stable.audacity
-      #gimp-with-plugins
 
       libreoffice-qt6
       mpv
@@ -85,14 +79,8 @@
       obs-studio
       pinta
 
-      #geogebra6
-
       spotify
       #cider-2 # 3rd party apple music client
-
-      # Steam Helpers
-      steam-tui
-      steamcmd
 
       # CLI Utilities
       acpid
@@ -121,28 +109,14 @@
       wget
       wl-clipboard # clipboard for wayland
       wtype
-      yt-dlp # i forgor what this is
       zip
-      inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # CXX
       meson
       cpio
       doxygen_gui
       vscode
-
-      # ECMA
-      nodejs
-      #npm
-
-      # WM
-      libnotify
-      gtt
     ];
-
-    sessionVariables = rec {
-      XDG_BOOKS_DIR = "$HOME/Media/Books";
-    };
   };
 
   # Stylix Overrides

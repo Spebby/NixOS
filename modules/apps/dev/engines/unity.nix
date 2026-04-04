@@ -11,7 +11,6 @@
     in
     {
       options.my.apps._.unity = {
-        enable = lib.mkEnableOption "Enable Unity game engine";
         usePlastic = lib.mkOption {
           type = lib.types.bool;
           default = true;
@@ -19,7 +18,7 @@
         };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         home.packages =
           with pkgs;
           [

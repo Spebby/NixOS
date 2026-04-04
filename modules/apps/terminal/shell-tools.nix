@@ -1,5 +1,5 @@
 {
-  my.apps._.shell.tools.homeManager =
+  my.apps._.shell.provides.tools.homeManager =
     {
       config,
       lib,
@@ -7,10 +7,10 @@
       ...
     }:
     let
-      cfg = config.my.apps._.shell-tools;
+      cfg = config.my.apps._.shell.tools;
     in
     {
-      options.my.apps._.shell-tools = {
+      options.my.apps._.shell.tools = {
         bat = {
           enable = lib.mkEnableOption "bat (modern cat replacement)";
           themes = lib.mkOption {

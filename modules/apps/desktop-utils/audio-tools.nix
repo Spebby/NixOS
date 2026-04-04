@@ -4,6 +4,7 @@
     {
       environment.systemPackages = with pkgs; [
         alsa-tools
+        alsa-utils
         pavucontrol
       ];
     };

@@ -6,6 +6,9 @@
         <my/apps/discord>
         <my/apps/firefox>
         <my/apps/fun>
+        <my/apps/hardware-tools>
+        <my/apps/emulators>
+        <my/apps/steam>
       ];
     };
 
@@ -33,11 +36,18 @@
         ];
       };
 
-      apps = den.lib.parametric.atLeast { includes = [ <my/apps/dev/python> ]; };
+      apps = den.lib.parametric.atLeast {
+        includes = [
+          <my/apps/dev/csharp>
+          <my/apps/dev/python>
+          <my/apps/dev/js-ts>
+        ];
+      };
       system = den.lib.parametric.atLeast {
         includes = [
           <my/apps/dev/c>
           <my/apps/dev/odin>
+          <my/apps/dev/rust>
           <my/apps/dev/zig>
           <my/apps/dev/common>
         ];
@@ -74,6 +84,7 @@
 
     desktop-utils = den.lib.parametric.atLeast {
       includes = [
+        <my/apps/desktop-utils/home>
         <my/apps/audio-tools>
         <my/apps/diagnostics>
         <my/apps/ffmpeg>
@@ -87,10 +98,6 @@
       ];
     };
 
-    math = den.lib.parametric.atLeast {
-      includes = [
-
-      ];
-    };
+    math = den.lib.parametric.atLeast { includes = [ <my/apps/math> ]; };
   };
 }
