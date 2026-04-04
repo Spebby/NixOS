@@ -28,28 +28,9 @@
     dev.provides = {
       all = den.lib.parametric.atLeast {
         includes = [
-          <my/profiles/dev/apps>
-          <my/profiles/dev/system>
           <my/profiles/dev/editors>
           <my/profiles/dev/tools>
           <my/profiles/dev/games>
-        ];
-      };
-
-      apps = den.lib.parametric.atLeast {
-        includes = [
-          <my/apps/dev/csharp>
-          <my/apps/dev/python>
-          <my/apps/dev/js-ts>
-        ];
-      };
-      system = den.lib.parametric.atLeast {
-        includes = [
-          <my/apps/dev/c>
-          <my/apps/dev/odin>
-          <my/apps/dev/rust>
-          <my/apps/dev/zig>
-          <my/apps/dev/common>
         ];
       };
 
@@ -70,6 +51,7 @@
           <my/apps/nix-tools>
           <my/apps/dev/localsend>
           <my/apps/dev/tooling>
+          <my/apps/dev/common>
         ];
       };
 
