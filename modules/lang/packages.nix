@@ -37,9 +37,9 @@
 
         zig = pkgs.buildEnv {
           name = "lang-zig";
-          paths = with pkgs; [
-            zig
-            zls
+          paths = [
+            pkgs.zig
+            pkgs.zls
           ];
         };
 
@@ -50,7 +50,7 @@
             [
               dotnet-sdk_8
               dotnet-runtime_8
-              aspnetcore_8_0
+              dotnet-aspnetcore_8
             ]
             ++ lib.optionals pkgs.stdenv.isLinux [
               omnisharp-roslyn
@@ -82,9 +82,9 @@
 
         odin = pkgs.buildEnv {
           name = "lang-odin";
-          paths = with pkgs; [
-            odin
-            ols
+          paths = [
+            pkgs.odin
+            pkgs.ols
           ];
         };
 

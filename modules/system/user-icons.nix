@@ -9,9 +9,19 @@ let
     mkIf
     ;
   iconUsers = filterAttrs (_: u: (u.icon or null) != null) config.users.users;
-  mkLink = name: u: ''
+  mkAccountServiceLink = name: u: ''
     ln -sfn ${lib.escapeShellArg (toString u.icon)} /var/lib/AccountsService/icons/${name}
   '';
+  mkFaceLink =
+    name: u:
+    let
+      homeDir = u.home or "/home/${name}";
+    in
+    ''
+      if [ -d ${lib.escapeShellArg homeDir} ]; then
+        ln -sfn ${lib.escapeShellArg (toString u.icon)} ${lib.escapeShellArg "${homeDir}/.face"}
+      fi
+    '';
 in
 {
   my.user-icons.nixos = {
@@ -33,7 +43,8 @@ in
         deps = [ "users" ];
         text = ''
           mkdir -p /var/lib/AccountsService/icons
-          ${concatStringsSep "\n" (mapAttrsToList mkLink iconUsers)}
+          ${concatStringsSep "\n" (mapAttrsToList mkAccountServiceLink iconUsers)}
+          ${concatStringsSep "\n" (mapAttrsToList mkFaceLink iconUsers)}
         '';
       };
     };

@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 {
   my.apps._.art._.blender.homeManager =
     { pkgs, ... }:

@@ -17,6 +17,8 @@
       <my/gaming/replays>
 
       <my/desktops/cosmic>
+      <my/desktops/hyprland>
+      <my/desktops/niri>
     ];
 
     nixos =
