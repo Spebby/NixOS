@@ -10,6 +10,7 @@
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
+      <my/services/plex>
 
       <my/profiles/desktop>
       <my/desktops/gnome>

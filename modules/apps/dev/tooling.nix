@@ -28,27 +28,27 @@
           claude = {
             enable = lib.mkEnableOption "Install ClaudeCode CLI tool.";
           };
-
-          extraPackages = lib.mkOption {
-            type = lib.types.listOf lib.types.package;
-            default = [ ];
-            description = "Extra packages added on top of the dev tooling set.";
-          };
         };
 
-        config = {
-          home.packages =
-            (lib.optionals cfg.includeGithub [ pkgs.gh ])
-            ++ (lib.optionals cfg.includeBuildDocs [
-              pkgs.meson
-              pkgs.doxygen_gui
-            ])
-            ++ (lib.optionals cfg.includeAiTools.enable [ pkgs.opencode ])
-            ++ (lib.optionals (cfg.includeAiTools.enable && cfg.includeAiTools.claude.enable) [
-              pkgs.claude-code
-            ])
-            ++ cfg.extraPackages;
+        extraPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
+          default = [ ];
+          description = "Extra packages added on top of the dev tooling set.";
         };
+      };
+
+      config = {
+        home.packages =
+          (lib.optionals cfg.includeGithub [ pkgs.gh ])
+          ++ (lib.optionals cfg.includeBuildDocs [
+            pkgs.meson
+            pkgs.doxygen_gui
+          ])
+          ++ (lib.optionals cfg.includeAiTools.enable [ pkgs.opencode ])
+          ++ (lib.optionals (cfg.includeAiTools.enable && cfg.includeAiTools.claude.enable) [
+            pkgs.claude-code
+          ])
+          ++ cfg.extraPackages;
       };
     };
 }

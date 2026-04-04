@@ -8,12 +8,6 @@
       in
       {
         options.my.apps._.productivity.core = {
-          includeBrowser = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-            description = "Install Google Chrome.";
-          };
-
           includeComms = lib.mkOption {
             type = lib.types.bool;
             default = true;
@@ -53,7 +47,6 @@
               pkgs.slack
               pkgs.zoom-us
             ])
-            ++ (lib.optionals cfg.includeBrowser [ pkgs.google-chrome ])
             ++ (lib.optionals cfg.includeCoreTools [ pkgs.gtt ])
             ++ cfg.extraPackages;
         };

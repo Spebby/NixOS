@@ -8,9 +8,14 @@
       <my/profiles/art/modelling>
       <my/profiles/theming>
       <my/profiles/desktop-utils>
+      <my/profiles/gaming/all>
 
       <my/apps/creative/core>
+      <my/apps/media/core>
+      <my/apps/cli/utility>
+
       <my/apps/productivity/core>
+      <my/apps/productivity/writing>
     ];
 
     nixos = {
@@ -49,7 +54,24 @@
           };
 
           dev._.tooling = {
+            includeBuildDocs = true;
             includeAiTools.enable = true;
+          };
+
+          editors._.zed = {
+            settings = {
+              ai = false;
+              vim_mode = true;
+            };
+          };
+
+          media.core = {
+            includeMusicClients = true;
+          };
+
+          shell.tui = {
+            yazi.enable = true;
+            zathura.enable = true;
           };
         };
 

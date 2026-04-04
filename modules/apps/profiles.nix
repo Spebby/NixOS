@@ -7,15 +7,31 @@
         <my/apps/firefox>
         <my/apps/fun>
         <my/apps/hardware-tools>
-        <my/apps/emulators>
-        <my/apps/steam>
       ];
+    };
+
+    gaming.provides = {
+      core = den.lib.parametric.atLeast {
+        includes = [
+          <my/apps/steam>
+          <my/apps/protonup>
+          <my/apps/prismlauncher>
+        ];
+      };
+
+      emulators = den.lib.parametric.atLeast { includes = [ <my/apps/emulators> ]; };
+
+      all = den.lib.parametric.atLeast {
+        includes = [
+          <my/profiles/gaming/core>
+          <my/profiles/gaming/emulators>
+        ];
+      };
     };
 
     art.provides = {
       all = den.lib.parametric.atLeast {
         includes = [
-          <my/profiles/dev/games>
           <my/profiles/art/modelling>
           <my/profiles/art/drawing>
         ];
@@ -38,6 +54,7 @@
         includes = [
           <my/apps/editors/zed>
           <my/apps/editors/vim>
+          <my/apps/editors/vscode>
         ];
       };
 

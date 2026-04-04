@@ -8,8 +8,15 @@
       <my/profiles/art/all>
       <my/profiles/math>
       <my/profiles/theming>
+      <my/profiles/desktop-utils>
+      <my/profiles/gaming/all>
+
+      <my/apps/creative/core>
+      <my/apps/media/core>
+      <my/apps/cli/utility>
 
       <my/apps/productivity/core>
+      <my/apps/editors/vscode>
     ];
 
     nixos = {
@@ -29,7 +36,7 @@
     };
 
     homeManager =
-      { config, ... }:
+      { pkgs, ... }:
       {
         my.apps._ = {
           git = {
@@ -39,28 +46,40 @@
           };
 
           productivity.core = {
-            includeBrowser = true;
             includeMail = false;
+            extraPackages = with pkgs; [ google-chrome ];
           };
 
           math = {
             geogebra.enable = true;
           };
-        };
 
-        creative.core = {
-          enable = true;
-          includeAudio = false;
-          includeVideo = false;
-        };
+          creative.core = {
+            includeAudio = false;
+            includeVideo = false;
+          };
 
-        dev._.tooling = {
-          includeBuildDocs = false;
-          includeAiTools.enable = false;
-        };
+          dev._.tooling = {
+            includeBuildDocs = false;
+            includeAiTools.enable = false;
+          };
 
-        emulators.enable = true;
-        steam.enable = true;
+          editors._.zed = {
+            settings = {
+              ai = false;
+              vim_mode = false;
+            };
+          };
+
+          media.core = {
+            includeMusicClients = true;
+          };
+
+          shell.tui = {
+            yazi.enable = true;
+            zathura.enable = true;
+          };
+        };
       };
 
     # defining this will create a entry for this user for this host.

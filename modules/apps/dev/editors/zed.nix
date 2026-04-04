@@ -2,10 +2,10 @@
   my.apps._.editors._.zed.homeManager =
     { config, lib, ... }:
     let
-      cfg = config.my.apps._.zed;
+      cfg = config.my.apps._.editors._.zed;
     in
     {
-      options.my.apps._.zed = {
+      options.my.apps._.editors._.zed = {
         settings = lib.mkOption {
           type = lib.types.attrs;
           default = {
