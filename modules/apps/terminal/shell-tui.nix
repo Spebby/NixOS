@@ -12,7 +12,12 @@
     {
       options.my.apps._.shell.tui = {
         yazi = {
-          enable = lib.mkEnableOption "Yazi file manager";
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Enable Yazi file manager";
+          };
+
           enableZshIntegration = lib.mkOption {
             type = lib.types.bool;
             default = true;
@@ -21,7 +26,12 @@
         };
 
         zathura = {
-          enable = lib.mkEnableOption "Zathura document reader";
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Enable Zathura document reader";
+          };
+
           mappings = lib.mkOption {
             type = lib.types.attrs;
             default = {

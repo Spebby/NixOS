@@ -75,6 +75,8 @@
           options = lib.mkForce "--delete-older-than 7d";
         };
 
+        nix.settings.trusted-users = [ "thom" ];
+
         fonts = {
           enableDefaultPackages = true;
           packages = [ pkgs.jetbrains-mono ];

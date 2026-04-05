@@ -158,10 +158,7 @@ in
           history.path = "${config.xdg.dataHome}/zsh/history";
 
           # it may be worth eventually translating over the vicmd and zle-keymap stuff in the old config
-          initContent = ''
-            eval "$(keychain --eval --quiet)"
-          ''
-          + cfg.zsh.extraInitContent;
+          initContent = "" + cfg.zsh.extraInitContent;
         };
 
         programs.starship = lib.mkIf cfg.starship.enable {

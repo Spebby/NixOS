@@ -32,7 +32,7 @@
           "docker"
         ];
       };
-	my.userIcons.max = ../../assets/icons/max.png;
+      my.userIcons.max = ../../assets/icons/max.png;
     };
 
     homeManager =
@@ -73,11 +73,6 @@
 
           media.core = {
             includeMusicClients = true;
-          };
-
-          shell.tui = {
-            yazi.enable = true;
-            zathura.enable = true;
           };
         };
       };

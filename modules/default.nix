@@ -188,7 +188,7 @@ in
             };
             useGlobalPkgs = lib.mkOption {
               type = lib.types.bool;
-              default = true;
+              default = false;
               description = "Use the system nixpkgs in home-manager (avoids a second nixpkgs eval).";
             };
           };
@@ -244,11 +244,7 @@ in
       };
 
     homeManager =
-      {
-        config,
-        lib,
-        ...
-      }:
+      { config, lib, ... }:
       let
         cfg = config.den.default.home;
       in
@@ -325,7 +321,8 @@ in
         };
 
         config = {
-nixpkgs.config.allowUnfree = true;
+          gtk.gtk4.theme = null;
+          nixpkgs.config.allowUnfree = true;
 
           programs.home-manager.enable = true;
 
@@ -349,5 +346,3 @@ nixpkgs.config.allowUnfree = true;
       };
   };
 }
-
-

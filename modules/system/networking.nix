@@ -6,24 +6,31 @@
       };
 
       wol.nixos = {
-        systemd.network.links."50-wol" = {
+        systemd.network.links."10-wol" = {
           matchConfig.Type = "ether";
           linkConfig.WakeOnLan = "magic";
         };
       };
 
     };
-    nixos = {
-      networking = {
-        networkmanager.enable = true;
-        nftables.enable = true;
-        wireguard.enable = true;
-        firewall.trustedInterfaces = [
-          "virbr0"
-          "podman0"
-          "docker0"
-        ];
+    nixos =
+      { lib, ... }:
+      {
+        systemd.network.networks."99-ethernet-default-dhcp" = {
+          networkConfig.UseDomains = "yes";
+        };
+
+        networking = {
+          networkmanager.enable = true;
+          nftables.enable = true;
+          wireguard.enable = true;
+          useDHCP = lib.mkDefault true;
+          firewall.trustedInterfaces = [
+            "virbr0"
+            "podman0"
+            "docker0"
+          ];
+        };
       };
-    };
   };
 }

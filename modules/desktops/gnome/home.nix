@@ -16,8 +16,6 @@ in
     includes = [ my.desktops._.gnome._.dconf ];
 
     homeManager = lib.mkIf cfg.enable {
-      nixpkgs.overlays = [ (import ./_overlays/simple-weather.nix) ];
-
       home.packages = with pkgs; [
         gnome-tweaks
 

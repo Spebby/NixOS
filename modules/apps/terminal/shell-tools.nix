@@ -12,7 +12,11 @@
     {
       options.my.apps._.shell.tools = {
         bat = {
-          enable = lib.mkEnableOption "bat (modern cat replacement)";
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Enable bat (modern cat replacement)";
+          };
           themes = lib.mkOption {
             type = lib.types.attrsOf lib.types.attrs;
             default = {
@@ -31,7 +35,11 @@
         };
 
         eza = {
-          enable = lib.mkEnableOption "eza (modern ls replacement)";
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Enable eza (modern ls replacement)";
+          };
           enableZshIntegration = lib.mkOption {
             type = lib.types.bool;
             default = true;

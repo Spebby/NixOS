@@ -48,6 +48,11 @@
           options = lib.mkForce "--delete-older-than 30d";
         };
 
+        nix.settings.trusted-users = [
+          "thom"
+          "max"
+        ];
+
         environment.systemPackages = with pkgs; [
           bottles
           libsForQt5.qt5.qtquickcontrols2
