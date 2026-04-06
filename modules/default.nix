@@ -182,6 +182,15 @@ in
               git
               nix-your-shell
             ];
+
+            # TODO: This is seemingly a 6 year old bug... but zsh, graphical shell, something or the other
+            # prevents sessionVariables set in home-manager from overriding nixos set ones.
+            # so, this is ugly af, but will have to go for now because AFAIK there isn't
+            # a sane solution for this problem
+            sessionVariables = {
+              EDITOR = lib.mkDefault "nvim";
+              MANPAGER = lib.mkDefault "nvim +Man!";
+            };
           };
 
           services = {
@@ -211,9 +220,8 @@ in
 
           home-manager = {
             inherit (cfg.homeManager) useUserPackages useGlobalPkgs;
-            backupFileExtension = "backup";
+            backupFileExtension = "hmBackup";
           };
-
         };
       };
 
@@ -297,7 +305,6 @@ in
         config = {
           gtk.gtk4.theme = null;
           nixpkgs.config.allowUnfree = true;
-
           programs.home-manager.enable = true;
 
           xdg = lib.mkIf cfg.xdg.enable {
@@ -312,8 +319,12 @@ in
             inherit stateVersion;
             sessionVariables =
               lib.optionalAttrs cfg.allowUnfree { NIXPKGS_ALLOW_UNFREE = "1"; }
-              // lib.optionalAttrs (cfg.programs.defaultEditor != null) { EDITOR = cfg.programs.defaultEditor; }
-              // lib.optionalAttrs (cfg.programs.manpager != null) { MANPAGER = cfg.programs.manpager; }
+              // lib.optionalAttrs (cfg.programs.defaultEditor != null) {
+                EDITOR = lib.mkDefault cfg.programs.defaultEditor;
+              }
+              // lib.optionalAttrs (cfg.programs.manpager != null) {
+                MANPAGER = lib.mkDefault cfg.programs.manpager;
+              }
               // cfg.extraSessionVariables;
           };
         };

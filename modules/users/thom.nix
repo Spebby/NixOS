@@ -1,4 +1,4 @@
-{ den, __findFile, ... }:
+{ __findFile, ... }:
 {
   den.aspects.thom = {
     includes = [
@@ -35,7 +35,7 @@
     };
 
     homeManager =
-      { config, ... }:
+      { lib, config, ... }:
       {
         my.apps._ = {
           git = {
@@ -78,6 +78,7 @@
         home = {
           sessionVariables = {
             TERMINAL = "kitty";
+            EDITOR = lib.mkForce "nvim";
           };
           file = {
             # GPG Signing for Git

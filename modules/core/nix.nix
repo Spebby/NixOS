@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   den.default = {
     nixos = {
@@ -11,7 +11,7 @@
 
       nixpkgs.config = {
         allowUnfree = true;
-        cudaSupport = false;
+        cudaSupport = lib.mkDefault false;
       };
 
       nix = {
