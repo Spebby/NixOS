@@ -20,7 +20,6 @@ top@{ __findFile, self, ... }:
     includes = [
       <my/ssh/server>
       <my/networking>
-      <my/desktops/cosmic>
       <my/virt/qemu>
     ];
 

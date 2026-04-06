@@ -9,7 +9,6 @@
         <my/printing>
         <my/ssh/client>
         <my/filesystems/ntfs>
-        <my/xdg>
         <my/system/openssl>
       ];
     };
@@ -24,7 +23,6 @@
     laptop = den.lib.parametric.atLeast {
       includes = [
         <my/profiles/workstation>
-        <my/boot/graphical>
         <my/power-management>
         <my/system/acpid>
       ];

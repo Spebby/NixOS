@@ -23,24 +23,19 @@ This document captures repo-specific conventions for working in this Den-based f
 ## Den Composition Patterns
 
 - Common profile pattern:
-
   - `den.lib.parametric.atLeast { includes = [ ... ]; }`
 
 - Common module bundle pattern:
-
   - `my.<area>._.<name> = { includes = [ ... ]; ... }`
 
 - Feature/provider pattern:
-
   - `my.<area>._.<name>.provides.<feature>.<scope> = { ... }`
 
 - Scopes used here:
-
   - `nixos` for system-level configuration.
   - `homeManager` for user-level configuration.
 
 - Den auto-creates aspects from entities:
-
   - Host declarations generate host aspects.
   - Host users generate user aspects.
   - Standalone homes (`den.homes`) generate home aspects.
@@ -48,45 +43,38 @@ This document captures repo-specific conventions for working in this Den-based f
 ## Den Concepts (Detailed)
 
 - Aspects:
-
   - An aspect is a composable feature bundle, not a host file.
   - Aspects can carry multiple Nix classes at once (for example `nixos` + `homeManager`).
   - Typical keys are owned class configs (`nixos`, `homeManager`, etc.), `includes`, and `provides`.
   - Den auto-generates aspects for declared hosts/users/homes, and repo files incrementally extend those aspects.
 
 - Parametric behavior:
-
   - Includes can be plain attrsets, static functions, or parametric functions.
   - Parametric functions receive context (`{ host }`, `{ host, user }`, `{ home }`) based on their argument shape.
   - This is what enables one feature module to adapt by host/user metadata without copy-pasting host-specific modules.
   - Static include helpers can use `{ class, aspect-chain }` to reason about class resolution and include path.
 
 - Provides:
-
   - `provides` creates named sub-aspects under an aspect DAG.
   - Practical reference forms: `den.aspects.foo.provides.bar` and shorthand/leaf forms (repo commonly uses `_`).
   - Use `provides` for feature slices that should be imported independently (e.g., editors subset of dev tools).
 
 - Batteries (`den.provides`, alias `den._`):
-
   - Batteries are Den's built-in reusable aspects.
   - They are included like normal aspects and can be parametric.
   - Use batteries for common integration plumbing, then compose custom `my.*` aspects on top.
 
 - Custom Nix classes:
-
   - Den is class-agnostic; `nixos`, `homeManager`, and `darwin` are common classes, not hard limits.
   - You can define and forward additional classes for other module domains/outputs.
   - This same mechanism is how aspect contributions can feed flake-level outputs like `packages`/`checks` when wired.
 
 - Namespaces:
-
   - Namespaces package/share aspect libraries across repos via `den.ful.<namespace>`.
   - `den.namespace "my" true` wires a local namespace and enables `<my/...>` style usage.
   - Namespaces are the social/distribution layer for reusable aspect libraries.
 
 - Angle bracket syntax (`<>`):
-
   - Backed by `den.lib.__findFile`; requires `_module.args.__findFile = den.lib.__findFile`.
   - Any module using `<>` must include `__findFile` in its argument set.
   - Resolution order from docs:
@@ -138,3 +126,7 @@ This document captures repo-specific conventions for working in this Den-based f
 - When moving modules, verify all `<my/...>` import paths still resolve.
 - If changing profile structure, keep callers stable first, then migrate references.
 - Validate with `nix flake check` (and `--impure` if you need untracked files during local iteration).
+
+## Reoccurring bugs
+
+- If network is completely failing (wifi/ethernet broken), double check that hardware.enableRedistributableFirmware is set true.

@@ -36,7 +36,7 @@ _: {
             PLATFORM_PROFILE_ON_BAT = "low-power";
 
             # Radio Device
-            RESTORE_DEVICE_STATE_ON_STARTUP = 1;
+            #RESTORE_DEVICE_STATE_ON_STARTUP = 1; # potentially causes race condition w/ WPA supplicant
             #DEVICES_TO_ENABLE_ON_STARTUP = "bluetooth wifi wwan";
 
             # If want to be more aggressive, use force option

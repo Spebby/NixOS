@@ -104,7 +104,6 @@
 
         config = {
           xdg.portal = {
-            extraPortals = [ pkgs.xdg-desktop-portal-cosmic ];
             xdgOpenUsePortal = cfg.xdg.usePortalForOpen;
           };
 
