@@ -103,11 +103,13 @@
         };
 
         config = {
-          xdg.portal.xdgOpenUsePortal = cfg.xdg.usePortalForOpen;
+          xdg.portal = {
+            extraPortals = [ pkgs.xdg-desktop-portal-cosmic ];
+            xdgOpenUsePortal = cfg.xdg.usePortalForOpen;
+          };
 
           services = {
             desktopManager.cosmic.enable = true;
-
             system76-scheduler = lib.mkIf cfg.scheduler.enable { enable = true; };
 
             geoclue2 = lib.mkIf cfg.geoclue.enable {
@@ -157,12 +159,7 @@
       };
 
     homeManager =
-      {
-        pkgs,
-        lib,
-        config,
-        ...
-      }:
+      { lib, config, ... }:
       let
         cfg = config.my.desktops._.cosmic.home;
       in

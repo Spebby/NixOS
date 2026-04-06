@@ -1,3 +1,5 @@
+# this file is primarily concerned with configuring git,
+# we assume it is enabled by default on all systems.
 {
   my.apps._.git.homeManager =
     {

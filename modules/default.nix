@@ -200,6 +200,7 @@ in
             defaultPackages = lib.mkForce cfg.shell.defaultPackages;
             extraOutputsToInstall = lib.mkForce cfg.docs.extraOutputsToInstall;
             systemPackages = with pkgs; [
+              git
               nix-your-shell
               nano
             ];
@@ -239,7 +240,11 @@ in
 
           boot.initrd.systemd.enable = cfg.boot.initrdSystemd;
 
-          home-manager = { inherit (cfg.homeManager) useUserPackages useGlobalPkgs; };
+          home-manager = {
+            inherit (cfg.homeManager) useUserPackages useGlobalPkgs;
+            backupFileExtension = "backup";
+          };
+
         };
       };
 

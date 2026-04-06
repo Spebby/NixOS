@@ -27,11 +27,13 @@ _: {
         ];
 
         services = {
-          displayManager.cosmic-greeter = {
-            enable = true;
-          }
-          // cfg.extraConfig;
-          displayManager.sddm.enable = false;
+          displayManager = {
+            cosmic-greeter = {
+              enable = true;
+            }
+            // cfg.extraConfig;
+            sddm.enable = false;
+          };
           greetd.enable = false;
         };
       };

@@ -17,7 +17,6 @@
       includes = [
         <my/profiles/workstation>
         <my/ssh/server>
-        <my/performance/max>
         <my/networking/wol>
         <my/system/acpid>
       ];
@@ -27,7 +26,6 @@
         <my/profiles/workstation>
         <my/boot/graphical>
         <my/power-management>
-        <my/performance/responsive>
         <my/system/acpid>
       ];
     };

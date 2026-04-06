@@ -1,4 +1,4 @@
-{ __findFile, ... }:
+{ den, __findFile, ... }:
 {
   den.aspects.max = {
     includes = [
@@ -17,23 +17,27 @@
 
       <my/apps/productivity/core>
       <my/apps/editors/vscode>
+      (den.provides.user-shell "zsh")
     ];
 
-    nixos = {
-      users.users.max = {
-        isNormalUser = true;
-        home = "/home/max";
+    nixos =
+      { pkgs, ... }:
+      {
+        programs.zsh.enable = true;
 
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-          "home-manager"
-          "gamemode"
-          "docker"
-        ];
+        users.users.max = {
+          isNormalUser = true;
+          home = "/home/max";
+          shell = pkgs.zsh;
+
+          extraGroups = [
+            "home-manager"
+            "gamemode"
+            "docker"
+          ];
+        };
+        my.userIcons.max = ../../assets/icons/max.png;
       };
-      my.userIcons.max = ../../assets/icons/max.png;
-    };
 
     homeManager =
       { pkgs, ... }:
@@ -76,15 +80,5 @@
           };
         };
       };
-
-    # defining this will create a entry for this user for this host.
-    den.hosts.x86_64-linux.tink.users.max = { };
-
-  };
-
-  # standalone Home Manager entry for faster user-only switches
-  den.homes.x86_64-linux."max@tink" = {
-    userName = "max";
-    aspect = "max";
   };
 }

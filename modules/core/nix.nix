@@ -9,7 +9,10 @@
         nix-ld.enable = true;
       };
 
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs.config = {
+        allowUnfree = true;
+      };
+
       nix = {
         optimise.automatic = true;
         registry.nixpkgs.flake = inputs.nixpkgs;

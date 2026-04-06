@@ -1,103 +1,99 @@
-{ __findFile, ... }:
+{ den, __findFile, ... }:
 {
-  den = {
-    aspects.thom = {
-      includes = [
-        <den/primary-user>
-        <my/profiles/common-use>
-        <my/profiles/dev/all>
-        <my/profiles/art/modelling>
-        <my/profiles/theming>
-        <my/profiles/desktop-utils>
-        <my/profiles/gaming/all>
+  den.aspects.thom = {
+    includes = [
+      <den/primary-user>
+      <my/profiles/common-use>
+      <my/profiles/dev/all>
+      <my/profiles/art/modelling>
+      <my/profiles/theming>
+      <my/profiles/desktop-utils>
+      <my/profiles/gaming/all>
 
-        <my/apps/creative/core>
-        <my/apps/media/core>
-        <my/apps/cli/utility>
+      <my/apps/creative/core>
+      <my/apps/media/core>
+      <my/apps/cli/utility>
 
-        <my/apps/productivity/core>
-        <my/apps/productivity/writing>
-      ];
+      <my/apps/productivity/core>
+      <my/apps/productivity/writing>
+      (den.provides.user-shell "zsh")
+    ];
 
-      nixos = {
-        users.users.thom = {
-          isNormalUser = true;
-          home = "/home/thom";
+    nixos = {
+      users.users.thom = {
+        isNormalUser = true;
+        home = "/home/thom";
 
-          extraGroups = [
-            "wheel"
-            "networkmanager"
-            "home-manager"
-            "gamemode"
-            "docker"
-          ];
-        };
-
-        my.userIcons.thom = ../../assets/icons/thom.png;
+        extraGroups = [
+          "home-manager"
+          "gamemode"
+          "docker"
+        ];
       };
 
-      homeManager =
-        { config, ... }:
-        {
-          my.apps._ = {
-            git = {
-              userName = "Thom";
-              userEmail = "thommott@proton.me";
-              lazygit.enable = true;
-            };
+      my.userIcons.thom = ../../assets/icons/thom.png;
+    };
 
-            productivity.core = {
-              includeCoreTools = true;
-            };
+    homeManager =
+      { config, ... }:
+      {
+        my.apps._ = {
+          git = {
+            userName = "Thom";
+            userEmail = "thommott@proton.me";
+            lazygit.enable = true;
+          };
 
-            creative.core = {
-              includeAudio = true;
-              includeVideo = true;
-            };
+          productivity.core = {
+            includeCoreTools = true;
+          };
 
-            dev._.tooling = {
-              includeBuildDocs = true;
-              includeAiTools.enable = true;
-            };
+          creative.core = {
+            includeAudio = true;
+            includeVideo = true;
+          };
 
-            editors._.zed = {
-              settings = {
-                ai = false;
-                vim_mode = true;
-              };
-            };
+          dev._.tooling = {
+            includeBuildDocs = true;
+            includeAiTools.enable = true;
+          };
 
-            media.core = {
-              includeMusicClients = true;
+          editors._.zed = {
+            settings = {
+              ai = false;
+              vim_mode = true;
             };
           };
 
-          home = {
-            file = {
-              # GPG Signing for Git
-              "${config.home.homeDirectory}/.ssh/allowed_signers".text =
-                "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
+          media.core = {
+            includeMusicClients = true;
+          };
 
-              # Distrobox Config
-              ".config/distrobox/distrobox.conf".text = ''
-                # List of environment variables to pass from host to container
-                container_envvars="DISPLAY WAYLAND_DISPLAY XAUTHORITY"
-
-                # Optional: Also pass these common GUI variables
-                container_envvars+=" QT_QPA_PLATFORM GDK_BACKEND CLUTTER_BACKEND"
-
-                # If using Flatpak or other special cases
-                container_envvars+=" DBUS_SESSION_BUS_ADDRESS"
-              '';
-            };
+          shell.tui = {
+            yazi.enable = true;
+            zathura.enable = true;
           };
         };
-    };
 
-    hosts.x86_64-linux.rosso.users.thom = { };
-    homes.x86_64-linux."thom@rosso" = {
-      userName = "thom";
-      aspect = "thom";
-    };
+        home = {
+          file = {
+            # GPG Signing for Git
+            "${config.home.homeDirectory}/.ssh/allowed_signers".text =
+              "* ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJHJvth1usDlafKm6M61C8nTy+YgVe7uizcFmqXqp3A thommott@proton.me";
+
+            # Distrobox Config
+            ".config/distrobox/distrobox.conf".text = ''
+              # List of environment variables to pass from host to container
+              container_envvars="DISPLAY WAYLAND_DISPLAY XAUTHORITY"
+
+              # Optional: Also pass these common GUI variables
+              container_envvars+=" QT_QPA_PLATFORM GDK_BACKEND CLUTTER_BACKEND"
+
+              # If using Flatpak or other special cases
+              container_envvars+=" DBUS_SESSION_BUS_ADDRESS"
+            '';
+          };
+        };
+      };
   };
 }

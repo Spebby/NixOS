@@ -1,7 +1,7 @@
 { inputs, __findFile, ... }:
 {
-  den.hosts.x86_64-linux.rosso = {
-    instantiate =
+  den = {
+    hosts.x86_64-linux.rosso.instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
   };
 
@@ -14,10 +14,8 @@
       <my/profiles/laptop>
       <my/bluetooth>
       <my/gaming/max>
-      <my/gaming/replays>
 
       <my/desktops/cosmic>
-      <my/desktops/niri>
     ];
 
     nixos =
@@ -43,14 +41,7 @@
           ../_common
         ];
 
-        #my.boot.grub = {
-        #   enable = true;
-        #   devices = [ "nodev" ];
-        #   efiSupport = true;
-        #   useOSProber = true;
-        #   configurationLimit = 3;
-        #   theme = rossoGrubTheme;
-        #};
+        nixpkgs.config.cudaSupport = true;
 
         environment.systemPackages = with pkgs; [
           dnsmasq
@@ -80,13 +71,6 @@
         fonts = {
           enableDefaultPackages = true;
           packages = [ pkgs.jetbrains-mono ];
-        };
-
-        services = {
-          auto-cpufreq.enable = false;
-          displayManager = {
-            defaultSession = "cosmic";
-          };
         };
 
         my.login.sddm = {
