@@ -46,6 +46,7 @@
           inherit (cfg) languagePacks;
           profiles.user = {
             search = {
+              force = true;
               default = "ddg";
               privateDefault = "ddg";
               engines = {
@@ -103,6 +104,26 @@
 
                   icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                   definedAliases = [ "@nw" ];
+                };
+                "Home Manager Options" = {
+                  urls = [
+                    {
+                      template = "https://home-manager-options.extranix.com/";
+                      params = [
+                        {
+                          name = "query";
+                          value = "{searchTerms}";
+                        }
+                        {
+                          name = "release";
+                          value = "master";
+                        }
+                      ];
+                    }
+                  ];
+
+                  icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake-white.svg";
+                  definedAliases = [ "@ho" ];
                 };
               };
             };

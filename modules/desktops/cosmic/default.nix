@@ -127,7 +127,8 @@
 
             systemPackages =
               with pkgs;
-              lib.optionals cfg.packages.enableExtensions [
+              [ cosmic-launcher ]
+              ++ lib.optionals cfg.packages.enableExtensions [
                 cosmic-ext-ctl
                 cosmic-ext-calculator
                 cosmic-ext-tweaks
