@@ -9,6 +9,7 @@
       <my/profiles/theming>
       <my/profiles/desktop-utils>
       <my/profiles/gaming/all>
+      <my/profiles/fun>
 
       <my/apps/creative/core>
       <my/apps/media/core>
@@ -16,7 +17,6 @@
 
       <my/apps/productivity/core>
       <my/apps/productivity/writing>
-      (den.provides.user-shell "zsh")
     ];
 
     nixos = {
@@ -76,6 +76,9 @@
         };
 
         home = {
+          sessionVariables = {
+            TERMINAL = "kitty";
+          };
           file = {
             # GPG Signing for Git
             "${config.home.homeDirectory}/.ssh/allowed_signers".text =
@@ -96,4 +99,5 @@
         };
       };
   };
+
 }

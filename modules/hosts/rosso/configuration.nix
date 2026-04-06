@@ -41,7 +41,7 @@
           ../_common
         ];
 
-        nixpkgs.config.cudaSupport = true;
+        nixpkgs.config.cudaSupport = false;
 
         environment.systemPackages = with pkgs; [
           dnsmasq

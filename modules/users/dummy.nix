@@ -7,8 +7,7 @@
       <my/profiles/common-use>
       <my/profiles/desktop-utils>
       <my/apps/cli/utility>
-      <my/apps/dev/tools>
-      (den.provides.user-shell "zsh")
+      <my/profiles/dev/tools>
     ];
 
     nixos = {
@@ -21,6 +20,10 @@
 
     homeManager = {
       my.apps._ = {
+        git = {
+          userName = "";
+          userEmail = "";
+        };
         shell.tui = {
           yazi.enable = true;
           zathura.enable = true;

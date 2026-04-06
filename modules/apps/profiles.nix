@@ -5,7 +5,6 @@
       includes = [
         <my/apps/discord>
         <my/apps/firefox>
-        <my/apps/fun>
         <my/apps/hardware-tools>
       ];
     };
@@ -54,7 +53,6 @@
         includes = [
           <my/apps/editors/zed>
           <my/apps/editors/vim>
-          <my/apps/editors/vscode>
         ];
       };
 
@@ -89,9 +87,12 @@
       ];
     };
 
-    theming = den.lib.parametric.atLeast {
+    theming = den.lib.parametric.atLeast { includes = [ <my/apps/stylix> ]; };
+
+    fun = den.lib.parametric.atLeast {
       includes = [
-        <my/apps/stylix>
+        <my/apps/fun/terminal>
+        <my/apps/fun/graphical>
       ];
     };
 

@@ -17,7 +17,6 @@
 
       <my/apps/productivity/core>
       <my/apps/editors/vscode>
-      (den.provides.user-shell "zsh")
     ];
 
     nixos =
@@ -81,4 +80,5 @@
         };
       };
   };
+
 }

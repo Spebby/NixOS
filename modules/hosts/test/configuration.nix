@@ -1,5 +1,8 @@
-{ _findFile, ... }:
+{ inputs, __findFile, ... }:
 {
+  den.hosts.x86_64-linux.test.instantiate =
+    args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+
   den.aspects.test = {
     includes = [
       <my/boot/secure>
@@ -13,8 +16,6 @@
         ../_common
       ];
 
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = true;
       networking.networkmanager.enable = true;
 
       # Enable touchpad support (enabled default in most desktopManager).

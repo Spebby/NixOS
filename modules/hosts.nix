@@ -1,9 +1,6 @@
 {
   den = {
     hosts.x86_64-linux = {
-      rosso.users.max = {
-        classes = [ "homeManager" ];
-      };
       rosso.users.thom = {
         classes = [ "homeManager" ];
       };
@@ -18,14 +15,22 @@
 
     homes.x86_64-linux = {
       max = { };
-      "max@rosso" = { };
-      "max@tink" = { };
+      "max@tink" = {
+        userName = "max";
+        aspect = "max";
+      };
 
       thom = { };
-      "thom@rosso" = { };
+      "thom@rosso" = {
+        userName = "thom";
+        aspect = "thom";
+      };
 
       dummy = { };
-      "dummy@test" = { };
+      "dummy@test" = {
+        userName = "dummy";
+        aspect = "dummy";
+      };
     };
   };
 }

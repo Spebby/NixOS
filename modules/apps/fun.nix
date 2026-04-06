@@ -1,53 +1,30 @@
-{ lib, ... }:
 {
-  my.apps._.fun = {
-    provides =
+  my.apps._.fun.provides = {
+    terminal.nixos =
       { pkgs, ... }:
       {
-        terminal.nixos = {
-          environment.systemPackages = with pkgs; [
-            cowsay
-            cbonsai
-            sl
-            fortune
-            asciiquarium-transparent
-            cmatrix
-            xcowsay
-            yes
-            toilet
-            oneko
-            aalib
-            rig
-          ];
-        };
-
-        graphical.nixos = {
-          environment.systemPackages = with pkgs; [ mesa-demos ];
-        };
+        environment.systemPackages = with pkgs; [
+          cowsay
+          cbonsai
+          sl
+          fortune
+          asciiquarium-transparent
+          cmatrix
+          toilet
+          oneko
+          aalib
+          rig
+          microfetch
+        ];
       };
 
-    homeManager =
-      { config, pkgs, ... }:
-      let
-        cfg = config.my.apps._.fun;
-      in
+    graphical.nixos =
+      { pkgs, ... }:
       {
-        options.my.apps._.fun = {
-          includeMicrofetch = lib.mkOption {
-            type = lib.types.bool;
-            default = true;
-            description = "Install microfetch in the home profile.";
-          };
-          includeSilicon = lib.mkOption {
-            type = lib.types.bool;
-            default = true;
-            description = "Install silicon for code image rendering.";
-          };
-        };
-
-        config.home.packages =
-          (lib.optionals cfg.includeMicrofetch [ pkgs.microfetch ])
-          ++ (lib.optionals cfg.includeSilicon [ pkgs.silicon ]);
+        environment.systemPackages = with pkgs; [
+          mesa-demos
+          silicon
+        ];
       };
   };
 }

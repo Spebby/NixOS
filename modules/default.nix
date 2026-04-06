@@ -154,32 +154,6 @@ in
             };
           };
 
-          nix = {
-            gc = {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = true;
-                description = "Enable automatic Nix store garbage collection.";
-              };
-              dates = lib.mkOption {
-                type = lib.types.str;
-                default = "weekly";
-                description = "Systemd calendar expression for when to run GC.";
-                example = "Mon *-*-* 03:00:00";
-              };
-              keepDays = lib.mkOption {
-                type = lib.types.int;
-                default = 14;
-                description = "Delete store paths older than this many days during GC.";
-              };
-            };
-            optimise = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-              description = "Automatically run nix store --optimise to deduplicate the store.";
-            };
-          };
-
           homeManager = {
             useUserPackages = lib.mkOption {
               type = lib.types.bool;
@@ -195,6 +169,11 @@ in
         };
 
         config = {
+          hardware.enableRedistributableFirmware = true;
+
+          programs.zsh.enable = true;
+          users.defaultUserShell = pkgs.zsh;
+
           environment = {
             binsh = lib.mkIf (cfg.shell.binSh != null) "${cfg.shell.binSh}/bin/sh";
             defaultPackages = lib.mkForce cfg.shell.defaultPackages;
@@ -202,7 +181,6 @@ in
             systemPackages = with pkgs; [
               git
               nix-your-shell
-              nano
             ];
           };
 
@@ -225,15 +203,6 @@ in
           zramSwap = lib.mkIf cfg.memory.zramSwap {
             enable = true;
             memoryPercent = cfg.memory.zramPercent;
-          };
-
-          nix = {
-            gc = lib.mkIf cfg.nix.gc.enable {
-              automatic = true;
-              inherit (cfg.nix.gc) dates;
-              options = "--delete-older-than ${toString cfg.nix.gc.keepDays}d";
-            };
-            optimise.automatic = cfg.nix.optimise;
           };
 
           system.stateVersion = stateVersion;
@@ -312,13 +281,13 @@ in
           programs = {
             manpager = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
-              default = null;
+              default = "nvim +Man!";
               description = "Override the MANPAGER variable. Null leaves it unset.";
               example = "nvim +Man!";
             };
             defaultEditor = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
-              default = null;
+              default = "nvim";
               description = "Set the EDITOR session variable. Null leaves it unset.";
               example = "nvim";
             };
