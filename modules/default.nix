@@ -40,7 +40,7 @@ in
           shell = {
             binSh = lib.mkOption {
               type = lib.types.nullOr lib.types.package;
-              default = pkgs.dash;
+              default = pkgs.bashInteractive;
               description = ''
                 Package whose bin/sh is used as /bin/sh.
                 Set to null to leave /bin/sh at its NixOS default (bash).

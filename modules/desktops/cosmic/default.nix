@@ -117,6 +117,10 @@
             };
           };
 
+          systemd.user.extraConfig = ''
+            DefaultEnvironment="PATH=/run/current-system/sw/bin"
+          '';
+
           environment = {
             variables =
               lib.optionalAttrs cfg.wayland.ozoneWl { NIXOS_OZONE_WL = "1"; }

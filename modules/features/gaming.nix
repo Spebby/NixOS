@@ -122,9 +122,7 @@
     };
 
     max = den.lib.parametric {
-      includes = [
-        my.gaming._.min
-      ];
+      includes = [ my.gaming._.min ];
       nixos =
         {
           pkgs,
@@ -267,8 +265,6 @@
               };
 
               gamescope.capSysNice = true;
-
-              nix-ld.libraries = [ pkgs.SDL2 ];
             };
 
             environment.systemPackages =

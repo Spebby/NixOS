@@ -6,7 +6,6 @@
       programs = {
         direnv.enable = true;
         nix-index-database.comma.enable = true;
-        nix-ld.enable = true;
       };
 
       nixpkgs.config = {
