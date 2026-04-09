@@ -1,23 +1,27 @@
 { inputs, lib, ... }:
 {
   my.boot.provides = {
-    secure.nixos = {
-      imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
+    secure.nixos =
+      { pkgs, ... }:
+      {
+        imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
-      boot = {
-        loader = {
-          systemd-boot.enable = lib.mkForce false; # Disable, as Lanzaboote replaces
-          grub.enable = lib.mkForce false;
-          efi.canTouchEfiVariables = true;
-        };
+        environment.systemPackages = [ pkgs.sbctl ];
 
-        tmp.cleanOnBoot = true;
+        boot = {
+          loader = {
+            systemd-boot.enable = lib.mkForce false; # Disable, as Lanzaboote replaces
+            grub.enable = lib.mkForce false;
+            efi.canTouchEfiVariables = true;
+          };
 
-        lanzaboote = {
-          enable = true;
-          pkiBundle = "/var/lib/sbctl";
+          tmp.cleanOnBoot = true;
+
+          lanzaboote = {
+            enable = true;
+            pkiBundle = "/var/lib/sbctl";
+          };
         };
       };
-    };
   };
 }
