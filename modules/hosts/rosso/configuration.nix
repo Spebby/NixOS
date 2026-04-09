@@ -15,6 +15,8 @@
       <my/bluetooth>
       <my/gaming/max>
 
+      <my/desktops/niri>
+      <my/desktops/gnome>
       <my/desktops/cosmic>
     ];
 
