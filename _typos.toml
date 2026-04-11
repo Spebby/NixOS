@@ -1,2 +1,6 @@
 [default.extend-words]
 substituters = "substituters"
+facter = "facter"
+ful = "ful"
+browseable = "browseable"
+writeable = "writeable"
