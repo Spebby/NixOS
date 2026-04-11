@@ -2,19 +2,17 @@
 
 [![wakatime](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb.svg)](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb)
 
-This is my NixOS config. The backbone (nix/home-manager) is based heavily on
-Ampersand's "Reborn" config. I've taken that config, and blended it with my old
-dots from my Gentoo days. This setup is made for a Lonovo Legion 5 Pro 16ARH7H,
-but with some tinkering it should work on most systems. Plenty of credit due to
-my good fiends, [wyatt](https://www.wyatt.wtf) and
-[molecule31](https://molecule31.co.ua/) for helping me through the learning
+This is my NixOS config. The backbone (nix/home-manager) was based on
+Ampersand's "Reborn" config. Since then, I have moved to a Dendritic model, using Quasigod's config as a reference. Plenty of credit due to
+my good fiends, [wyatt](https://www.wyatt.wtf) and [molecule31](https://molecule31.co.ua/) for helping me through the learning
 process. This repository will be somewhat active as long as I'm using this
 system--I go back and forwards between this and a old Thinkpad running Gentoo,
 which I have no intention of moving over to Nix.
 
 The Hyprland RICE is based off of Ampersands' RICE.
 
-![COSMIC Setup](images/cover2.png) ![Hyprland RICE](images/cover1.png)
+![COSMIC Setup](assets/images/cover2.png)
+![Hyprland RICE](assets/images/cover1.png)
 
 ## Philosophy
 
@@ -111,3 +109,5 @@ Live wallpaper
 
 [Wavy Grass](https://moewalls.com/landscape/wavy-grass-live-wallpaper/) Live
 wallpaper
+
+DeterminateSystems for update-flake-lock GitHub Action
