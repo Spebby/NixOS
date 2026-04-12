@@ -88,6 +88,10 @@
       url = "github:Spebby/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devshells = {
+      url = "github:Spebby/devshells";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     #  devshell
     pre-commit-hooks = {
@@ -95,11 +99,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
     # Nixpkgs PRs
     amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
     hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
-
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   # Ripped from https://tangled.org/quasigod.xyz/nixconfig

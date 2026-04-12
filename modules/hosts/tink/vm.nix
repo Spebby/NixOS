@@ -12,7 +12,7 @@
             host = inputs.self.nixosConfigurations.tink.config;
           in
           ''
-            ${host.system.build.vmTink}/bin/run-${host.networking.hostName}-vm "$@"
+            ${host.system.build.vm}/bin/run-${host.networking.hostName}-vm "$@"
           '';
       };
     };

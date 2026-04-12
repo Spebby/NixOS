@@ -1,85 +1,88 @@
 {
   my.lang.provides =
-    { self', ... }:
+    { inputs, pkgs, ... }:
+    let
+      langPkgs = inputs.devshells.packages.${pkgs.stdenv.hostPlatform.system};
+    in
     {
       c = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-c" ];
+          environment.systemPackages = [ langPkgs."lang-c" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-c" ];
+          home.packages = [ langPkgs."lang-c" ];
         };
       };
 
       cpp = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-cpp" ];
+          environment.systemPackages = [ langPkgs."lang-cpp" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-cpp" ];
+          home.packages = [ langPkgs."lang-cpp" ];
         };
       };
 
       rust = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-rust" ];
+          environment.systemPackages = [ langPkgs."lang-rust" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-rust" ];
+          home.packages = [ langPkgs."lang-rust" ];
         };
       };
 
       zig = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-zig" ];
+          environment.systemPackages = [ langPkgs."lang-zig" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-zig" ];
+          home.packages = [ langPkgs."lang-zig" ];
         };
       };
 
       csharp = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-csharp" ];
+          environment.systemPackages = [ langPkgs."lang-csharp" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-csharp" ];
+          home.packages = [ langPkgs."lang-csharp" ];
         };
       };
 
       js-ts = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-js-ts" ];
+          environment.systemPackages = [ langPkgs."lang-js-ts" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-js-ts" ];
+          home.packages = [ langPkgs."lang-js-ts" ];
         };
       };
 
       python = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-python" ];
+          environment.systemPackages = [ langPkgs."lang-python" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-python" ];
+          home.packages = [ langPkgs."lang-python" ];
         };
       };
 
       odin = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-odin" ];
+          environment.systemPackages = [ langPkgs."lang-odin" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-odin" ];
+          home.packages = [ langPkgs."lang-odin" ];
         };
       };
 
       full = {
         nixos = {
-          environment.systemPackages = [ self'.packages."lang-full" ];
+          environment.systemPackages = [ langPkgs."lang-full" ];
         };
         homeManager = {
-          home.packages = [ self'.packages."lang-full" ];
+          home.packages = [ langPkgs."lang-full" ];
         };
       };
     };

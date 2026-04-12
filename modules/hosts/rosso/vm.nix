@@ -12,7 +12,7 @@
             host = inputs.self.nixosConfigurations.rosso.config;
           in
           ''
-            ${host.system.build.vmRosso}/bin/run-${host.networking.hostName}-vm "$@"
+            ${host.system.build.vm}/bin/run-${host.networking.hostName}-vm "$@"
           '';
       };
     };

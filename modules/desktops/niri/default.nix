@@ -32,70 +32,71 @@
         };
       };
 
-    homeManager = { lib, config, ... }: 
-let
-  cfg = config.my.desktops._.niri.home;
-in
-{
-      options.my.desktops._.niri.home = {
-        enable = lib.mkOption {
-          type = lib.types.bool;
-          default = true;
-          description = "Enable Home Manager Niri desktop configuration bundle.";
-        };
-
-        shell = {
+    homeManager =
+      { lib, config, ... }:
+      let
+        cfg = config.my.desktops._.niri.home;
+      in
+      {
+        options.my.desktops._.niri.home = {
           enable = lib.mkOption {
             type = lib.types.bool;
-            default = false;
-            description = "Use an external shell bundle (e.g. Noctalia) instead of DIY bar/launcher/notifier defaults.";
+            default = true;
+            description = "Enable Home Manager Niri desktop configuration bundle.";
           };
 
-          package = lib.mkOption {
-            type = lib.types.nullOr lib.types.package;
-            default = null;
-            description = "Optional shell package to install when shell.enable is true.";
+          shell = {
+            enable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = "Use an external shell bundle (e.g. Noctalia) instead of DIY bar/launcher/notifier defaults.";
+            };
+
+            package = lib.mkOption {
+              type = lib.types.nullOr lib.types.package;
+              default = null;
+              description = "Optional shell package to install when shell.enable is true.";
+            };
+          };
+
+          components = {
+            waybar.enable = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = null;
+              description = "Enable Waybar. Null means enabled unless shell.enable is true.";
+            };
+
+            wofi.enable = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = null;
+              description = "Enable Wofi launcher config. Null means enabled unless shell.enable is true.";
+            };
+
+            swaync.enable = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = null;
+              description = "Enable swaync notifications config. Null means enabled unless shell.enable is true.";
+            };
           };
         };
 
-        components = {
-          waybar.enable = lib.mkOption {
-            type = lib.types.nullOr lib.types.bool;
-            default = null;
-            description = "Enable Waybar. Null means enabled unless shell.enable is true.";
-          };
-
-          wofi.enable = lib.mkOption {
-            type = lib.types.nullOr lib.types.bool;
-            default = null;
-            description = "Enable Wofi launcher config. Null means enabled unless shell.enable is true.";
-          };
-
-          swaync.enable = lib.mkOption {
-            type = lib.types.nullOr lib.types.bool;
-            default = null;
-            description = "Enable swaync notifications config. Null means enabled unless shell.enable is true.";
-          };
+        config = lib.mkIf (cfg.enable && cfg.shell.enable) {
+          assertions = [
+            {
+              assertion = !(cfg.components.waybar.enable or false);
+              message = "Set my.desktops._.niri.home.components.waybar.enable = false when shell.enable = true, or set it to null for automatic behavior.";
+            }
+            {
+              assertion = !(cfg.components.wofi.enable or false);
+              message = "Set my.desktops._.niri.home.components.wofi.enable = false when shell.enable = true, or set it to null for automatic behavior.";
+            }
+            {
+              assertion = !(cfg.components.swaync.enable or false);
+              message = "Set my.desktops._.niri.home.components.swaync.enable = false when shell.enable = true, or set it to null for automatic behavior.";
+            }
+          ];
         };
       };
-
-      config = lib.mkIf (cfg.enable && cfg.shell.enable) {
-        assertions = [
-          {
-            assertion = !(cfg.components.waybar.enable or false);
-            message = "Set my.desktops._.niri.home.components.waybar.enable = false when shell.enable = true, or set it to null for automatic behavior.";
-          }
-          {
-            assertion = !(cfg.components.wofi.enable or false);
-            message = "Set my.desktops._.niri.home.components.wofi.enable = false when shell.enable = true, or set it to null for automatic behavior.";
-          }
-          {
-            assertion = !(cfg.components.swaync.enable or false);
-            message = "Set my.desktops._.niri.home.components.swaync.enable = false when shell.enable = true, or set it to null for automatic behavior.";
-          }
-        ];
-      };
-    };
   };
 
   perSystem =

@@ -38,17 +38,21 @@
       };
 
       config = {
-        home.packages = [ pkgs.cpio pkgs.binutils pkgs.gdb ]
-          ++ (lib.optionals cfg.includeGithub [ pkgs.gh ])
-          ++ (lib.optionals cfg.includeBuildDocs [
-            pkgs.meson
-            pkgs.doxygen_gui
-          ])
-          ++ (lib.optionals cfg.includeAiTools.enable [ pkgs.opencode ])
-          ++ (lib.optionals (cfg.includeAiTools.enable && cfg.includeAiTools.claude.enable) [
-            pkgs.claude-code
-          ])
-          ++ cfg.extraPackages;
+        home.packages = [
+          pkgs.cpio
+          pkgs.binutils
+          pkgs.gdb
+        ]
+        ++ (lib.optionals cfg.includeGithub [ pkgs.gh ])
+        ++ (lib.optionals cfg.includeBuildDocs [
+          pkgs.meson
+          pkgs.doxygen_gui
+        ])
+        ++ (lib.optionals cfg.includeAiTools.enable [ pkgs.opencode ])
+        ++ (lib.optionals (cfg.includeAiTools.enable && cfg.includeAiTools.claude.enable) [
+          pkgs.claude-code
+        ])
+        ++ cfg.extraPackages;
       };
     };
 }

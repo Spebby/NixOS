@@ -16,13 +16,11 @@
   "$menu" = cfg.menu;
 
   xwayland.force_zero_scaling = true;
-  exec-once =
-    (if waybarEnabled then [ "waybar" ] else [ ])
-    ++ [
-      "wl-paste --type text --watch cliphist store"
-      "wl-paste --type image --watch cliphist store"
-      "nm-applet"
-    ];
+  exec-once = (if waybarEnabled then [ "waybar" ] else [ ]) ++ [
+    "wl-paste --type text --watch cliphist store"
+    "wl-paste --type image --watch cliphist store"
+    "nm-applet"
+  ];
 
   general = {
     gaps_in = 5;
@@ -92,67 +90,66 @@
     swallow_regex = ".*($terminal)";
   };
 
-  bind =
-    [
-      "$mainMod,       Q, exec, hypr-kill-or-hide-steam"
-      "$mainMod CTRL,  ESCAPE, exit,"
-      "$mainMod,       L, exec, loginctl lock-session"
-      "$mainMod,       C, exec, hyprpicker -an"
-      "$mainMod,       B, fullscreen, 1"
-    ]
-    ++ lib.optionals swayncEnabled [ "$mainMod,       N, exec, swaync-client -t" ]
-    ++ [
-      ", Print, exec, grimblast --notify --freeze copysave area | swappy -f -"
-      "$mainMod,       RETURN, exec, $terminal"
-    ]
-    ++ lib.optionals wofiEnabled [ "$mainMod,       R, exec, $menu --show drun" ]
-    ++ [
-      "$mainMod,       D, exec, $fileManager"
-      "$mainMod,       E, exec, bemoji -cn"
-      "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
-      "$mainMod,       F, togglefloating,"
-      "$mainMod,       G, pin,"
-      "$mainMod,       H, togglesplit,"
-      "$mainMod, left, movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"
-      "$mainMod SHIFT, left,  swapwindow, l"
-      "$mainMod SHIFT, right, swapwindow, r"
-      "$mainMod SHIFT, up,    swapwindow, u"
-      "$mainMod SHIFT, down,  swapwindow, d"
-      "$mainMod CTRL, left,  resizeactive, -60 0"
-      "$mainMod CTRL, right, resizeactive,  60 0"
-      "$mainMod CTRL, up,    resizeactive,  0 -60"
-      "$mainMod CTRL, down,  resizeactive,  0  60"
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
-      "$mainMod, 0, workspace, 10"
-      "$mainMod, P, togglespecialworkspace, popupterm"
-      "$mainMod, mouse_down, workspace, e+1"
-      "$mainMod, mouse_up, workspace, e-1"
-      "$mainMod CTRL, right, workspace, e+1"
-      "$mainMod CTRL, left, workspace, e-1"
-      "$mainMod SHIFT, 1, movetoworkspace, 1"
-      "$mainMod SHIFT, 2, movetoworkspace, 2"
-      "$mainMod SHIFT, 3, movetoworkspace, 3"
-      "$mainMod SHIFT, 4, movetoworkspace, 4"
-      "$mainMod SHIFT, 5, movetoworkspace, 5"
-      "$mainMod SHIFT, 6, movetoworkspace, 6"
-      "$mainMod SHIFT, 7, movetoworkspace, 7"
-      "$mainMod SHIFT, 8, movetoworkspace, 8"
-      "$mainMod SHIFT, 9, movetoworkspace, 9"
-      "$mainMod SHIFT, 0, movetoworkspace, 10"
-      "$mainMod SHIFT, P, movetoworkspace, special:popupterm"
-      "$mainMod, SPACE, layoutmsg, swapwithmaster"
-    ];
+  bind = [
+    "$mainMod,       Q, exec, hypr-kill-or-hide-steam"
+    "$mainMod CTRL,  ESCAPE, exit,"
+    "$mainMod,       L, exec, loginctl lock-session"
+    "$mainMod,       C, exec, hyprpicker -an"
+    "$mainMod,       B, fullscreen, 1"
+  ]
+  ++ lib.optionals swayncEnabled [ "$mainMod,       N, exec, swaync-client -t" ]
+  ++ [
+    ", Print, exec, grimblast --notify --freeze copysave area | swappy -f -"
+    "$mainMod,       RETURN, exec, $terminal"
+  ]
+  ++ lib.optionals wofiEnabled [ "$mainMod,       R, exec, $menu --show drun" ]
+  ++ [
+    "$mainMod,       D, exec, $fileManager"
+    "$mainMod,       E, exec, bemoji -cn"
+    "$mainMod,       V, exec, cliphist list | $menu --dmenu | cliphist decode | wl-copy"
+    "$mainMod,       F, togglefloating,"
+    "$mainMod,       G, pin,"
+    "$mainMod,       H, togglesplit,"
+    "$mainMod, left, movefocus, l"
+    "$mainMod, right, movefocus, r"
+    "$mainMod, up, movefocus, u"
+    "$mainMod, down, movefocus, d"
+    "$mainMod SHIFT, left,  swapwindow, l"
+    "$mainMod SHIFT, right, swapwindow, r"
+    "$mainMod SHIFT, up,    swapwindow, u"
+    "$mainMod SHIFT, down,  swapwindow, d"
+    "$mainMod CTRL, left,  resizeactive, -60 0"
+    "$mainMod CTRL, right, resizeactive,  60 0"
+    "$mainMod CTRL, up,    resizeactive,  0 -60"
+    "$mainMod CTRL, down,  resizeactive,  0  60"
+    "$mainMod, 1, workspace, 1"
+    "$mainMod, 2, workspace, 2"
+    "$mainMod, 3, workspace, 3"
+    "$mainMod, 4, workspace, 4"
+    "$mainMod, 5, workspace, 5"
+    "$mainMod, 6, workspace, 6"
+    "$mainMod, 7, workspace, 7"
+    "$mainMod, 8, workspace, 8"
+    "$mainMod, 9, workspace, 9"
+    "$mainMod, 0, workspace, 10"
+    "$mainMod, P, togglespecialworkspace, popupterm"
+    "$mainMod, mouse_down, workspace, e+1"
+    "$mainMod, mouse_up, workspace, e-1"
+    "$mainMod CTRL, right, workspace, e+1"
+    "$mainMod CTRL, left, workspace, e-1"
+    "$mainMod SHIFT, 1, movetoworkspace, 1"
+    "$mainMod SHIFT, 2, movetoworkspace, 2"
+    "$mainMod SHIFT, 3, movetoworkspace, 3"
+    "$mainMod SHIFT, 4, movetoworkspace, 4"
+    "$mainMod SHIFT, 5, movetoworkspace, 5"
+    "$mainMod SHIFT, 6, movetoworkspace, 6"
+    "$mainMod SHIFT, 7, movetoworkspace, 7"
+    "$mainMod SHIFT, 8, movetoworkspace, 8"
+    "$mainMod SHIFT, 9, movetoworkspace, 9"
+    "$mainMod SHIFT, 0, movetoworkspace, 10"
+    "$mainMod SHIFT, P, movetoworkspace, special:popupterm"
+    "$mainMod, SPACE, layoutmsg, swapwithmaster"
+  ];
 
   bindm = [
     "$mainMod, mouse:272, movewindow"
@@ -218,4 +215,3 @@
     "special:popupterm,on-created-empty:$terminal"
   ];
 }
-

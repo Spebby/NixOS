@@ -24,11 +24,11 @@ let
 in
 {
   my.userIcons.nixos = {
-options.my.userIcons = mkOption {
-  type = types.attrsOf (types.nullOr types.path);
-  default = { };
-  description = "Map of username to AccountsService icon path.";
-};
+    options.my.userIcons = mkOption {
+      type = types.attrsOf (types.nullOr types.path);
+      default = { };
+      description = "Map of username to AccountsService icon path.";
+    };
 
     config =
       let
@@ -47,4 +47,3 @@ options.my.userIcons = mkOption {
       };
   };
 }
-
