@@ -26,7 +26,12 @@
           };
         };
     };
+    docker.nixos = {
+      virtualisation.docker.enable = true;
+      networking.firewall.trustedInterfaces = [ "docker0" ];
+    };
     podman.nixos = {
+      networking.firewall.trustedInterfaces = [ "podman0" ];
       virtualisation.podman = {
         enable = true;
         autoPrune = {

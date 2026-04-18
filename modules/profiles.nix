@@ -10,6 +10,7 @@
         <my/ssh/client>
         <my/filesystems/ntfs>
         <my/system/openssl>
+        <my/virt/podman>
       ];
     };
     desktop = den.lib.parametric.atLeast {

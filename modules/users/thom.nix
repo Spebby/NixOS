@@ -17,6 +17,8 @@
 
       <my/apps/productivity/core>
       <my/apps/productivity/writing>
+
+      <my/virt/docker>
     ];
 
     nixos = {

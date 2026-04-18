@@ -85,7 +85,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:Spebby/nixvim";
+      #url = "github:Spebby/nixvim";
+      url = "path:/home/thom/Projects/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devshells = {
