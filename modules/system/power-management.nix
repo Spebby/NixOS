@@ -41,7 +41,7 @@ _: {
 
             # If want to be more aggressive, use force option
             #DEVICES_TO_DISABLE_ON_BAT = "bluetooth";
-            DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE = "bluetooth";
+            #DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE = "bluetooth";
 
             DEVICES_TO_DISABLE_ON_LAN_CONNECT = "wifi wwan";
             DEVICES_TO_ENABLE_ON_LAN_DISCONNECT = "wifi wwan";

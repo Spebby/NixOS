@@ -1,4 +1,9 @@
-{ __findFile, ... }:
+{
+  __findFile,
+  inputs,
+  lib,
+  ...
+}:
 {
   den.aspects.thom = {
     includes = [
@@ -34,10 +39,23 @@
       };
 
       my.userIcons.thom = ../../assets/icons/thom.png;
+
+      nixpkgs.overlays = [
+        (self: super: {
+          openldap = super.openldap.overrideAttrs (_: {
+            doCheck = false;
+          });
+        })
+      ];
     };
 
     homeManager =
-      { lib, config, ... }:
+      {
+        lib,
+        config,
+        pkgs,
+        ...
+      }:
       {
         my.apps._ = {
           git = {
@@ -75,9 +93,14 @@
             yazi.enable = true;
             zathura.enable = true;
           };
+
+          steam = {
+            includeLutris = false;
+          };
         };
 
         home = {
+          packages = with pkgs; [ easyeffects ];
           sessionVariables = {
             TERMINAL = "kitty";
             EDITOR = lib.mkForce "nvim";

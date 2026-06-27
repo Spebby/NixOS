@@ -1,4 +1,9 @@
-{ den, my, ... }:
+{
+  inputs,
+  den,
+  my,
+  ...
+}:
 {
   my.desktops._.cosmic = den.lib.parametric {
     includes = [ my.desktops._.base ];
@@ -117,9 +122,9 @@
             };
           };
 
-          systemd.user.extraConfig = ''
-            DefaultEnvironment="PATH=/run/current-system/sw/bin"
-          '';
+          systemd.user.settings.Manager = {
+            DefaultEnvironment = "PATH=/run/current-system/sw/bin";
+          };
 
           environment = {
             variables =

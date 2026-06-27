@@ -44,6 +44,7 @@
         programs.firefox = {
           enable = true;
           inherit (cfg) languagePacks;
+          configPath = "${config.xdg.configHome}/mozilla/firefox";
           profiles.user = {
             search = {
               force = true;

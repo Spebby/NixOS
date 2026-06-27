@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  my,
-  ...
-}:
+{ lib, my, ... }:
 {
   my.desktops._.hyprland = {
     includes = [

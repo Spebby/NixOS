@@ -95,7 +95,6 @@
               [
                 cartridges
                 heroic
-                lutris
                 umu-launcher
               ]
               ++ cfg.extraPackages;

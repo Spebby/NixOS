@@ -303,7 +303,6 @@ in
         };
 
         config = {
-          gtk.gtk4.theme = null;
           nixpkgs.config.allowUnfree = true;
           programs.home-manager.enable = true;
 

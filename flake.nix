@@ -75,11 +75,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-    nur = {
-      url = "git+https://tangled.org/quasigod.xyz/nur";
-      inputs.nixpkgs.url = "github:numtide/nixpkgs-unfree?ref=nixos-unstable";
-      inputs.flake-parts.follows = "flake-parts";
-    };
     blender = {
       url = "github:edolstra/nix-warez?dir=blender";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -112,7 +107,6 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
-      "https://attic.xuyh0120.win/lantian" # cachyos kernels
       "https://cache.numtide.com" # llm-agents
     ];
     extra-trusted-public-keys = [
