@@ -1,5 +1,4 @@
-{ inputs, __findFile, ... }:
-{
+{ inputs, __findFile, ... }: {
   den.hosts.x86_64-linux.tink = {
     instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
@@ -55,8 +54,8 @@
 
         environment.systemPackages = with pkgs; [
           bottles
-          libsForQt5.qt5.qtquickcontrols2
-          libsForQt5.qt5.qtgraphicaleffects
+          qt5.qtquickcontrols2
+          qt5.qtgraphicaleffects
         ];
 
         fonts = {
