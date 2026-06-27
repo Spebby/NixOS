@@ -12,6 +12,15 @@
     in
     {
       options.my.apps._.firefox = {
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.firefox;
+          description = "Firefox package to install.";
+        };
+        configPath = lib.mkOption {
+          type = lib.types.str;
+          default = "${config.xdg.configHome}/mozilla/firefox";
+        };
         languagePacks = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [
@@ -43,8 +52,7 @@
       config = {
         programs.firefox = {
           enable = true;
-          inherit (cfg) languagePacks;
-          configPath = "${config.xdg.configHome}/mozilla/firefox";
+          inherit (cfg) configPath package languagePacks;
           profiles.user = {
             search = {
               force = true;

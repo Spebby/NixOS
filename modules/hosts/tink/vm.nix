@@ -1,11 +1,9 @@
-{ inputs, den, ... }:
-{
+{ inputs, den, ... }: {
   den.aspects.tink.includes = [ (den.provides.tty-autologin "max") ];
 
-  perSystem =
-    { pkgs, ... }:
-    {
-      packages.vmTink = pkgs.writeShellApplication {
+  perSystem = { lib, pkgs, ... }: {
+    packages = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      vmTink = pkgs.writeShellApplication {
         name = "vmTink";
         text =
           let
@@ -16,4 +14,5 @@
           '';
       };
     };
+  };
 }

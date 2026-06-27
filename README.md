@@ -14,6 +14,8 @@ The Hyprland RICE is based off of Ampersands' RICE.
 ![COSMIC Setup](assets/images/cover2.png)
 ![Hyprland RICE](assets/images/cover1.png)
 
+NOTE: this readme is kinda out of date. maybe will update it at some point. probably not.
+
 ## Philosophy
 
 I've designed this config to be somewhat portable, in that it will exist on a

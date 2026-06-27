@@ -1,11 +1,9 @@
-{ inputs, den, ... }:
-{
+{ inputs, den, ... }: {
   den.aspects.rosso.includes = [ (den.provides.tty-autologin "thom") ];
 
-  perSystem =
-    { pkgs, ... }:
-    {
-      packages.vmRosso = pkgs.writeShellApplication {
+  perSystem = { lib, pkgs, ... }: {
+    packages = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      vmRosso = pkgs.writeShellApplication {
         name = "vmRosso";
         text =
           let
@@ -16,4 +14,5 @@
           '';
       };
     };
+  };
 }

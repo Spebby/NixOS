@@ -1394,14 +1394,17 @@
         "pre-commit-hooks": "pre-commit-hooks_2"
       },
       "locked": {
-        "lastModified": 1776282559,
-        "narHash": "sha256-7cnqEjMnQpDaA4eoduN6saixsop0pF+XbVG4gWD0fiM=",
-        "path": "/home/thom/Projects/nixvim",
-        "type": "path"
+        "lastModified": 1782602813,
+        "narHash": "sha256-UonVBa2f5+8mbVe+2n4iCjkt+Y+TwHOLARfY7mvGIpc=",
+        "owner": "Spebby",
+        "repo": "nixvim",
+        "rev": "3d9fdc894c7182d6be977b030b779dd746fb5b67",
+        "type": "github"
       },
       "original": {
-        "path": "/home/thom/Projects/nixvim",
-        "type": "path"
+        "owner": "Spebby",
+        "repo": "nixvim",
+        "type": "github"
       }
     },
     "nixvim_2": {
