@@ -1,5 +1,4 @@
-{ my, ... }:
-{
+{ my, ... }: {
   my.performance = {
     nixos =
       { lib, config, ... }:

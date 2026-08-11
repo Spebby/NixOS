@@ -15,10 +15,6 @@
         };
       };
     };
-    homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = with pkgs; [ prismlauncher ];
-      };
+    homeManager = { pkgs, ... }: { home.packages = with pkgs; [ prismlauncher ]; };
   };
 }

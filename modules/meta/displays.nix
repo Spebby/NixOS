@@ -18,8 +18,7 @@ in
           displays = mkOption {
             type = types.lazyAttrsOf (
               types.submodule (
-                { name, config, ... }:
-                {
+                { name, config, ... }: {
                   options = {
                     name = mkOption {
                       default = name;

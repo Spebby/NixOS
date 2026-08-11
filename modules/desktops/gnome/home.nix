@@ -1,5 +1,4 @@
-{ my, lib, ... }:
-{
+{ my, lib, ... }: {
   my.desktops._.gnome.provides.home = {
     homeManager =
       {

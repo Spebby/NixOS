@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.services.provides.plex.nixos =
     { config, pkgs, ... }:
     let

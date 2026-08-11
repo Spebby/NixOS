@@ -1,5 +1,4 @@
-{ inputs, lib, ... }:
-{
+{ inputs, lib, ... }: {
   den.default = {
     nixos = {
       imports = [ inputs.nix-index-database.nixosModules.nix-index ];

@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.apps._.cli._.utility.homeManager =
     { config, pkgs, ... }:
     let

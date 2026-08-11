@@ -13,12 +13,7 @@ in
       <den/home-manager>
       <den/define-user>
       <my/userIcons>
-      (
-        { host, ... }:
-        {
-          ${host.class}.networking.hostName = host.name;
-        }
-      )
+      ({ host, ... }: { ${host.class}.networking.hostName = host.name; })
     ];
     nixos =
       {

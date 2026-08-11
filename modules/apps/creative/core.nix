@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.apps._.creative._.core.homeManager =
     { config, pkgs, ... }:
     let

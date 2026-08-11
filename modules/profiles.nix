@@ -1,5 +1,4 @@
-{ den, __findFile, ... }:
-{
+{ den, __findFile, ... }: {
   my.profiles._ = {
     workstation = den.lib.parametric.atLeast {
       includes = [

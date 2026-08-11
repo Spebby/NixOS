@@ -1,12 +1,10 @@
 {
   my.apps._.steam = {
-    nixos =
-      { lib, pkgs, ... }:
-      {
-        programs.steam = {
-          extraPackages = [ pkgs.steamtinkerlaunch ];
-        };
+    nixos = { lib, pkgs, ... }: {
+      programs.steam = {
+        extraPackages = [ pkgs.steamtinkerlaunch ];
       };
+    };
 
     homeManager =
       {

@@ -1,5 +1,4 @@
-{ lib, my, ... }:
-{
+{ lib, my, ... }: {
   my.desktops._.hyprland = {
     includes = [
       my.desktops._.base
@@ -205,9 +204,7 @@
       };
   };
 
-  perSystem =
-    { lib, pkgs, ... }:
-    {
-      packages = lib.optionalAttrs pkgs.stdenv.isLinux { myHyprland = pkgs.hyprland; };
-    };
+  perSystem = { lib, pkgs, ... }: {
+    packages = lib.optionalAttrs pkgs.stdenv.isLinux { myHyprland = pkgs.hyprland; };
+  };
 }

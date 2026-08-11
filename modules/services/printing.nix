@@ -1,10 +1,8 @@
 {
-  my.printing.nixos =
-    { pkgs, ... }:
-    {
-      services.printing = {
-        enable = true;
-        drivers = [ pkgs.hplip ];
-      };
+  my.printing.nixos = { pkgs, ... }: {
+    services.printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];
     };
+  };
 }

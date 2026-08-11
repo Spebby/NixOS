@@ -1,5 +1,4 @@
-{ inputs, __findFile, ... }:
-{
+{ inputs, __findFile, ... }: {
   den.hosts.x86_64-linux.test.instantiate =
     args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
 

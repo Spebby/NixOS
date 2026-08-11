@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-{
+{ pkgs, lib, ... }: {
   my.desktops._.hyprland.provides.waybar.homeManager =
     { lib, config, ... }:
     let

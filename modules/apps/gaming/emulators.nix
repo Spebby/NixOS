@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.apps._.emulators.homeManager =
     { config, pkgs, ... }:
     let

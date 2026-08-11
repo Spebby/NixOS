@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.desktops._.hyprland.provides.shell.homeManager =
     { lib, config, ... }:
     let

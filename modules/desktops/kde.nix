@@ -1,5 +1,4 @@
-{ my, ... }:
-{
+{ my, ... }: {
   my.desktops._.kde = {
     includes = [ my.desktops._.base ];
 

@@ -75,8 +75,7 @@ let
     "vagrant"
   ];
 in
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   my.apps._.shell.homeManager =
     {
       config,
@@ -148,7 +147,6 @@ in
             ls = "eza --group-directories-first --icons";
             cat = "bat";
             grep = "rg";
-            grepchild = "grep -rnwe";
             firefox = "exec firefox";
             xev = "wev";
           }

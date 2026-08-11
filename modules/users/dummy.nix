@@ -1,6 +1,5 @@
 # min user intended for testing
-{ den, __findFile, ... }:
-{
+{ den, __findFile, ... }: {
   den.aspects.dummy = {
     includes = [
       <den/primary-user>

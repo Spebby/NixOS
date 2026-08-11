@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.apps._.desktop-utils.provides.home.homeManager =
     { config, pkgs, ... }:
     let

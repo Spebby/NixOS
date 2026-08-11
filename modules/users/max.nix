@@ -1,5 +1,4 @@
-{ den, __findFile, ... }:
-{
+{ den, __findFile, ... }: {
   den.aspects.max = {
     includes = [
       <den/primary-user>
@@ -19,66 +18,62 @@
       <my/apps/editors/vscode>
     ];
 
-    nixos =
-      { pkgs, ... }:
-      {
-        programs.zsh.enable = true;
+    nixos = { pkgs, ... }: {
+      programs.zsh.enable = true;
 
-        users.users.max = {
-          isNormalUser = true;
-          home = "/home/max";
-          shell = pkgs.zsh;
+      users.users.max = {
+        isNormalUser = true;
+        home = "/home/max";
+        shell = pkgs.zsh;
 
-          extraGroups = [
-            "home-manager"
-            "gamemode"
-            "docker"
-          ];
-        };
-        my.userIcons.max = ../../assets/icons/max.png;
+        extraGroups = [
+          "home-manager"
+          "gamemode"
+          "docker"
+        ];
       };
+      my.userIcons.max = ../../assets/icons/max.png;
+    };
 
-    homeManager =
-      { pkgs, ... }:
-      {
-        my.apps._ = {
-          git = {
-            userName = "Max Brockmann";
-            userEmail = "max.marika.brock@gmail.com";
-            lazygit.enable = true;
-          };
+    homeManager = { pkgs, ... }: {
+      my.apps._ = {
+        git = {
+          userName = "Max Brockmann";
+          userEmail = "max.marika.brock@gmail.com";
+          lazygit.enable = true;
+        };
 
-          productivity.core = {
-            includeMail = false;
-            extraPackages = with pkgs; [ google-chrome ];
-          };
+        productivity.core = {
+          includeMail = false;
+          extraPackages = with pkgs; [ google-chrome ];
+        };
 
-          math = {
-            geogebra.enable = true;
-          };
+        math = {
+          geogebra.enable = true;
+        };
 
-          creative.core = {
-            includeAudio = false;
-            includeVideo = false;
-          };
+        creative.core = {
+          includeAudio = false;
+          includeVideo = false;
+        };
 
-          dev._.tooling = {
-            includeBuildDocs = false;
-            includeAiTools.enable = false;
-          };
+        dev._.tooling = {
+          includeBuildDocs = false;
+          includeAiTools.enable = false;
+        };
 
-          editors._.zed = {
-            settings = {
-              ai = false;
-              vim_mode = false;
-            };
-          };
-
-          media.core = {
-            includeMusicClients = true;
+        editors._.zed = {
+          settings = {
+            ai = false;
+            vim_mode = false;
           };
         };
+
+        media.core = {
+          includeMusicClients = true;
+        };
       };
+    };
   };
 
 }
