@@ -2,6 +2,10 @@
 
 [![wakatime](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb.svg)](https://wakatime.com/badge/user/6c1b4d80-35ad-487a-a081-efc861c8d411/project/968184c1-48bf-4747-8f1e-59ce13bcfdfb)
 
+## ⚠️ Out of date nixpkgs-lib ⚠️
+
+Due to a breaking change made in nixpkgs-lib, the config is unable to build on versions of nixpkgs-lib post May 16th. At some point, this will be addressed.
+
 This is my NixOS config. The backbone (nix/home-manager) was based on
 Ampersand's "Reborn" config. Since then, I have moved to a Dendritic model, using Quasigod's config as a reference. Plenty of credit due to
 my good fiends, [wyatt](https://www.wyatt.wtf) and [molecule31](https://molecule31.co.ua/) for helping me through the learning

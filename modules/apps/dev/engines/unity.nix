@@ -11,6 +11,12 @@
     in
     {
       options.my.apps._.unity = {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Enable the Unity editor";
+        };
+
         usePlastic = lib.mkOption {
           type = lib.types.bool;
           default = true;
@@ -18,7 +24,7 @@
         };
       };
 
-      config = {
+      config = lib.mkIf cfg.enable {
         home.packages =
           with pkgs;
           [

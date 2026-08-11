@@ -70,7 +70,7 @@
 
           creative.core = {
             includeAudio = true;
-            includeVideo = true;
+            includeVideo = false;
           };
 
           dev._.tooling = {
@@ -83,6 +83,10 @@
               ai = false;
               vim_mode = true;
             };
+          };
+
+          godot = {
+            enable = false;
           };
 
           media.core = {

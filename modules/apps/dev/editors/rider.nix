@@ -1,14 +1,14 @@
 {
   my.apps._.editors._.rider.homeManager =
-    { lib, pkgs, ... }:
+    { lib, pkgs-stable, ... }:
     let
-      extraPath = with pkgs; [
+      extraPath = with pkgs-stable; [
         dotnetCorePackages.sdk_8_0
         dotnetPackages.Nuget
         mono
       ];
 
-      extraLib = with pkgs; [
+      extraLib = with pkgs-stable; [
         libx11
         libxcursor
         libxrandr
@@ -16,7 +16,7 @@
         icu
       ];
 
-      riderWrapped = pkgs.jetbrains.rider.overrideAttrs (attrs: {
+      riderWrapped = pkgs-stable.jetbrains.rider.overrideAttrs (attrs: {
         postInstall = (attrs.postInstall or "") + ''
           mv $out/bin/rider $out/bin/.rider-unwrapped
           makeWrapper $out/bin/.rider-unwrapped $out/bin/rider \

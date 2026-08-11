@@ -48,7 +48,10 @@
           pkgs.meson
           pkgs.doxygen_gui
         ])
-        ++ (lib.optionals cfg.includeAiTools.enable [ pkgs.opencode ])
+        ++ (lib.optionals cfg.includeAiTools.enable [
+          pkgs.opencode
+          pkgs.github-copilot-cli
+        ])
         ++ (lib.optionals (cfg.includeAiTools.enable && cfg.includeAiTools.claude.enable) [
           pkgs.claude-code
         ])

@@ -24,6 +24,10 @@ in
       }:
       let
         cfg = config.den.default;
+        pkgs-stable = import inputs.nixpkgs-stable {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
       in
       {
         imports = with inputs; [
@@ -164,6 +168,8 @@ in
         };
 
         config = {
+          _module.args = { inherit pkgs-stable; };
+
           hardware.enableRedistributableFirmware = true;
 
           programs.zsh.enable = true;
@@ -221,9 +227,18 @@ in
       };
 
     homeManager =
-      { config, lib, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       let
         cfg = config.den.default.home;
+        pkgs-stable = import inputs.nixpkgs-stable {
+          system = pkgs.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
       in
       {
         imports = [
@@ -298,6 +313,8 @@ in
         };
 
         config = {
+          _module.args = { inherit pkgs-stable; };
+
           nixpkgs.config.allowUnfree = true;
           programs.home-manager.enable = true;
 
