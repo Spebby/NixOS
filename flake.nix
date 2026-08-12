@@ -27,7 +27,7 @@
     # Dendritic framework
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    den.url = "github:vic/den/v0.10.0";
+    den.url = "github:vic/den/v0.18.0";
     flake-aspects.url = "github:vic/flake-aspects/v0.5.0";
 
     # Hardware & Boot
@@ -37,6 +37,16 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.follows = "pre-commit-hooks";
+    };
+
+    # Desktop: Cosmic
+    cosmic-manager = {
+      url = "github:HeitorAugustoLN/cosmic-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-parts.follows = "flake-parts";
+      };
     };
 
     # Desktop: Hyprland

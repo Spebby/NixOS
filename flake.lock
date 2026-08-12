@@ -139,6 +139,32 @@
         "type": "github"
       }
     },
+    "cosmic-manager": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780178896,
+        "narHash": "sha256-98aHwiGZcvb0VJUGE+lCS/zuGdFAlNvm8keIimuLOK0=",
+        "owner": "HeitorAugustoLN",
+        "repo": "cosmic-manager",
+        "rev": "1630bbf792a95baffbd3169885580cd53a7027d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HeitorAugustoLN",
+        "repo": "cosmic-manager",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1784564969,
@@ -156,16 +182,16 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1774839389,
-        "narHash": "sha256-gjREeOXMLLMfgqhL0I+cX0RIV1Qn554ajwxf3+Flp8I=",
+        "lastModified": 1781621963,
+        "narHash": "sha256-8Mntz200pNVIF2l8twpdc4wvEFqzrlkICz2tvkfwz0s=",
         "owner": "vic",
         "repo": "den",
-        "rev": "d03b126aa36035752b6b172f26027d015b5cf70a",
+        "rev": "5df0987658d6e44268abba953406480e9f066928",
         "type": "github"
       },
       "original": {
         "owner": "vic",
-        "ref": "v0.10.0",
+        "ref": "v0.18.0",
         "repo": "den",
         "type": "github"
       }
@@ -1435,6 +1461,7 @@
       "inputs": {
         "amuletMapEditor": "amuletMapEditor",
         "blender": "blender",
+        "cosmic-manager": "cosmic-manager",
         "den": "den",
         "devshells": "devshells",
         "flake-aspects": "flake-aspects",

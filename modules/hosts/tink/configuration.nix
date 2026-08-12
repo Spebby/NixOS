@@ -1,7 +1,13 @@
 { inputs, __findFile, ... }: {
   den.hosts.x86_64-linux.tink = {
+    users.max.classes = [ "homeManager" ];
+
     instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+
+    displays = {
+
+    };
   };
 
   den.aspects.tink = {
