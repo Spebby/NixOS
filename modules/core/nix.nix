@@ -14,12 +14,16 @@
 
       nix = {
         optimise.automatic = true;
-        registry.nixpkgs.flake = inputs.nixpkgs;
+        registry = {
+          nixpkgs.flake = inputs.nixpkgs;
+          nixpkgs-stable.flake = inputs.nixpkgs-stable;
+        };
 
         gc = {
           automatic = true;
           dates = "weekly";
           options = "--delete-older-than 7d";
+          persistent = true;
         };
 
         settings = {
@@ -59,6 +63,20 @@
 
     homeManager = {
       #quix config if you want it
+
+      nix = {
+        registry = {
+          nixpkgs.flake = inputs.nixpkgs;
+          nixpkgs-stable.flake = inputs.nixpkgs-stable;
+        };
+
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 7d";
+          persistent = true;
+        };
+      };
     };
   };
 }
