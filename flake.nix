@@ -1,7 +1,10 @@
 {
   description = "Spebby's NixOS config";
 
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+
   inputs = {
+    # Core
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     home-manager = {
@@ -9,37 +12,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nix Tooling
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-index-database.follows = "nix-index-database";
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Dendritic framework
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     den.url = "github:vic/den/latest";
-    flake-aspects.url = "github:vic/flake-aspects/v0.5.0";
+    flake-aspects.url = "github:vic/flake-aspects/latest";
 
-    # Hardware & Boot
+    # System infrastructure
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
+    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.pre-commit.follows = "pre-commit-hooks";
     };
 
-    # Desktop: Cosmic
+    # Desktops
     cosmic-manager = {
       url = "github:HeitorAugustoLN/cosmic-manager";
       inputs = {
@@ -49,7 +38,6 @@
       };
     };
 
-    # Desktop: Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
@@ -57,7 +45,6 @@
     };
     hyprland-unity-fix.url = "github:nnra6864/HyprlandUnityFix";
 
-    # Desktop: Niri
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs = {
@@ -72,42 +59,62 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     silentSDDM = {
       url = "github:uiriansan/SilentSDDM/cfb0e3eb380cfc61e73ad4bce90e4dcbb9400291";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Packages
-    nixpkgs-patcher.url = "github:gepbird/nixpkgs-patcher";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-    blender = {
-      url = "github:edolstra/nix-warez?dir=blender";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:Spebby/nixvim";
-      #url = "path:/home/thom/Projects/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    devshells = {
-      url = "github:Spebby/devshells";
+    # Nix tooling
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #  devshell
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-index-database.follows = "nix-index-database";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
-    # Nixpkgs PRs
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    devshells = {
+      url = "github:Spebby/devshells";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Applications
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+
+    nixvim = {
+      url = "github:Spebby/nixvim";
+      # url = "path:/home/thom/Projects/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+
+    blender = {
+      url = "github:edolstra/nix-warez?dir=blender";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Experimental packages
     amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
     hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
   };
@@ -126,8 +133,4 @@
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
-
-  outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } { imports = [ (inputs.import-tree ./modules) ]; };
 }
