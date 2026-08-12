@@ -27,7 +27,7 @@
     # Dendritic framework
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    den.url = "github:vic/den/v0.18.0";
+    den.url = "github:vic/den/latest";
     flake-aspects.url = "github:vic/flake-aspects/v0.5.0";
 
     # Hardware & Boot
