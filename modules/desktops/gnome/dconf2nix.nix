@@ -31,6 +31,7 @@
       apps.dconf2nix-export = {
         type = "app";
         program = "${dconf2nixExport}/bin/dconf2nix-export";
+        meta.description = "Converts valid dconf files to nix.";
       };
 
       devShells.dconf2nix-export = pkgs.mkShell {

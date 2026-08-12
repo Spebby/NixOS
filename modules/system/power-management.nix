@@ -1,5 +1,5 @@
 _: {
-  my.power-management.nixos = { pkgs, ... }: {
+  my.system._.power-management.nixos = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.powertop ];
     services = {
       auto-cpufreq.enable = false;
@@ -46,7 +46,7 @@ _: {
 
           USB_AUTOSUSPEND = 1;
           USB_EXCLUDE_AUDIO = 1;
-          USB_EXCLUDE_BTUSB = 0;
+          USB_EXCLUDE_BTUSB = 1;
           USB_EXCLUDE_PHONE = 0;
 
           #START_CHARGE_THRESH_BAT0 = 40;

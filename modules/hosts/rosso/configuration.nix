@@ -9,10 +9,12 @@
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
+      <my/filesystems/ntfs>
 
       <my/profiles/laptop>
       <my/bluetooth>
       <my/gaming/max>
+      <my/graphics>
 
       <my/desktops/cosmic>
     ];

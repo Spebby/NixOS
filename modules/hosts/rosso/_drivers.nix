@@ -12,7 +12,6 @@ let
 in
 {
   options.nvidia = {
-    useNvidiaFramebuffer = lib.mkEnableOption "Enable NVIDIA's experimental Framebuffer device";
     mode = lib.mkOption {
       type = lib.types.enum [
         "offload"
@@ -59,13 +58,7 @@ in
       BACKLIGHT_DEVICE = "amdgpu_bl1";
     };
 
-    environment.systemPackages = with pkgs; [
-      nvidia-vaapi-driver
-      egl-wayland
-      corectrl
-      nvtopPackages.full
-      vulkan-tools
-    ];
+    environment.systemPackages = with pkgs; [ nvidia-vaapi-driver ];
 
     # For the moment, I only want to use Offload. However, at some point it may be worth making specialisations for Clamshell & other modes.
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -81,6 +74,7 @@ in
       nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.stable;
 
+        dynamicBoost.enable = cfg.powerManagement && cfg.usePowerd;
         # Use Open Source (not nouveau) kernel modules? Turing+
         open = false;
 
@@ -88,15 +82,13 @@ in
         # nvidia-drm.modeset=1 is required for some wayland compositors
         modesetting.enable = true;
 
-        # NVIDIA X Server Settings
-        nvidiaSettings = false;
+        moduleParams = { };
 
         # Fine Grained Power Management for use w/ offload. Turing+
         powerManagement = {
           enable = cfg.powerManagement;
           finegrained = cfg.powerManagement && cfg.mode == "offload" && cfg.useFinegrain;
         };
-        dynamicBoost.enable = cfg.powerManagement && cfg.usePowerd;
 
         prime = {
           amdgpuBusId = cfg.amdBus;
@@ -115,9 +107,6 @@ in
           sync.enable = cfg.mode == "sync";
           reverseSync.enable = cfg.mode == "clamshell";
         };
-
-        # Set True for potential screen-tearing fix
-        forceFullCompositionPipeline = false;
       };
     };
 
@@ -128,35 +117,14 @@ in
         # Force s2idle (since S3 isn't supported)
         "mem_sleep_default=s2idle"
 
-        # Disable PCIe power management quirks
-        #"pcie_aspm=off"
-        #"pcie_port_pm=off"
-        # GPU memory preservation
-        "nvidia.NVreg_PreserveVideoMemoryAllocations=0"
-        # Workaround for resume failures
-        "nvidia.NVreg_EnablePCIeGen3=1"
+        # Experimental framebuffer device.
+        "nvidia_drm.fbdev=1"
+      ];
 
-        # === Debugging (temporary) ===
-        # Enable these if issues persist, then check `journalctl -b`:
-        # "pm_debug_messages"
-        "nvidia.NVreg_EnableMSI=1"
-      ]
-      ++ lib.optional cfg.useNvidiaFramebuffer "nvidia_drm.fbdev=1";
-
-      # This is mainly an X11 support thing. Investigate if we need it.
+      # mainly an X11 support thing.
       blacklistedKernelModules = [ "nouveau" ];
 
-      initrd.kernelModules = [
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-      ];
-      kernelModules = [
-        "amdgpu"
-        "kvm-amd"
-        "joydev"
-      ];
+      # initrd was probably here b/c plymouth
     };
   };
 }

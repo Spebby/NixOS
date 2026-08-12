@@ -1,7 +1,6 @@
 {
   nvidia = {
-    useNvidiaFramebuffer = true;
-    mode = "sync";
+    mode = "offload";
     powerManagement = false;
     useFinegrain = false;
     usePowerd = false;
@@ -18,7 +17,6 @@
         "usbhid"
         "usb_storage"
         "sd_mod"
-        "softdog"
       ];
     };
     extraModulePackages = [ ];

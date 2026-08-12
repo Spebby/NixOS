@@ -7,7 +7,6 @@
         <my/flatpak>
         <my/printing>
         <my/ssh/client>
-        <my/filesystems/ntfs>
         <my/system/openssl>
         <my/virt/podman>
       ];
@@ -23,7 +22,7 @@
     laptop = den.lib.parametric.atLeast {
       includes = [
         <my/profiles/workstation>
-        <my/power-management>
+        <my/system/power-management>
         <my/system/acpid>
       ];
     };
