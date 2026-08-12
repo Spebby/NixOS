@@ -1,4 +1,4 @@
-{ den, __findFile, ... }: {
+{ __findFile, ... }: {
   den.aspects.max = {
     includes = [
       <den/primary-user>
@@ -24,6 +24,7 @@
       users.users.max = {
         isNormalUser = true;
         home = "/home/max";
+        icon = ../../assets/icons/max.png;
         shell = pkgs.zsh;
 
         extraGroups = [
@@ -32,7 +33,6 @@
           "docker"
         ];
       };
-      my.userIcons.max = ../../assets/icons/max.png;
     };
 
     homeManager = { pkgs, ... }: {

@@ -1,10 +1,4 @@
-{
-  __findFile,
-  inputs,
-  lib,
-  ...
-}:
-{
+{ __findFile, ... }: {
   den.aspects.thom = {
     includes = [
       <den/primary-user>
@@ -30,6 +24,7 @@
       users.users.thom = {
         isNormalUser = true;
         home = "/home/thom";
+        icon = ../../assets/icons/thom.png;
 
         extraGroups = [
           "home-manager"
@@ -37,8 +32,6 @@
           "docker"
         ];
       };
-
-      my.userIcons.thom = ../../assets/icons/thom.png;
 
       nixpkgs.overlays = [
         (self: super: {
