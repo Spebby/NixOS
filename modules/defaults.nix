@@ -1,4 +1,9 @@
-{ inputs, __findFile, ... }:
+{
+  inputs,
+  lib,
+  __findFile,
+  ...
+}:
 let
   stateVersion = "24.11";
 in
@@ -8,9 +13,12 @@ in
     "aarch64-linux"
     "aarch64-darwin"
   ];
+
+  # Enable HM for users by default
+  den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+
   den.default = {
     includes = [
-      <den/home-manager>
       <den/define-user>
       <my/userIcons>
       ({ host, ... }: { ${host.class}.networking.hostName = host.name; })
@@ -30,11 +38,6 @@ in
         };
       in
       {
-        imports = with inputs; [
-          home-manager.nixosModules.home-manager
-          nixos-facter-modules.nixosModules.facter
-        ];
-
         options.den.default = {
           shell = {
             binSh = lib.mkOption {
@@ -216,7 +219,6 @@ in
           };
 
           system.stateVersion = stateVersion;
-
           boot.initrd.systemd.enable = cfg.boot.initrdSystemd;
 
           home-manager = {

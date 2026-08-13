@@ -5,7 +5,7 @@
   ...
 }:
 {
-  my.desktops._.cosmic = den.lib.parametric {
+  my.desktops._.cosmic = {
     includes = [
       my.desktops._.base
       den.lib.perHost

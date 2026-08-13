@@ -53,7 +53,7 @@ let
         };
         wallpaper = mkOption {
           type = types.path;
-          apply = v: builtins.path { path = (inputs.self + v); };
+          apply = v: builtins.path { path = inputs.self + v; };
         };
       };
     }
@@ -63,7 +63,7 @@ in
   den.schema.host =
     { config, ... }:
     let
-      displays = config.displays;
+      inherit (config) displays;
       displayList = builtins.attrValues displays;
       primaries = lib.filterAttrs (_: d: d.primary) displays;
       primaryList = builtins.attrValues primaries;
@@ -83,7 +83,7 @@ in
           else if builtins.length primaryList == 0 then
             null
           else if builtins.length primaryList > 1 then
-            builtins.throw "Multiple displays marked as primary: ${primaryNames}"
+            throw "Multiple displays marked as primary: ${primaryNames}"
           else
             builtins.head primaryList;
       };
