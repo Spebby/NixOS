@@ -204,6 +204,7 @@ in
               systemPackages = with pkgs; [
                 git
                 nix-your-shell
+                jq
               ];
 
               # TODO: This is seemingly a 6 year old bug... but zsh, graphical shell, something or the other

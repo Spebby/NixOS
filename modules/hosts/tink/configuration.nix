@@ -78,9 +78,6 @@
           auto-cpufreq.enable = false;
           tlp.enable = false;
           displayManager.defaultSession = "gnome";
-          plex = {
-            user = "tink";
-          };
 
           samba = {
             enable = true;
@@ -133,29 +130,34 @@
           };
         };
 
-        my.login.sddm = {
-          enable = true;
-          preset = "rei";
-          extraBackgrounds = [
-            grass-bg
-            grass-placeholder
-          ];
-          themeOverrides = {
-            General = {
-              scale = "1.0";
-              enable-animations = true;
-              background-fill-mode = "fill";
-              animated-background-placeholder = "${grass-placeholder.name}";
+        my = {
+          services.plex = {
+            user = "plex";
+          };
+          login.sddm = {
+            enable = true;
+            preset = "rei";
+            extraBackgrounds = [
+              grass-bg
+              grass-placeholder
+            ];
+            themeOverrides = {
+              General = {
+                scale = "1.0";
+                enable-animations = true;
+                background-fill-mode = "fill";
+                animated-background-placeholder = "${grass-placeholder.name}";
+              };
+              LoginScreen = {
+                background = "${grass-bg.name}";
+                animated-background-placeholder = "${grass-placeholder.name}";
+              };
+              LockScreen = {
+                background = "${grass-bg.name}";
+                animated-background-placeholder = "${grass-placeholder.name}";
+              };
+              "LoginScreen.MenuArea.Session".position = "bottom-left";
             };
-            LoginScreen = {
-              background = "${grass-bg.name}";
-              animated-background-placeholder = "${grass-placeholder.name}";
-            };
-            LockScreen = {
-              background = "${grass-bg.name}";
-              animated-background-placeholder = "${grass-placeholder.name}";
-            };
-            "LoginScreen.MenuArea.Session".position = "bottom-left";
           };
         };
       };
