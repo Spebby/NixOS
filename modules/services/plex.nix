@@ -37,15 +37,19 @@
         };
       };
 
-      config.services.plex = {
-        enable = true;
-        inherit (cfg)
-          package
-          dataDir
-          user
-          group
-          openFirewall
-          ;
+      config = {
+        users.users.plex.extraGroups = [ "users" ];
+
+        services.plex = {
+          enable = true;
+          inherit (cfg)
+            package
+            dataDir
+            user
+            group
+            openFirewall
+            ;
+        };
       };
     };
 }
