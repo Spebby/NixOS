@@ -1,15 +1,13 @@
-{ inputs, lib, ... }: {
+{ inputs, ... }: {
   den.default = {
     nixos = {
       imports = [ inputs.nix-index-database.nixosModules.nix-index ];
+      nixpkgs.config.allowUnfree = true;
       programs = {
+        command-not-found.enable = false;
         direnv.enable = true;
         nix-index-database.comma.enable = true;
-      };
-
-      nixpkgs.config = {
-        allowUnfree = true;
-        cudaSupport = lib.mkDefault false;
+        nix-ld.enable = true;
       };
 
       nix = {
@@ -31,11 +29,6 @@
           #keep-derivations = true;
           #use-xdg-base-directories = true;
           auto-optimise-store = true;
-
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
 
           substituters = [
             "https://cache.nixos.org/"
