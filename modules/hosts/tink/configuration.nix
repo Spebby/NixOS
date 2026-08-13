@@ -1,4 +1,5 @@
-{ inputs, __findFile, ... }: {
+{ inputs, __findFile, ... }:
+{
   den.hosts.x86_64-linux.tink = {
     users.max = { };
 
@@ -77,6 +78,9 @@
           auto-cpufreq.enable = false;
           tlp.enable = false;
           displayManager.defaultSession = "gnome";
+          plex = {
+            user = "tink";
+          };
 
           samba = {
             enable = true;
