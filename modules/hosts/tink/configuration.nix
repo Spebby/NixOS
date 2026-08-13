@@ -1,4 +1,5 @@
-{ inputs, __findFile, ... }: {
+{ inputs, __findFile, ... }:
+{
   den.hosts.x86_64-linux.tink = {
     instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
@@ -71,6 +72,9 @@
           auto-cpufreq.enable = false;
           tlp.enable = false;
           displayManager.defaultSession = "gnome";
+          plex = {
+            user = "tink";
+          };
 
           samba = {
             enable = true;
