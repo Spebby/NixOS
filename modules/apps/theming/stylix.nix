@@ -203,104 +203,106 @@
         };
       };
 
-      config = {
-        home.packages =
-          with pkgs;
-          [
-            dejavu_fonts
-            jetbrains-mono
-            noto-fonts
-            texlivePackages.hebrew-fonts
-            noto-fonts-color-emoji
-            nerd-fonts.symbols-only
-            font-awesome
-            powerline-fonts
-            powerline-symbols
-          ]
-          ++ cfg.extraPackages;
-      }
-      // lib.optionalAttrs hasStylix {
-        stylix = {
-          enable = true;
-          autoEnable = true;
-          inherit (cfg) polarity base16Scheme image;
-          imageScalingMode = "fill";
+      config = lib.mkMerge [
+        {
+          home.packages =
+            with pkgs;
+            [
+              dejavu_fonts
+              jetbrains-mono
+              noto-fonts
+              texlivePackages.hebrew-fonts
+              noto-fonts-color-emoji
+              nerd-fonts.symbols-only
+              font-awesome
+              powerline-fonts
+              powerline-symbols
+            ]
+            ++ cfg.extraPackages;
+        }
+        (lib.optionalAttrs hasStylix {
+          stylix = {
+            enable = true;
+            autoEnable = true;
+            inherit (cfg) polarity base16Scheme image;
+            imageScalingMode = "fill";
 
-          opacity = {
-            inherit (cfg.opacity)
-              applications
-              desktop
-              popups
-              terminal
-              ;
-          };
-
-          fonts = {
-            emoji = { inherit (cfg.fonts.emoji) name package; };
-            monospace = { inherit (cfg.fonts.monospace) name package; };
-            sansSerif = { inherit (cfg.fonts.sansSerif) name package; };
-            serif = { inherit (cfg.fonts.serif) name package; };
-            sizes = {
-              inherit (cfg.fonts.sizes)
+            opacity = {
+              inherit (cfg.opacity)
                 applications
                 desktop
                 popups
                 terminal
                 ;
             };
-          };
 
-          icons = {
-            inherit (cfg.icons)
-              enable
-              package
-              dark
-              light
-              ;
-          };
+            fonts = {
+              emoji = { inherit (cfg.fonts.emoji) name package; };
+              monospace = { inherit (cfg.fonts.monospace) name package; };
+              sansSerif = { inherit (cfg.fonts.sansSerif) name package; };
+              serif = { inherit (cfg.fonts.serif) name package; };
+              sizes = {
+                inherit (cfg.fonts.sizes)
+                  applications
+                  desktop
+                  popups
+                  terminal
+                  ;
+              };
+            };
 
-          targets = {
-            bat.enable = true;
-            ghostty.enable = true;
-            firefox.enable = false;
-            neovim.enable = cfg.targets.neovim.enable;
-            waybar.enable = cfg.targets.waybar.enable;
-            wofi.enable = cfg.targets.wofi.enable;
-            hyprland.enable = cfg.targets.hyprland.enable;
-            hyprlock.enable = cfg.targets.hyprlock.enable;
-            swaync.enable = cfg.targets.swaync.enable;
-            gtk = {
-              enable = true;
-              flatpakSupport.enable = true;
-              inherit (cfg.targets.gtk) extraCss;
+            icons = {
+              inherit (cfg.icons)
+                enable
+                package
+                dark
+                light
+                ;
+            };
+
+            targets = {
+              bat.enable = true;
+              ghostty.enable = true;
+              firefox.enable = false;
+              neovim.enable = cfg.targets.neovim.enable;
+              waybar.enable = cfg.targets.waybar.enable;
+              wofi.enable = cfg.targets.wofi.enable;
+              hyprland.enable = cfg.targets.hyprland.enable;
+              hyprlock.enable = cfg.targets.hyprlock.enable;
+              swaync.enable = cfg.targets.swaync.enable;
+              gtk = {
+                enable = true;
+                flatpakSupport.enable = true;
+                inherit (cfg.targets.gtk) extraCss;
+              };
+            };
+
+            cursor = {
+              name = "DMZ-Black";
+              size = 24;
+              package = pkgs.vanilla-dmz;
             };
           };
 
-          cursor = {
-            name = "DMZ-Black";
-            size = 24;
-            package = pkgs.vanilla-dmz;
-          };
-        };
-
-        home.file.".config/stylix/colours.css".text = ''
-          @define-color base00 ${config.lib.stylix.colors.withHashtag.base00}; /* bg0 */
-          @define-color base01 ${config.lib.stylix.colors.withHashtag.base01}; /* bg1 */
-          @define-color base02 ${config.lib.stylix.colors.withHashtag.base02}; /* b2 */
-          @define-color base03 ${config.lib.stylix.colors.withHashtag.base03}; /* b3 */
-          @define-color base04 ${config.lib.stylix.colors.withHashtag.base04}; /* fg3 */
-          @define-color base05 ${config.lib.stylix.colors.withHashtag.base05}; /* fg2 */
-          @define-color base06 ${config.lib.stylix.colors.withHashtag.base06}; /* fg1 */
-          @define-color base07 ${config.lib.stylix.colors.withHashtag.base07}; /* fg0 */
-          @define-color base08 ${config.lib.stylix.colors.withHashtag.base08}; /* red */
-          @define-color base09 ${config.lib.stylix.colors.withHashtag.base09}; /* orange */
-          @define-color base0A ${config.lib.stylix.colors.withHashtag.base0A}; /* yellow */
-          @define-color base0B ${config.lib.stylix.colors.withHashtag.base0B}; /* green */
-          @define-color base0C ${config.lib.stylix.colors.withHashtag.base0C}; /* aqua */
-          @define-color base0D ${config.lib.stylix.colors.withHashtag.base0D}; /* blue */
-          @define-color base0E ${config.lib.stylix.colors.withHashtag.base0E}; /* purple */
-          @define-color base0F ${config.lib.stylix.colors.withHashtag.base0F}; /* orange */
-        '';
-      };
+          home.file.".config/stylix/colours.css".text = ''
+            @define-color base00 ${config.lib.stylix.colors.withHashtag.base00}; /* bg0 */
+            @define-color base01 ${config.lib.stylix.colors.withHashtag.base01}; /* bg1 */
+            @define-color base02 ${config.lib.stylix.colors.withHashtag.base02}; /* b2 */
+            @define-color base03 ${config.lib.stylix.colors.withHashtag.base03}; /* b3 */
+            @define-color base04 ${config.lib.stylix.colors.withHashtag.base04}; /* fg3 */
+            @define-color base05 ${config.lib.stylix.colors.withHashtag.base05}; /* fg2 */
+            @define-color base06 ${config.lib.stylix.colors.withHashtag.base06}; /* fg1 */
+            @define-color base07 ${config.lib.stylix.colors.withHashtag.base07}; /* fg0 */
+            @define-color base08 ${config.lib.stylix.colors.withHashtag.base08}; /* red */
+            @define-color base09 ${config.lib.stylix.colors.withHashtag.base09}; /* orange */
+            @define-color base0A ${config.lib.stylix.colors.withHashtag.base0A}; /* yellow */
+            @define-color base0B ${config.lib.stylix.colors.withHashtag.base0B}; /* green */
+            @define-color base0C ${config.lib.stylix.colors.withHashtag.base0C}; /* aqua */
+            @define-color base0D ${config.lib.stylix.colors.withHashtag.base0D}; /* blue */
+            @define-color base0E ${config.lib.stylix.colors.withHashtag.base0E}; /* purple */
+            @define-color base0F ${config.lib.stylix.colors.withHashtag.base0F}; /* orange */
+          '';
+        })
+      ];
     };
 }
