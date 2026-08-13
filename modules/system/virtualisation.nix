@@ -1,16 +1,18 @@
 # https://tangled.org/quasigod.xyz/nixconfig/blob/main/modules/virtualisation.nix
-
-{ den, my, ... }: {
-  my.virt.provides = {
-    qemu = den.lib.parametric {
-      includes = [ (my.groups "kvm") ];
+{
+  my.system._.virt.provides = {
+    qemu = { my, ... }: {
+      includes = [ my.batteries._.privileged-user ];
       nixos = { pkgs, ... }: {
         boot.kernelParams = [ "amd_iommu=on" ];
+        users.privilegedGroups = [ "kvm" ];
+        networking.firewall.trustedInterfaces = [ "virbr0" ];
         programs.virt-manager.enable = true;
         environment.systemPackages = with pkgs; [
           gnome-boxes
           virglrenderer
         ];
+
         services.qemuGuest.enable = true;
         virtualisation = {
           libvirtd = {
@@ -23,10 +25,19 @@
         };
       };
     };
-    docker.nixos = {
-      virtualisation.docker.enable = true;
-      networking.firewall.trustedInterfaces = [ "docker0" ];
+
+    waydroid.nixos.virtualisation.waydroid.enable = true;
+
+    docker = { my, ... }: {
+      includes = [ my.batteries._.privileged-user ];
+
+      nixos = {
+        virtualisation.docker.enable = true;
+        users.privilegedGroups = [ "docker" ];
+        networking.firewall.trustedInterfaces = [ "docker0" ];
+      };
     };
+
     podman.nixos = {
       networking.firewall.trustedInterfaces = [ "podman0" ];
       virtualisation.podman = {

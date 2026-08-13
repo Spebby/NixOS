@@ -1,29 +1,31 @@
 { den, __findFile, ... }: {
   my.profiles._ = {
-    workstation = den.lib.parametric.atLeast {
+    workstation = {
       includes = [
         <my/boot>
-        <my/networking>
+        <my/system/networking>
         <my/flatpak>
         <my/printing>
         <my/ssh/client>
         <my/system/openssl>
-        <my/virt/podman>
+        <my/system/virt/podman>
       ];
     };
-    desktop = den.lib.parametric.atLeast {
+    desktop = {
       includes = [
         <my/profiles/workstation>
         <my/ssh/server>
-        <my/networking/wol>
+        <my/system/networking/wol>
         <my/system/acpid>
+        <my/system/performance/max>
       ];
     };
-    laptop = den.lib.parametric.atLeast {
+    laptop = {
       includes = [
         <my/profiles/workstation>
         <my/system/power-management>
         <my/system/acpid>
+        <my/system/performance/responsive>
       ];
     };
   };

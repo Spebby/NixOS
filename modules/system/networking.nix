@@ -1,22 +1,16 @@
+# quasi gods's networking
 {
-  my.networking = {
+  my.system._.networking = {
     provides = {
-      static.nixos = {
-        networking.tempAddresses = "disabled";
+      static.nixos.networking.tempAddresses = "disabled";
+      wol.nixos.systemd.network.links."10-wol" = {
+        matchConfig.Type = "ether";
+        linkConfig.WakeOnLan = "magic";
       };
-
-      wol.nixos = {
-        systemd.network.links."10-wol" = {
-          matchConfig.Type = "ether";
-          linkConfig.WakeOnLan = "magic";
-        };
-      };
-
     };
-    nixos = {
-      systemd.network.networks."99-ethernet-default-dhcp" = {
-        networkConfig.UseDomains = "yes";
-      };
+
+    nixos = { pkgs, ... }: {
+      systemd.network.networks."99-ethernet-default-dhcp".networkConfig.UseDomains = "yes";
 
       networking = {
         networkmanager.enable = true;
@@ -31,7 +25,11 @@
         ];
       };
 
-      services.resolved.enable = true;
+      environment.systemPackages = [ pkgs.iptables ];
+      services.resolved = {
+        enable = true;
+        settings.Resolve.ResolveUnicastSingleLabel = true;
+      };
     };
   };
 }

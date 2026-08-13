@@ -1,6 +1,9 @@
 { inputs, __findFile, ... }: {
-  den.hosts.x86_64-linux.test.instantiate =
-    args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+  den.hosts.x86_64-linux.test = {
+    users.dummy = { };
+    instantiate =
+      args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+  };
 
   den.aspects.test = {
     includes = [

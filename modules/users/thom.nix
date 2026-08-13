@@ -17,7 +17,7 @@
       <my/apps/productivity/core>
       <my/apps/productivity/writing>
 
-      <my/virt/docker>
+      <my/system/virt/docker>
     ];
 
     nixos = {
@@ -25,12 +25,6 @@
         isNormalUser = true;
         home = "/home/thom";
         icon = ../../assets/icons/thom.png;
-
-        extraGroups = [
-          "home-manager"
-          "gamemode"
-          "docker"
-        ];
       };
 
       nixpkgs.overlays = [
@@ -89,10 +83,6 @@
           shell.tui = {
             yazi.enable = true;
             zathura.enable = true;
-          };
-
-          steam = {
-            includeLutris = false;
           };
         };
 

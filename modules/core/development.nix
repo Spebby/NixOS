@@ -1,7 +1,7 @@
 { inputs, self, ... }: {
   perSystem = { pkgs, system, ... }: {
     checks = {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+      pre-commit-check = inputs.git-hooks.lib.${system}.run {
         src = ../..;
         excludes = [
           ".*/submodules/.*"

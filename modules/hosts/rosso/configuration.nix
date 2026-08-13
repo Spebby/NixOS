@@ -1,7 +1,24 @@
 { inputs, __findFile, ... }: {
   den = {
-    hosts.x86_64-linux.rosso.instantiate =
-      args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+    hosts.x86_64-linux.rosso = {
+      users = {
+        thom = { };
+      };
+
+      instantiate =
+        args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
+
+      displays = {
+        eDP-1 = {
+          primary = true;
+          refresh = 165.003998;
+          width = 2560;
+          height = 1600;
+          vrr = true;
+          wallpaper = ../../../assets/backgrounds/winter-forest-placeholder.png;
+        };
+      };
+    };
   };
 
   den.aspects.rosso = {
@@ -9,7 +26,7 @@
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
-      <my/filesystems/ntfs>
+      <my/system/filesystems/ntfs>
 
       <my/profiles/laptop>
       <my/bluetooth>

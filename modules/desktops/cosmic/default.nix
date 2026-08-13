@@ -1,12 +1,20 @@
-{
-  inputs,
-  den,
-  my,
-  ...
-}:
-{
-  my.desktops._.cosmic = den.lib.parametric {
-    includes = [ my.desktops._.base ];
+{ inputs, my, ... }: {
+  my.desktops._.cosmic = {
+    includes = [
+      my.desktops._.base
+      ({ host, ... }: {
+        homeManager = { lib, ... }: {
+          wayland.desktopManager.cosmic.wallpapers = lib.mapAttrsToList (output: display: {
+            inherit output;
+            source = {
+              __type = "enum";
+              variant = "Path";
+              value = [ "${display.wallpaper}" ];
+            };
+          }) host.displays;
+        };
+      })
+    ];
     nixos =
       {
         pkgs,
@@ -173,6 +181,7 @@
         cfg = config.my.desktops._.cosmic.home;
       in
       {
+        imports = [ inputs.cosmic-manager.homeManagerModules.cosmic-manager ];
         options.my.desktops._.cosmic.home = {
           dconf = {
             extraSettings = lib.mkOption {
@@ -180,22 +189,12 @@
               default = { };
               description = ''
                 Extra dconf key/value pairs merged into <option>dconf.settings</option>.
-                Useful for GNOME-compatible settings consumed by COSMIC (e.g. night-light,
+                Useful for GNOME-compatible settings consumed by COSMIC (e.g. nightlight,
                 accessibility, font hinting).
-              '';
-              example = lib.literalExpression ''
-                {
-                  "org/gnome/desktop/interface" = {
-                    color-scheme = "prefer-dark";
-                    font-antialiasing = "rgba";
-                  };
-                }
               '';
             };
           };
-
         };
-
         config = {
           dconf.settings = cfg.dconf.extraSettings;
         };

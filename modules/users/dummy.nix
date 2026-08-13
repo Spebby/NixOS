@@ -13,7 +13,6 @@
       users.users.dummy = {
         isNormalUser = true;
         home = "/home/dummy";
-        extraGroups = [ "home-manager" ];
       };
     };
 
