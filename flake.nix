@@ -11,6 +11,11 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixstuff = {
+      url = "git+https://tangled.org/quasigod.xyz/nixstuff";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
 
     # Dendritic framework
     flake-parts.url = "github:hercules-ci/flake-parts";

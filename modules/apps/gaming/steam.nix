@@ -1,6 +1,6 @@
 {
   my.apps._.steam = {
-    nixos = { lib, pkgs, ... }: {
+    nixos = { pkgs, ... }: {
       programs.steam = {
         extraPackages = [ pkgs.steamtinkerlaunch ];
       };
@@ -23,21 +23,13 @@
             default = true;
             description = "Install steam-tui and steamcmd.";
           };
-
-          includeLutris = lib.mkOption {
-            type = lib.types.bool;
-            default = true;
-            description = "Install Lutris game launcher.";
-          };
         };
 
         config = {
-          home.packages =
-            (lib.optionals cfg.includeCliTools [
-              pkgs.steam-tui
-              pkgs.steamcmd
-            ])
-            ++ (lib.optionals cfg.includeLutris [ pkgs.lutris ]);
+          home.packages = lib.optionals cfg.includeCliTools [
+            pkgs.steam-tui
+            pkgs.steamcmd
+          ];
         };
       };
   };

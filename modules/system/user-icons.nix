@@ -1,5 +1,5 @@
 {
-  my.userIcons.nixos =
+  my.system._.user-icons.nixos =
     { lib, config, ... }:
     let
       userOptions = with lib; {

@@ -1,6 +1,6 @@
 # On Hardware
 
-"Rosso" is a Lonovo Legion 5 Pro 16ARH7H. The nixos-hardware repository hosts
+`rosso` is a Lonovo Legion 5 Pro 16ARH7H. The nixos-hardware repository hosts
 many different pre-configured profiles for different hardware. While the 16ARH7H
 does not have a profile, an extremely similar laptop, the 16ACH6H does. I have
 chosen to adapt that

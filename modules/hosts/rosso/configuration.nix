@@ -2,9 +2,7 @@
   den = {
     hosts.x86_64-linux.rosso = {
       users = {
-        thom = {
-          classes = [ "homeManager" ];
-        };
+        thom = { };
       };
 
       instantiate =
@@ -28,7 +26,7 @@
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
-      <my/filesystems/ntfs>
+      <my/system/filesystems/ntfs>
 
       <my/profiles/laptop>
       <my/bluetooth>

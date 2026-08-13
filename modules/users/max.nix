@@ -26,12 +26,6 @@
         home = "/home/max";
         icon = ../../assets/icons/max.png;
         shell = pkgs.zsh;
-
-        extraGroups = [
-          "home-manager"
-          "gamemode"
-          "docker"
-        ];
       };
     };
 

@@ -19,8 +19,8 @@ top@{ __findFile, self, ... }:
   den.aspects.vps = {
     includes = [
       <my/ssh/server>
-      <my/networking>
-      <my/virt/qemu>
+      <my/system/networking>
+      <my/system/virt/qemu>
     ];
 
     nixos =
@@ -100,7 +100,7 @@ top@{ __findFile, self, ... }:
           };
 
           # ── QEMU guest integration ──────────────────────────────────────────
-          # services.qemuGuest is already enabled by <my/virt/qemu>.
+          # services.qemuGuest is already enabled by <my/system/virt/qemu>.
           # Add the SPICE guest agent so the hypervisor console works.
           spice-vdagentd.enable = true;
         };

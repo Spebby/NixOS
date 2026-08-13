@@ -1,38 +1,43 @@
 { inputs, __findFile, ... }: {
-  den.hosts.x86_64-linux.tink = {
-    users.max = { };
-
+  den.hosts.x86_64-linux.fio = {
+    users = {
+      thom = { };
+    };
     instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
 
     displays = {
-
+      DP-1 = {
+        wallpaper = ../../../assets/backgrounds/winter-forest-placeholder.png;
+      };
     };
   };
 
-  den.aspects.tink = {
+  den.aspects.fio = {
     includes = [
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
-      <my/profiles/desktop>
-      <my/system/filesystems/ntfs>
+      <my/system/filesystems/zfs>
 
+      <my/profiles/desktop>
+      <my/bluetooth>
       <my/gaming/max>
+      <my/gaming/replays>
       <my/graphics>
 
       <my/services/plex>
-      <my/desktops/gnome>
+      <my/desktops/cosmic>
     ];
 
     nixos =
       { pkgs, lib, ... }:
       let
-        grass-bg = pkgs.runCommand "grass-bg.mp4" { } ''
-          cp ${../../../assets/backgrounds/wavy-grass-moewalls-com.mp4} $out
+        winter-bg = pkgs.runCommand "winter-bg.mp4" { } ''
+          cp ${../../../assets/backgrounds/winter-forest-snow-moewalls-com.mp4} $out
         '';
-        grass-placeholder = pkgs.runCommand "grass-placeholder.png" { } ''
-          cp ${../../../assets/backgrounds/wavy-grass-placeholder.png} $out
+        winter-placeholder = pkgs.runCommand "winter-placeholder.png" { } ''
+          cp ${../../../assets/backgrounds/winter-forest-placeholder.png} $out
         '';
       in
       {
@@ -41,42 +46,36 @@
           ../_common
         ];
 
+        nix.settings.trusted-users = [ "thom" ];
+        nixpkgs.config.cudaSupport = true;
         boot = {
           plymouth = {
             theme = "cuts_alt";
             themePackages = with pkgs; [
               (adi1090x-plymouth-themes.override { selected_themes = [ "cuts_alt" ]; })
             ];
-            extraConfig = "DeviceScale=1";
+            extraConfig = "DeviceScale=1.5";
           };
+
+          #kernelParams = [ "resume=/.swapfile" ];
           kernelPackages = pkgs.linuxPackages_zen;
         };
 
         nix.gc = {
           dates = lib.mkForce "weekly";
-          options = lib.mkForce "--delete-older-than 30d";
+          options = lib.mkForce "--delete-older-than 7d";
         };
-
-        nix.settings.trusted-users = [
-          "thom"
-          "max"
-        ];
-
-        environment.systemPackages = with pkgs; [
-          bottles
-          qt5.qtquickcontrols2
-          qt5.qtgraphicaleffects
-        ];
 
         fonts = {
           enableDefaultPackages = true;
           packages = [ pkgs.jetbrains-mono ];
         };
 
+        networking.hostId = "4e98920d";
         services = {
           auto-cpufreq.enable = false;
           tlp.enable = false;
-          displayManager.defaultSession = "gnome";
+          displayManager.defaultSession = "cosmic";
 
           samba = {
             enable = true;
@@ -131,25 +130,25 @@
 
         my.login.sddm = {
           enable = true;
-          preset = "rei";
+          preset = "default";
           extraBackgrounds = [
-            grass-bg
-            grass-placeholder
+            winter-bg
+            winter-placeholder
           ];
           themeOverrides = {
             General = {
-              scale = "1.0";
+              scale = "1.5";
               enable-animations = true;
               background-fill-mode = "fill";
-              animated-background-placeholder = "${grass-placeholder.name}";
+              animated-background-placeholder = "${winter-placeholder.name}";
             };
             LoginScreen = {
-              background = "${grass-bg.name}";
-              animated-background-placeholder = "${grass-placeholder.name}";
+              background = "${winter-bg.name}";
+              animated-background-placeholder = "${winter-placeholder.name}";
             };
             LockScreen = {
-              background = "${grass-bg.name}";
-              animated-background-placeholder = "${grass-placeholder.name}";
+              background = "${winter-bg.name}";
+              animated-background-placeholder = "${winter-placeholder.name}";
             };
             "LoginScreen.MenuArea.Session".position = "bottom-left";
           };

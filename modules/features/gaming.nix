@@ -1,12 +1,8 @@
-{
-  my,
-  inputs,
-  den,
-  ...
-}:
-{
+# https://tangled.org/quasigod.xyz/nixconfig/blob/main/modules/gaming.nix
+{ my, inputs, ... }: {
   my.gaming.provides = {
     min = {
+      includes = [ my.batteries._.privileged-user ];
       nixos =
         {
           pkgs,
@@ -89,18 +85,18 @@
 
           config = {
             boot.kernelModules = lib.mkIf cfg.ntsync [ "ntsync" ];
-
             environment.systemPackages =
               with pkgs;
               [
                 cartridges
                 heroic
+                lutris
+                hydralauncher
                 umu-launcher
               ]
               ++ cfg.extraPackages;
 
             hardware.graphics.enable32Bit = true;
-
             programs = {
               steam = lib.mkIf cfg.steam.enable {
                 enable = true;
@@ -116,11 +112,12 @@
 
               gamemode.enable = cfg.gamemode.enable;
             };
+            users.privilegedGroups = lib.mkIf cfg.gamemode.enable [ "gamemode" ];
           };
         };
     };
 
-    max = den.lib.parametric {
+    max = {
       includes = [ my.gaming._.min ];
       nixos =
         {
@@ -130,7 +127,7 @@
           ...
         }:
         let
-          cfg = config.my.gaming.max;
+          cfg = config.my.gaming;
         in
         {
           options.my.gaming.max = {
@@ -243,54 +240,79 @@
           ];
 
           config = {
-            hardware.opentabletdriver.enable = lib.mkIf cfg.tablet.enable true;
+            hardware = {
+              opentabletdriver.enable = lib.mkIf cfg.max.tablet.enable true;
+              graphics.extraPackages = [
+                inputs.nixstuff.packages.${pkgs.stdenv.hostPlatform.system}.low-latency-layer
+              ];
+            };
 
             services = {
-              input-remapper = lib.mkIf cfg.input-remapper.enable (
-                { enable = true; } // cfg.input-remapper.extraConfig
+              input-remapper = lib.mkIf cfg.max.input-remapper.enable (
+                { enable = true; } // cfg.max.input-remapper.extraConfig
               );
-              pipewire.lowLatency = lib.mkIf cfg.lowLatency.enable {
-                inherit (cfg.lowLatency) enable quantum rate;
+              pipewire.lowLatency = lib.mkIf cfg.max.lowLatency.enable {
+                inherit (cfg.max.lowLatency) enable quantum rate;
               };
             };
 
             programs = {
               steam = {
-                platformOptimizations.enable = cfg.steam.usePlatformOptimisations;
-                remotePlay.openFirewall = cfg.steam.openRemotePlayFirewall;
-                dedicatedServer.openFirewall = cfg.steam.openDedicatedServerFirewall;
-                localNetworkGameTransfers.openFirewall = cfg.steam.openLocalNetworkGameTransfersFirewall;
+                platformOptimizations.enable = cfg.max.steam.usePlatformOptimisations;
+                remotePlay.openFirewall = cfg.max.steam.openRemotePlayFirewall;
+                dedicatedServer.openFirewall = cfg.max.steam.openDedicatedServerFirewall;
+                localNetworkGameTransfers.openFirewall = cfg.max.steam.openLocalNetworkGameTransfersFirewall;
                 protontricks.enable = true;
               };
 
               gamescope.capSysNice = true;
             };
 
-            environment.systemPackages =
-              with pkgs;
-              [
-                protonplus
-                protontricks
-                winetricks
-                gpu-screen-recorder-gtk
-              ]
-              ++ lib.optionals cfg.overlay.enable [
-                mangohud
-                goverlay
-              ]
-              ++ lib.optionals cfg.frameGeneration.enable [
-                lsfg-vk
-                lsfg-vk-ui
-              ]
-              ++ lib.optionals cfg.saves.enable [ ludusavi ]
-              ++ lib.optionals cfg.hostUtilities.enable [
-                sc-controller
-                vulkan-loader
-                vulkan-tools
-              ]
-              ++ cfg.extraPackages;
+            environment = {
+              variables = {
+                LOW_LATENCY_LAYER = 1;
+                VKD3D_SWAPCHAIN_LATENCY_FRAMES = 1;
+                PROTON_ENABLE_WAYLAND = 1;
+                PROTON_FSR4_UPGRADE = 1;
+              }
+              // lib.optionalAttrs cfg.min.ntsync { PROTON_USE_NTSYNC = 1; };
+              systemPackages =
+                with pkgs;
+                [
+                  protonplus
+                  protontricks
+                  winetricks
+                  ludusavi
+                ]
+                ++ lib.optionals cfg.max.overlay.enable [
+                  mangohud
+                  goverlay
+                ]
+                ++ lib.optionals cfg.max.frameGeneration.enable [
+                  lsfg-vk
+                  lsfg-vk-ui
+                ]
+                ++ lib.optionals cfg.max.saves.enable [ ludusavi ]
+                ++ lib.optionals cfg.max.hostUtilities.enable [
+                  sc-controller
+                  vulkan-loader
+                  vulkan-tools
+                ]
+                ++ cfg.max.extraPackages;
+            };
           };
         };
+    };
+
+    # Moonlight client :)
+    streaming.nixos = { config, pkgs, ... }: {
+      environment.packages = with pkgs; [ moonshine ];
+      services.moonshine = {
+        enable = true;
+        openFirewall = true;
+        settings = null;
+        paths = map (p: "${p}/bin") config.environment.profiles;
+      };
     };
 
     replays.homeManager =
@@ -403,7 +425,6 @@
 
         config = lib.mkIf cfg.enable {
           home.packages = [ pkgs.gpu-screen-recorder ];
-
           systemd.user.services.gpu-screen-recorder =
             let
               audioFlags = lib.concatMapStringsSep " " (a: "-a '${a}'") cfg.audioOutputs;

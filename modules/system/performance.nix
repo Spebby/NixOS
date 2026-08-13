@@ -1,9 +1,9 @@
 { my, ... }: {
-  my.performance = {
+  my.system._.performance = {
     nixos =
       { lib, config, ... }:
       let
-        cfg = config.my.performance;
+        cfg = config.my.system._.performance;
 
         myOptions = {
           hugepages = {
@@ -53,7 +53,7 @@
         };
       in
       {
-        options.my.performance = myOptions;
+        options.my.system._.performance = myOptions;
 
         config.boot.kernel.sysctl = lib.mkIf cfg.hugepages.enable (
           {
@@ -70,14 +70,14 @@
 
     provides = {
       responsive = {
-        includes = [ my.performance ];
+        includes = [ my.system._.performance ];
         nixos =
           { lib, config, ... }:
           let
-            cfg = config.my.performance.responsive;
+            cfg = config.my.system._.performance.responsive;
           in
           {
-            options.my.performance.responsive = {
+            options.my.system._.performance.responsive = {
               swappiness = lib.mkOption {
                 type = lib.types.ints.between 0 200;
                 default = 1;
@@ -135,14 +135,14 @@
       };
 
       max = {
-        includes = [ my.performance._.responsive ];
+        includes = [ my.system._.performance._.responsive ];
         nixos =
           { lib, config, ... }:
           let
-            cfg = config.my.performance.max;
+            cfg = config.my.system._.performance.max;
           in
           {
-            options.my.performance.max = {
+            options.my.system._.performance.max = {
               cpuGovernor = lib.mkOption {
                 type = lib.types.enum [
                   "performance"

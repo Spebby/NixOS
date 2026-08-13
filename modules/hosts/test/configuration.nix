@@ -1,6 +1,6 @@
 { inputs, __findFile, ... }: {
   den.hosts.x86_64-linux.test = {
-    users.dummy.classes = [ "homeManager" ];
+    users.dummy = { };
     instantiate =
       args: inputs.nixpkgs-patcher.lib.nixosSystem ({ nixpkgsPatcher.inputs = inputs; } // args);
   };
