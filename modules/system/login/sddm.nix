@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   my.login.provides.sddm.nixos =
     {
       pkgs,
@@ -109,14 +108,12 @@
           theme = if cfg.theme.name != null then cfg.theme.name else activeTheme.pname;
           extraPackages =
             (if hasTheme then [ ] else activeTheme.propagatedBuildInputs) ++ cfg.theme.extraPackages;
-          settings =
-            lib.optionalAttrs (!hasTheme) {
-              General = {
-                GreeterEnvironment = "QML2_IMPORT_PATH=${activeTheme}/share/sddm/themes/${activeTheme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-                InputMethod = "qtvirtualkeyboard";
-              };
-            }
-            // cfg.settings;
+          settings = lib.recursiveUpdate (lib.optionalAttrs (!hasTheme) {
+            General = {
+              GreeterEnvironment = "QML2_IMPORT_PATH=${activeTheme}/share/sddm/themes/${activeTheme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+              InputMethod = "qtvirtualkeyboard";
+            };
+          }) cfg.settings;
         };
 
         environment.systemPackages = lib.mkIf cfg.enable (
