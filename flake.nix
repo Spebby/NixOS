@@ -165,15 +165,31 @@
   # Ripped from https://tangled.org/quasigod.xyz/nixconfig
   nixConfig = {
     extra-substituters = [
+      "https://cache.nixos.org/"
+      "https://cache.nixos-cuda.org"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
+      "https://quasigod.cachix.org"
+      "https://attic.xuyh0120.win/lantian" # cachyos kernels
+      "https://cache.garnix.io"
       "https://cache.numtide.com" # llm-agents
+      "https://catppuccin.cachix.org"
+      "https://noctalia.cachix.org"
+      "https://cosmic.cachix.org/"
     ];
+
     extra-trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "quasigod.cachix.org-1:z+auA/0uS8vy6DDtUZhRQagZvVdl5WYnE/7lveoM3Do="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
     ];
   };
 }

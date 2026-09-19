@@ -26,7 +26,7 @@
       <my/gaming/replays>
       <my/graphics>
 
-      <my/services/plex>
+      #<my/services/plex>
       <my/desktops/cosmic>
     ];
 

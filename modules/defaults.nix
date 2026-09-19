@@ -70,9 +70,7 @@ in
           };
         in
         {
-          imports = [
-            inputs.disko.nixosModules.disko
-          ];
+          imports = [ inputs.disko.nixosModules.disko ];
 
           options.den.default = {
             shell = {
