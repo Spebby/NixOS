@@ -18,7 +18,7 @@
       <my/boot/secure>
       <my/boot/graphical>
       <my/login/sddm>
-      <my/system/filesystems/zfs>
+      <my/system/filesystems/ntfs>
 
       <my/profiles/desktop>
       <my/bluetooth>
@@ -42,6 +42,7 @@
       in
       {
         imports = [
+          ./_disko.nix
           ./_hardware-configuration.nix
           ../_common
         ];

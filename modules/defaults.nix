@@ -70,6 +70,10 @@ in
           };
         in
         {
+          imports = [
+            inputs.disko.nixosModules.disko
+          ];
+
           options.den.default = {
             shell = {
               binSh = lib.mkOption {
@@ -191,7 +195,6 @@ in
 
           config = {
             _module.args = { inherit pkgs-stable; };
-
             hardware.enableRedistributableFirmware = true;
 
             programs.zsh.enable = true;
