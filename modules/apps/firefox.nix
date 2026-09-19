@@ -168,9 +168,9 @@
                 installation_mode = "normal_installed";
               };
 
-              # Language Tool
-              "languagetool-webextension@languagetool.org" = {
-                install_url = "https://addons.mozilla.org/firefox/downloads/latest/languagetool/latest.xpi";
+              # Grammar Checker - Harper:
+              "harper@writewithharper.com" = {
+                install_url = "https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/latest.xpi";
                 installation_mode = "normal_installed";
               };
 

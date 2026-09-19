@@ -105,7 +105,7 @@
       noctaliaExe = lib.getExe self'.packages.myNoctalia;
     in
     {
-      packages = lib.optionalAttrs pkgs.stdenv.isLinux {
+      packages = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         myNiri = inputs.wrapper-modules.wrappers.niri.wrap {
           inherit pkgs;
           settings = {

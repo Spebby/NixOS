@@ -128,6 +128,14 @@
           };
         };
 
+        den.default = {
+          locale.timeZone = "America/Los_Angeles";
+          memory = {
+            zramSwap = true;
+            zramPercent = 50;
+          };
+        };
+
         my.login.sddm = {
           enable = true;
           preset = "default";

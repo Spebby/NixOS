@@ -1,89 +1,41 @@
-{
-  my.lang.provides =
-    { inputs, pkgs, ... }:
+# NOTE: C# does not work properly b/c mono & msbuild conflict on buildEnv.
+# consider a better solution. For now, direnv works fine for my purposes.
+{ inputs, ... }:
+let
+  mkLang =
+    name:
     let
-      langPkgs = inputs.devshells.packages.${pkgs.stdenv.hostPlatform.system};
+      packageName = "lang-${name}";
     in
     {
-      c = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-c" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-c" ];
-        };
+      nixos = { pkgs, ... }: {
+        environment.systemPackages = [
+          inputs.devshells.packages.${pkgs.stdenv.hostPlatform.system}.${packageName}
+        ];
       };
 
-      cpp = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-cpp" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-cpp" ];
-        };
-      };
-
-      rust = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-rust" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-rust" ];
-        };
-      };
-
-      zig = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-zig" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-zig" ];
-        };
-      };
-
-      csharp = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-csharp" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-csharp" ];
-        };
-      };
-
-      js-ts = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-js-ts" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-js-ts" ];
-        };
-      };
-
-      python = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-python" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-python" ];
-        };
-      };
-
-      odin = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-odin" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-odin" ];
-        };
-      };
-
-      full = {
-        nixos = {
-          environment.systemPackages = [ langPkgs."lang-full" ];
-        };
-        homeManager = {
-          home.packages = [ langPkgs."lang-full" ];
-        };
+      homeManager = { pkgs, ... }: {
+        home.packages = [ inputs.devshells.packages.${pkgs.stdenv.hostPlatform.system}.${packageName} ];
       };
     };
+
+  languages = [
+    "c"
+    "cpp"
+    "rust"
+    "zig"
+    "csharp"
+    "js-ts"
+    "python"
+    "odin"
+    "full"
+  ];
+in
+{
+  my.lang.provides = builtins.listToAttrs (
+    map (name: {
+      inherit name;
+      value = mkLang name;
+    }) languages
+  );
 }

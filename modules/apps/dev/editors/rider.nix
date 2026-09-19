@@ -1,50 +1,11 @@
 {
-  my.apps._.editors._.rider.homeManager =
-    { lib, pkgs-stable, ... }:
-    let
-      extraPath = with pkgs-stable; [
-        dotnetCorePackages.sdk_8_0
-        dotnetPackages.Nuget
-        mono
-      ];
+  # Highly recommend installing direnv everywhere plugin to get around
+  # Rider's weirdness with the toolchain
+  my.apps._.editors._.rider.homeManager = { pkgs, ... }: {
+    options.my.apps._.rider = { };
 
-      extraLib = with pkgs-stable; [
-        libx11
-        libxcursor
-        libxrandr
-        libglvnd
-        icu
-      ];
-
-      riderWrapped = pkgs-stable.jetbrains.rider.overrideAttrs (attrs: {
-        postInstall = (attrs.postInstall or "") + ''
-          mv $out/bin/rider $out/bin/.rider-unwrapped
-          makeWrapper $out/bin/.rider-unwrapped $out/bin/rider \
-            --argv0 rider \
-            --prefix PATH : "${lib.makeBinPath extraPath}" \
-            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath extraLib}"
-
-          shopt -s extglob
-          ln -s $out/rider/!(bin) $out/
-          shopt -u extglob
-        '';
-      });
-    in
-    {
-      options.my.apps._.rider = { };
-
-      config = {
-        home.packages = [ riderWrapped ];
-        xdg.desktopEntries.jetbrains-rider = {
-          name = "Rider";
-          exec = ''"${riderWrapped}/bin/rider"'';
-          icon = "rider";
-          terminal = false;
-          categories = [
-            "Development"
-            "IDE"
-          ];
-        };
-      };
+    config = {
+      home.packages = [ pkgs.jetbrains.rider ];
     };
+  };
 }
