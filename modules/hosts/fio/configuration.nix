@@ -8,6 +8,8 @@
 
     displays = {
       DP-1 = {
+        primary = true;
+        vrr = false;
         wallpaper = ../../../assets/backgrounds/winter-forest-placeholder.png;
       };
     };
@@ -42,6 +44,9 @@
       in
       {
         imports = [
+          inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
+
           ./_disko.nix
           ./_hardware-configuration.nix
           ../_common
@@ -55,10 +60,10 @@
             themePackages = with pkgs; [
               (adi1090x-plymouth-themes.override { selected_themes = [ "cuts_alt" ]; })
             ];
-            extraConfig = "DeviceScale=1.5";
+            extraConfig = "DeviceScale=1.75";
           };
 
-          #kernelParams = [ "resume=/.swapfile" ];
+          kernelParams = [ "resume=/.swapfile" ];
           kernelPackages = pkgs.linuxPackages_zen;
         };
 

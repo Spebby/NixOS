@@ -11,6 +11,7 @@
   boot = {
     initrd = {
       availableKernelModules = [
+        "nvme"
         "xhci_pci"
         "ahci"
         "usbhid"
@@ -20,6 +21,11 @@
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-amd" ];
+    blacklistedKernelModules = [ "nouveau" ];
+    kernelParams = [
+      "mem_sleep_default=s2idle"
+      "nvidia_drm.fbdev=1"
+    ];
     extraModulePackages = [ ];
   };
 
