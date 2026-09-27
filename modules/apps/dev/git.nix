@@ -41,7 +41,7 @@
           };
           key = lib.mkOption {
             type = lib.types.str;
-            default = "~/.ssh/NixOS.pub";
+            default = "~/.ssh/ed25519.pub";
             description = "Path to the signing key.";
           };
           signByDefault = lib.mkOption {

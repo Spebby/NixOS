@@ -11,7 +11,7 @@
     in
     {
       options.my.apps._.discord = {
-        useCustomClient = lib.mkOption {
+        useCustomClients = lib.mkOption {
           type = lib.types.bool;
           default = false;
           description = "Install Vesktop alongside Discord.";
@@ -32,7 +32,10 @@
         home.packages = [
           (pkgs.discord.override { inherit (cfg) withOpenASAR withVencord; })
         ]
-        ++ lib.optionals cfg.useCustomClient [ pkgs.vesktop ];
+        ++ lib.optionals cfg.useCustomClients [
+          pkgs.webcord-vencord
+          pkgs.vesktop
+        ];
       };
     };
 }

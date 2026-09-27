@@ -1,6 +1,9 @@
-{ my, ... }: {
+{ __findFile, ... }: {
   my.desktops._.kde = {
-    includes = [ my.desktops._.base ];
+    includes = [
+      <my/desktops/base>
+      <my/login/sddm>
+    ];
 
     nixos =
       {

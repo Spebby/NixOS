@@ -41,6 +41,7 @@
         lib,
         config,
         pkgs,
+        host,
         ...
       }:
       {
@@ -49,6 +50,12 @@
             userName = "Thom";
             userEmail = "thommott@proton.me";
             lazygit.enable = true;
+            signing.key =
+              {
+                fio = "~/.ssh/fio.pub";
+                rosso = "~/.ssh/rosso.pub";
+              }
+              .${host.name} or "~/.ssh/ed25519.pub";
           };
 
           productivity.core = {
@@ -63,6 +70,10 @@
           dev._.tooling = {
             includeBuildDocs = true;
             includeAiTools.enable = true;
+          };
+
+          discord = {
+            useCustomClients = true;
           };
 
           editors._.zed = {
@@ -112,5 +123,4 @@
         };
       };
   };
-
 }

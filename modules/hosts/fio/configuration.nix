@@ -29,6 +29,7 @@
       <my/graphics>
 
       #<my/services/plex>
+      <my/ai/llama>
       <my/desktops/cosmic>
     ];
 
@@ -60,10 +61,9 @@
             themePackages = with pkgs; [
               (adi1090x-plymouth-themes.override { selected_themes = [ "cuts_alt" ]; })
             ];
-            extraConfig = "DeviceScale=1.75";
+            extraConfig = "DeviceScale=1.5";
           };
 
-          kernelParams = [ "resume=/.swapfile" ];
           kernelPackages = pkgs.linuxPackages_zen;
         };
 
@@ -82,6 +82,10 @@
           auto-cpufreq.enable = false;
           tlp.enable = false;
           displayManager.defaultSession = "cosmic";
+          hardware.openrgb = {
+            enable = true;
+            motherboard = "amd";
+          };
 
           samba = {
             enable = true;

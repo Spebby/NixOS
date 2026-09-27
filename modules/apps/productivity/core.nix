@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   my.apps._.productivity.provides = {
     core.homeManager =
       { config, pkgs, ... }:
@@ -42,7 +41,10 @@
         config = {
           home.packages =
             (lib.optionals cfg.includeOffice [ pkgs.libreoffice-qt6 ])
-            ++ (lib.optionals cfg.includeMail [ pkgs.thunderbird ])
+            ++ (lib.optionals cfg.includeMail [
+              pkgs.thunderbird
+              pkgs.protonmail-bridge
+            ])
             ++ (lib.optionals cfg.includeComms [
               pkgs.slack
               pkgs.zoom-us

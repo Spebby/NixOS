@@ -102,7 +102,7 @@
         ];
 
         services.displayManager.sddm = lib.mkIf cfg.enable {
-          inherit (cfg) package;
+          package = lib.mkForce cfg.package;
           enable = true;
           wayland.enable = cfg.wayland;
           theme = if cfg.theme.name != null then cfg.theme.name else activeTheme.pname;

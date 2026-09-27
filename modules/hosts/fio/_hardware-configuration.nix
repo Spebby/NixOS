@@ -20,7 +20,11 @@
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [
+      "kvm-amd"
+      "i2c-dev" # Ram RGB controls
+      "ic2-piix4" # ditto
+    ];
     blacklistedKernelModules = [ "nouveau" ];
     kernelParams = [
       "mem_sleep_default=s2idle"
