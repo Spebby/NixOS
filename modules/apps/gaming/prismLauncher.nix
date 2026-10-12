@@ -1,18 +1,12 @@
 {
-  my.apps._.prismlauncher.provides = {
+  my.apps._.prismlauncher = {
     nixos = {
-      networking = {
-        # Allow connections from devices on local network (for purposes of LAN)
-        firewall = {
-          extraCommands = ''
-            iptables -A nixos-fw -p tcp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
-            iptables -A nixos-fw -p udp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept
-          '';
-          extraStopCommands = ''
-            iptables -D nixos-fw -p tcp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept || true
-            iptables -D nixos-fw -p udp --source 192.168.0.0/24 --dport 1714:65535 -j nixos-fw-accept || true
-          '';
-        };
+      # Allow connections from devices on local network (for purposes of LAN)
+      networking.firewall = {
+        extraInputRules = ''
+          ip saddr 192.168.0.0/24 tcp dport 50000-65535 accept
+          ip saddr 192.168.0.0/24 udp dport 4445 accept
+        '';
       };
     };
     homeManager = { pkgs, ... }: { home.packages = with pkgs; [ prismlauncher ]; };

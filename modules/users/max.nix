@@ -2,13 +2,13 @@
   den.aspects.max = {
     includes = [
       <den/primary-user>
-      <my/profiles/common-use>
-      <my/profiles/dev/all>
-      <my/profiles/art/all>
-      <my/profiles/math>
-      <my/profiles/theming>
-      <my/profiles/desktop-utils>
-      <my/profiles/gaming/all>
+      <my/apps/profiles/common-use>
+      <my/apps/profiles/dev/all>
+      <my/apps/profiles/art/all>
+      <my/apps/profiles/math>
+      <my/apps/profiles/theming>
+      <my/apps/profiles/desktop-utils>
+      <my/apps/profiles/gaming/all>
 
       <my/apps/creative/core>
       <my/apps/media/core>
@@ -69,5 +69,4 @@
       };
     };
   };
-
 }

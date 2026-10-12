@@ -333,7 +333,10 @@ in
           config = {
             _module.args = { inherit pkgs-stable; };
 
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs = {
+              overlays = [ inputs.hytale-launcher.overlays.default ];
+              config.allowUnfree = true;
+            };
             programs.home-manager.enable = true;
 
             xdg = lib.mkIf cfg.xdg.enable {

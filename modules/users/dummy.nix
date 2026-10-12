@@ -3,10 +3,10 @@
   den.aspects.dummy = {
     includes = [
       <den/primary-user>
-      <my/profiles/common-use>
-      <my/profiles/desktop-utils>
+      <my/apps/profiles/common-use>
+      <my/apps/profiles/desktop-utils>
       <my/apps/cli/utility>
-      <my/profiles/dev/tools>
+      <my/apps/profiles/dev/tools>
     ];
 
     nixos = {

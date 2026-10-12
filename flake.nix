@@ -158,8 +158,10 @@
     };
 
     # Experimental packages
-    amuletMapEditor.url = "github:NixOS/nixpkgs/pull/405548/head";
-    hytale.url = "github:NixOS/nixpkgs/pull/479368/head";
+    hytale-launcher = {
+      url = "github:visoredkon/hytale-launcher-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Ripped from https://tangled.org/quasigod.xyz/nixconfig

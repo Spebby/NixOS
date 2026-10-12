@@ -29,7 +29,7 @@
       <my/graphics>
 
       #<my/services/plex>
-      <my/ai/llama>
+      #<my/ai/llama>
       <my/desktops/cosmic>
     ];
 
@@ -77,7 +77,14 @@
           packages = [ pkgs.jetbrains-mono ];
         };
 
-        networking.hostId = "4e98920d";
+        networking = {
+          hostId = "4e98920d";
+          # Make the machine use Blocky
+          #nameservers = [ "127.0.0.1" ];
+          # block NetworkManager replace the DNS server
+          #networkmanager.dns = "none";
+        };
+
         services = {
           auto-cpufreq.enable = false;
           tlp.enable = false;
@@ -85,6 +92,53 @@
           hardware.openrgb = {
             enable = true;
             motherboard = "amd";
+          };
+
+          blocky = {
+            enable = true;
+            settings = {
+              # DNS traditionally uses UDP port 53 for DNS queries & TCP 53 as fallback
+              ports.dns = 53;
+
+              # defines where blocky sends non-blocked DNS queries
+              upstreams.groups.default = [
+                "https://one.one.one.one/dns-query"
+                "https://dns.quad9.net/dns-query"
+              ];
+              # For initially solving DoH/DoT Requests when no system Resolver is available.
+              bootstrapDns = {
+                upstream = "https://one.one.one.one/dns-query";
+                ips = [
+                  "1.1.1.1"
+                  "1.0.0.1"
+                ];
+              };
+
+              caching = {
+                minTime = "5m";
+                maxTime = "30m";
+                prefetching = true;
+              };
+
+              blocking = {
+                denylists = {
+                  ads = [ "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" ];
+                  social-media = [
+                    "youtube.com"
+                    "*.youtube.com"
+                    "youtu.be"
+                    "*.youtu.be"
+                    "instagram.com"
+                    "*.instagram.com"
+                  ];
+                };
+
+                clientGroupsBlock.default = [
+                  "ads"
+                  "social-media"
+                ];
+              };
+            };
           };
 
           samba = {

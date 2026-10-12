@@ -122,6 +122,7 @@
       nixos =
         {
           pkgs,
+          pkgs-stable,
           config,
           lib,
           ...
@@ -219,14 +220,6 @@
               };
             };
 
-            saves = {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = true;
-                description = "Install Ludusavi for cross-platform game save management.";
-              };
-            };
-
             extraPackages = lib.mkOption {
               type = lib.types.listOf lib.types.package;
               default = [ ];
@@ -276,29 +269,26 @@
                 PROTON_FSR4_UPGRADE = 1;
               }
               // lib.optionalAttrs cfg.min.ntsync { PROTON_USE_NTSYNC = 1; };
-              systemPackages =
-                with pkgs;
-                [
-                  protonplus
-                  protontricks
-                  winetricks
-                  ludusavi
-                ]
-                ++ lib.optionals cfg.max.overlay.enable [
-                  mangohud
-                  goverlay
-                ]
-                ++ lib.optionals cfg.max.frameGeneration.enable [
-                  lsfg-vk
-                  lsfg-vk-ui
-                ]
-                ++ lib.optionals cfg.max.saves.enable [ ludusavi ]
-                ++ lib.optionals cfg.max.hostUtilities.enable [
-                  sc-controller
-                  vulkan-loader
-                  vulkan-tools
-                ]
-                ++ cfg.max.extraPackages;
+              systemPackages = [
+                pkgs.protonplus
+                pkgs.protontricks
+                pkgs.winetricks
+                pkgs.ludusavi
+              ]
+              ++ lib.optionals cfg.max.overlay.enable [
+                pkgs.mangohud
+                pkgs-stable.goverlay
+              ]
+              ++ lib.optionals cfg.max.frameGeneration.enable [
+                pkgs.lsfg-vk
+                pkgs.lsfg-vk-ui
+              ]
+              ++ lib.optionals cfg.max.hostUtilities.enable [
+                pkgs.sc-controller
+                pkgs.vulkan-loader
+                pkgs.vulkan-tools
+              ]
+              ++ cfg.max.extraPackages;
             };
           };
         };

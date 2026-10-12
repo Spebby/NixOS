@@ -1,5 +1,5 @@
 { __findFile, ... }: {
-  my.profiles._ = {
+  my.apps._.profiles._ = {
     common-use.includes = [
       <my/apps/discord>
       <my/apps/firefox>
@@ -16,15 +16,15 @@
       emulators.includes = [ <my/apps/emulators> ];
 
       all.includes = [
-        <my/profiles/gaming/core>
-        <my/profiles/gaming/emulators>
+        <my/apps/profiles/gaming/core>
+        <my/apps/profiles/gaming/emulators>
       ];
     };
 
     art.provides = {
       all.includes = [
-        <my/profiles/art/modelling>
-        <my/profiles/art/drawing>
+        <my/apps/profiles/art/modelling>
+        <my/apps/profiles/art/drawing>
       ];
 
       modelling.includes = [ <my/apps/art/blender> ];
@@ -33,9 +33,9 @@
 
     dev.provides = {
       all.includes = [
-        <my/profiles/dev/editors>
-        <my/profiles/dev/tools>
-        <my/profiles/dev/games>
+        <my/apps/profiles/dev/editors>
+        <my/apps/profiles/dev/tools>
+        <my/apps/profiles/dev/games>
       ];
 
       editors.includes = [

@@ -16,6 +16,10 @@
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
+      settings.Gerneral = {
+        JustWorksRepairing = "always";
+        FastConnectable = true;
+      };
     };
   };
 }

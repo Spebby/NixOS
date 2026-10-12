@@ -117,7 +117,6 @@ This document captures repo-specific conventions for working in this Den-based f
 - Apps are under `modules/apps/**` (there is no top-level `apps/` directory).
 - Desktop modules are under `modules/desktops/**`.
 - User aspects are in `modules/users/**`.
-- Legacy/manual user package lists exist under `users/*.nix`; these are useful for discovering missing app modules/profiles.
 - In this repo, there are currently no explicit top-level `homeConfigurations` outputs declared by user-defined `den.homes`; HM is primarily host-integrated via `den.hosts.*.users.*`.
 
 ## Practical Guidelines For Future Edits

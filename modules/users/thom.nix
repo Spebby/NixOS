@@ -2,13 +2,13 @@
   den.aspects.thom = {
     includes = [
       <den/primary-user>
-      <my/profiles/common-use>
-      <my/profiles/dev/all>
-      <my/profiles/art/modelling>
-      <my/profiles/theming>
-      <my/profiles/desktop-utils>
-      <my/profiles/gaming/all>
-      <my/profiles/fun>
+      <my/apps/profiles/common-use>
+      <my/apps/profiles/dev/all>
+      <my/apps/profiles/art/modelling>
+      <my/apps/profiles/theming>
+      <my/apps/profiles/desktop-utils>
+      <my/apps/profiles/gaming/all>
+      <my/apps/profiles/fun>
 
       <my/apps/creative/core>
       <my/apps/media/core>
@@ -98,7 +98,7 @@
         };
 
         home = {
-          packages = with pkgs; [ easyeffects ];
+          packages = with pkgs; [ hytale-launcher ];
           sessionVariables = {
             TERMINAL = "kitty";
             EDITOR = lib.mkForce "nvim";
